@@ -17,7 +17,7 @@ export async function generateMetadata({
 }: {
    params: { handle: string }
 }): Promise<Metadata> {
-   const product = await getProduct(params.handle)
+   const product = await getProduct(decodeURIComponent(params.handle))
 
    if (!product) return notFound()
 
