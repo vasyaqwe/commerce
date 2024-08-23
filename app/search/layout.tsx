@@ -1,8 +1,8 @@
-import { Footer } from "components/layout/footer"
-import { FilterList } from "components/layout/search/filter"
-import { sorting } from "lib/constants"
-import { getCollections } from "lib/shopify"
-import { cn } from "lib/utils"
+import { Footer } from "@/components/layout/footer"
+import { FilterList } from "@/components/layout/search/filter"
+import { sorting } from "@/lib/constants"
+import { getCollections } from "@/lib/shopify"
+import { cn } from "@/lib/utils"
 import { Suspense } from "react"
 import { ChildrenWrapper } from "./children-wrapper"
 

@@ -1,6 +1,6 @@
-import FooterMenu from "components/layout/footer-menu"
-import { Icons } from "components/ui/icons"
-import { getMenu } from "lib/shopify"
+import FooterMenu from "@/components/layout/footer-menu"
+import { Icons } from "@/components/ui/icons"
+import { getMenu } from "@/lib/shopify"
 import Link from "next/link"
 import { Suspense } from "react"
 

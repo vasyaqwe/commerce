@@ -1,5 +1,5 @@
-import { Price } from "components/price"
-import { cn } from "lib/utils"
+import { Price } from "@/components/price"
+import { cn } from "@/lib/utils"
 
 const Label = ({
    title,

@@ -1,5 +1,5 @@
+import { cn } from "@/lib/utils"
 import { ShoppingCartIcon } from "@heroicons/react/24/outline"
-import { cn } from "lib/utils"
 
 export default function OpenCart({
    className,

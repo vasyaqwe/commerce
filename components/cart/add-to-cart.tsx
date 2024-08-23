@@ -1,10 +1,10 @@
 "use client"
 
+import { addItem } from "@/components/cart/actions"
+import { useProduct } from "@/components/product/product-context"
+import type { Product, ProductVariant } from "@/lib/shopify/types"
+import { cn } from "@/lib/utils"
 import { PlusIcon } from "@heroicons/react/24/outline"
-import { addItem } from "components/cart/actions"
-import { useProduct } from "components/product/product-context"
-import type { Product, ProductVariant } from "lib/shopify/types"
-import { cn } from "lib/utils"
 import { useFormState } from "react-dom"
 import { useCart } from "./cart-context"
 

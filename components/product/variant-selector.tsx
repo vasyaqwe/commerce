@@ -1,8 +1,8 @@
 "use client"
 
-import { useProduct, useUpdateURL } from "components/product/product-context"
-import type { ProductOption, ProductVariant } from "lib/shopify/types"
-import { cn } from "lib/utils"
+import { useProduct, useUpdateURL } from "@/components/product/product-context"
+import type { ProductOption, ProductVariant } from "@/lib/shopify/types"
+import { cn } from "@/lib/utils"
 
 type Combination = {
    id: string

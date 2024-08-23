@@ -1,7 +1,7 @@
 "use client"
 
-import type { SortFilterItem } from "lib/constants"
-import { cn, createUrl } from "lib/utils"
+import type { SortFilterItem } from "@/lib/constants"
+import { cn, createUrl } from "@/lib/utils"
 import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
 import type { ListItem, PathFilterItem } from "."

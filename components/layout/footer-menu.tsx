@@ -1,7 +1,7 @@
 "use client"
 
-import type { Menu } from "lib/shopify/types"
-import { cn } from "lib/utils"
+import type { Menu } from "@/lib/shopify/types"
+import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
