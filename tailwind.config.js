@@ -3,6 +3,7 @@
 const color = (cssVar) => `hsl(var(--${cssVar}) / <alpha-value>)`
 
 module.exports = {
+   darkMode: "class",
    content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
    theme: {
       // container: {
@@ -18,7 +19,7 @@ module.exports = {
       // },
       extend: {
          fontFamily: {
-            sans: ["var(--font-geist-sans)"],
+            primary: ["var(--font-geist-sans)"],
          },
          keyframes: {
             shimmer: {
@@ -70,6 +71,7 @@ module.exports = {
                DEFAULT: color("muted"),
                foreground: color("muted-foreground"),
             },
+            accent: color("accent"),
             ring: color("ring"),
          },
          fontSize: {
@@ -79,8 +81,6 @@ module.exports = {
          boxShadow: {
             "popover-shadow": "var(--popover-shadow)",
             "popover-side-shadow": "var(--popover-side-shadow)",
-            button:
-               "0px 0px 0px 0.5px hsl(var(--background)/.35),0px 1px 1px -1px hsl(var(--background)/.35),0px 2px 2px -1px hsl(var(--background)/.35),inset 0px 0.5px 0px hsla(0,0%,100%,.0),inset 0px 0px 1px 0px hsla(0,0%,100%,0),inset 0px -6px 12px -4px hsl(var(--background)/.35)",
          },
       },
    },

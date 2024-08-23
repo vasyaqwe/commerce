@@ -4,22 +4,20 @@
 
 :root {
   --background: 0deg 0% 100%;
-  --foreground: var(--slate-12);
-  --popover: var(--slate-12);
-  --popover-foreground: var(--slate-3);
+  --foreground: 240deg 6% 10%;
+  --popover: 240deg 6% 13%;
+  --popover-foreground: 0deg 0% 64%;
   --popover-highlight: 220deg 6% 27%;
   --popover-icon: #acacac;
-  --primary: var(--blue-9);
-  --primary-foreground: var(--blue-1);
-  --muted: var(--slate-6);
-  --muted-foreground: var(--slate-11);
-  --destructive: var(--red-9);
-  --destructive-foreground: var(--red-1);
-  --border: var(--slate-4);
+  --primary: 240deg 6% 10%;
+  --primary-foreground: 0deg 0% 100%;
+  --accent: 48deg 80% 65;
+  --muted: 45deg 24% 90%;
+  --muted-foreground: 45deg 24% 25%;
+  --destructive: 358 75% 59%;
+  --destructive-foreground: 0deg 0% 98%;
+  --border: 45deg 24% 85%;
   --ring: 228deg 5% 82%;
-
-  --brand: var(--blue-9);
-  --logo-fill: #23164c;
 
   --intentful: light-dark(color-mix(in lch, canvas, canvasText 15%), black);
   --ease: linear(
@@ -47,12 +45,6 @@
 }
 
 .dark {
-  --background: var(--slate-1);
-  --foreground: var(--slate-12);
-  --popover: 225deg 6% 12%;
-  --popover-foreground: var(--slate-12);
-  --popover-highlight: var(--slate-6);
-  --popover-icon: #888888;
   --popover-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.08),
     inset 0px 0px 0px 1px rgba(255, 255, 255, 0.04),
     0px 2px 3px rgba(0, 0, 0, 0.55), 0px 2px 4px rgba(0, 0, 0, 0.12),
@@ -61,18 +53,6 @@
     inset 0px 0px 0px 1px rgba(255, 255, 255, 0.04),
     0px 2px 3px rgba(0, 0, 0, 0.55), 0px 2px 4px rgba(0, 0, 0, 0.12),
     0px 0px 0px 0.5px rgba(0, 0, 0, 0.25);
-  --primary: var(--blue-8);
-  --primary-foreground: var(--slate-12);
-  --muted: var(--slate-5);
-  --muted-foreground: 222deg 5.2% 56%;
-  --destructive: var(--red-9);
-  --destructive-foreground: var(--slate-12);
-  --border: 214deg 7.1% 18%;
-  --ring: 228deg 5% 82%;
-
-  --brand: var(--blue-10);
-
-  --logo-fill: hsl(var(--slate-12));
 }
 
 @layer utilities {

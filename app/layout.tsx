@@ -8,6 +8,7 @@ import "./globals.css"
 import { ModalProvider } from "@/components/modals"
 import { Toaster } from "@/components/ui/toast"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { cn } from "@/lib/utils"
 import * as Portal from "@radix-ui/react-portal"
 
 const { SITE_NAME } = process.env
@@ -21,6 +22,9 @@ export const metadata = {
       // biome-ignore lint/style/noNonNullAssertion: <explanation>
       default: SITE_NAME!,
       template: `%s | ${SITE_NAME}`,
+   },
+   openGraph: {
+      type: "website",
    },
    robots: {
       follow: true,
@@ -38,9 +42,9 @@ export default async function RootLayout({
    return (
       <html
          lang="en"
-         className={GeistSans.variable}
+         className={cn("font-primary antialiased", GeistSans.variable)}
       >
-         <body className="bg-neutral-50 text-black dark:bg-neutral-900 dark:selection:bg-pink-500 selection:bg-teal-300 dark:selection:text-white dark:text-white">
+         <body className="bg-background text-foreground">
             <CartProvider cartPromise={cart}>
                <TooltipProvider delayDuration={300}>
                   <ModalProvider />

@@ -1,5 +1,7 @@
 "use client"
+
 import { Price } from "@/components/price"
+import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Loading } from "@/components/ui/loading"
 import { DEFAULT_OPTION } from "@/lib/constants"
@@ -11,10 +13,8 @@ import { useEffect, useRef, useState } from "react"
 import { useFormStatus } from "react-dom"
 import { createCartAndSetCookie, redirectToCheckout } from "./actions"
 import { useCart } from "./cart-context"
-import CloseCart from "./close-cart"
 import { DeleteItemButton } from "./delete-item-button"
 import { EditItemQuantityButton } from "./edit-item-quantity-button"
-import OpenCart from "./open-cart"
 
 type MerchandiseSearchParams = {
    [key: string]: string
@@ -49,29 +49,27 @@ export default function CartModal() {
 
    return (
       <>
-         <button
+         <Button
+            variant={"ghost"}
+            size={"icon"}
             aria-label="Open cart"
             onClick={openCart}
          >
-            <OpenCart quantity={cart?.totalQuantity} />
-         </button>
+            <ShoppingCartIcon className="size-6" />
+
+            {cart?.totalQuantity ? (
+               <div className="-mr-2 -mt-2 absolute top-0 right-0 h-4 w-4 rounded bg-blue-600 font-medium text-[11px] text-white">
+                  {cart.totalQuantity}
+               </div>
+            ) : null}
+         </Button>
          <Dialog
             open={isOpen}
             onOpenChange={setIsOpen}
          >
-            <DialogContent className="fixed top-0 right-0 bottom-0 flex h-full w-full flex-col border-neutral-200 border-l bg-white/80 p-6 text-black backdrop-blur-xl md:w-[390px] dark:border-neutral-700 dark:bg-black/80 dark:text-white">
-               <div className="flex items-center justify-between">
-                  <p className="font-semibold text-lg">My Cart</p>
-                  <button
-                     aria-label="Close cart"
-                     onClick={closeCart}
-                  >
-                     <CloseCart />
-                  </button>
-               </div>
-
+            <DialogContent>
                {!cart || cart.lines.length === 0 ? (
-                  <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
+                  <div className=" flex w-full flex-col items-center justify-center overflow-hidden">
                      <ShoppingCartIcon className="h-16" />
                      <p className="mt-6 text-center font-bold text-2xl">
                         Your cart is empty.

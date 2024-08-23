@@ -30,13 +30,13 @@ const DialogOverlay = React.forwardRef<
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
 const dialogVariants = cva(
-   `data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-left-1/2 data-[state=open]:slide-in-from-left-1/2 fixed top-[50%] left-[50%] z-50 grid w-full translate-x-[-50%] translate-y-[-50%] rounded-xl bg-background duration-200 data-[state=closed]:animate-out data-[state=open]:animate-in`,
+   `data-[state=closed]:fade-out-0 data-[state=open]:[animation-duration:750ms] data-[state=open]:fade-in-0 fixed z-50 grid w-full inset-0 !h-max m-auto rounded-xl bg-background data-[state=closed]:animate-out data-[state=open]:animate-in`,
    {
       variants: {
          variant: {
-            default: `max-w-lg [&>div]:p-4 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-top-[48%] [&>form]:p-4 dark:ring-0 dark:bg-popover dark:shadow-popover-shadow ring-8 ring-ring shadow-lg data-[state=closed]:zoom-out-[97%] data-[state=open]:zoom-in-[97%]`,
-            alert: "data-[state=closed]:zoom-out-[97%] data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-top-[48%] data-[state=open]:zoom-in-[97%] max-w-md shadow-lg ring-8 ring-ring dark:bg-popover [&>div]:p-4 [&>form]:p-4 dark:shadow-popover-shadow dark:ring-0",
-            overlay: "bg-transparent ",
+            default: `max-w-lg [&>div]:p-4 data-[state=open]:slide-in-from-bottom-16 [&>form]:p-4 dark:bg-popover dark:shadow-popover-shadow shadow-lg`,
+            alert: "data-[state=open]:slide-in-from-bottom-16 max-w-md shadow-lg dark:bg-popover [&>div]:p-4 [&>form]:p-4 dark:shadow-popover-shadow",
+            overlay: "bg-transparent",
             command:
                "data-[state=closed]:!animate-none top-[20px] w-[90%] max-w-[430px] translate-y-0 animate-none bg-trasparent md:top-[75px]",
             toolbar:
@@ -92,11 +92,15 @@ const DialogContent = React.forwardRef<
                className,
             }),
          )}
+         style={{
+            animationTimingFunction: `var(--ease)`,
+            ...props.style,
+         }}
          {...props}
       >
          {children}
          {(variant === "default" || !variant) && (
-            <DialogPrimitive.Close className="absolute top-3.5 right-3.5 grid size-7 place-content-center rounded-full bg-border text-foreground/70 ring-offset-background transition-[transform,background-color] duration-100 disabled:pointer-events-none active:scale-95 hover:scale-105 dark:hover:bg-foreground/15 hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2">
+            <DialogPrimitive.Close className="absolute top-3.5 right-3.5 grid size-7 place-content-center rounded-full bg-muted text-foreground/70 ring-offset-background transition-[transform,background-color] disabled:pointer-events-none active:scale-95 hover:bg-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2">
                <XMarkIcon
                   className="size-4"
                   strokeWidth={3}

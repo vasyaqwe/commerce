@@ -1,21 +1,60 @@
-import { Carousel } from "@/components/carousel"
-import { ThreeItemGrid } from "@/components/grid/three-items"
-import { Footer } from "@/components/layout/footer"
-
-export const metadata = {
-   description:
-      "High-performance ecommerce store built with Next.js, Vercel, and Shopify.",
-   openGraph: {
-      type: "website",
-   },
-}
+import { Button } from "@/components/ui/button"
+import { HeartIcon, TrashIcon } from "@heroicons/react/24/outline"
 
 export default function HomePage() {
    return (
-      <>
-         <ThreeItemGrid />
-         <Carousel />
-         <Footer />
-      </>
+      <div className="border p-10">
+         <div className="flex gap-3 ">
+            <Button>Add to cart</Button>
+            <Button
+               size={"icon"}
+               variant={"secondary"}
+            >
+               <HeartIcon
+                  className="size-5"
+                  strokeWidth={2}
+               />
+            </Button>
+            <Button
+               size={"icon"}
+               variant={"ghost"}
+            >
+               <HeartIcon
+                  className="size-5"
+                  strokeWidth={2}
+               />
+            </Button>
+            <Button variant={"outline"}>
+               <HeartIcon
+                  className="size-5"
+                  strokeWidth={2}
+               />
+           Add to cart
+            </Button>
+            <Button variant={"secondary"}>
+               <HeartIcon
+                  className="size-5"
+                  strokeWidth={2}
+               />
+               Like this
+            </Button>
+            <Button variant={"secondary-destructive"}>
+               <TrashIcon
+                  className="size-5"
+                  strokeWidth={2}
+               />
+               Trash this
+            </Button>
+            <Button size={'icon'} variant={"destructive"}>
+               <TrashIcon
+                  className="size-5"
+                  strokeWidth={2}
+               />
+            </Button>
+         </div>
+         {/* <ThreeItemGrid /> */}
+         {/* <Carousel /> */}
+         {/* <Footer /> */}
+      </div>
    )
 }

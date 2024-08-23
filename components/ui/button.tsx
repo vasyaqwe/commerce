@@ -5,24 +5,24 @@ import { type VariantProps, cva } from "class-variance-authority"
 import { type ComponentProps, forwardRef } from "react"
 
 const buttonVariants = cva(
-   `relative inline-flex items-center justify-center font-medium gap-1.5 leading-none overflow-hidden whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:pointer-events-none disabled:opacity-75`,
+   `relative inline-flex items-center justify-center font-medium transition-[color,background-color,transform,box-shadow] gap-1.5 leading-none overflow-hidden active:scale-95 duration-200 whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:pointer-events-none disabled:opacity-75`,
    {
       variants: {
          variant: {
-            default: `bg-primary text-primary-foreground`,
-            secondary: `transition-none bg-muted/35 font-medium text-foreground/75 hover:bg-muted/65 data-[state=open]:bg-muted/65 dark:bg-muted/50 dark:data-[state=open]:bg-muted dark:hover:bg-muted hover:text-foreground/95 data-[state=open]:text-foreground/85 dark:shadow-md`,
-            "secondary-primary": `transition-none bg-muted/25 font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary`,
-            "secondary-destructive": `transition-none bg-muted/25 font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive`,
-            outline: `bg-background dark:bg-muted dark:border-foreground/[0.07] dark:shadow-md border text-foreground shadow-sm`,
-            destructive: `bg-destructive text-destructive-foreground`,
-            ghost: "border border-transparent transition-none aria-[current=page]:bg-border/70 dark:hover:bg-border hover:bg-border/70",
+            default: `bg-primary/90 shadow-sm hover:shadow-md focus-visible:ring-accent text-primary-foreground/95 hover:bg-primary active:shadow-sm hover:text-primary-foreground`,
+            secondary: `bg-muted font-medium text-muted-foreground hover:bg-border data-[state=open]:bg-border dark:bg-muted/50 dark:data-[state=open]:bg-muted dark:hover:bg-muted hover:text-foreground/95 data-[state=open]:text-foreground/85 dark:shadow-md`,
+            "secondary-primary": `bg-muted font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary`,
+            "secondary-destructive": `bg-muted font-medium text-muted-foreground hover:bg-destructive/20 hover:text-destructive`,
+            outline: `bg-background dark:bg-muted dark:border-foreground/[0.07] dark:shadow-md border text-foreground hover:bg-muted/40 shadow-sm`,
+            destructive: `bg-destructive/90 hover:bg-destructive text-destructive-foreground/90 hover:text-destructive-foreground`,
+            ghost: "border border-transparent aria-[current=page]:bg-border/70 dark:hover:bg-border hover:bg-muted",
             link: "!h-auto !rounded-none !p-0 text-foreground/70 underline transition-none hover:text-foreground",
          },
          size: {
-            default: "h-9 rounded-[10px] px-3 md:h-8 md:rounded-lg",
-            sm: "h-[32px] rounded-lg px-2.5 text-sm md:h-[30px]",
-            lg: "h-[38px] gap-2 rounded-[10px] px-4 text-[0.9325rem] md:h-[34px] md:rounded-lg",
-            icon: "size-9 gap-0 rounded-[9px] md:size-8 md:rounded-lg",
+            default: "h-[42px] rounded-xl px-4 text-[0.975rem]",
+            sm: "h-[32px] rounded-lg px-2.5 text-sm",
+            lg: "h-[38px] gap-2 rounded-lg px-4 text-[0.9325rem]",
+            icon: "size-[42px] gap-0 rounded-xl",
             "with-icon":
                "h-[51px] flex-col gap-[3px] rounded-lg px-3 py-1.5 text-[0.785rem] leading-[1.25]",
          },
