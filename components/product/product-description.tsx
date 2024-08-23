@@ -1,6 +1,6 @@
 import { AddToCart } from "components/cart/add-to-cart"
 import { Price } from "components/price"
-import Prose from "components/prose"
+import { Prose } from "components/ui/prose"
 import type { Product } from "lib/shopify/types"
 import { VariantSelector } from "./variant-selector"
 

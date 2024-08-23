@@ -1,5 +1,5 @@
 import CartModal from "components/cart/modal"
-import LogoSquare from "components/logo-square"
+import { Icons } from "components/ui/icons"
 import { getMenu } from "lib/shopify"
 import type { Menu } from "lib/shopify/types"
 import Link from "next/link"
@@ -26,7 +26,7 @@ export async function Navbar() {
                   prefetch={true}
                   className="mr-2 flex w-full items-center justify-center lg:mr-6 md:w-auto"
                >
-                  <LogoSquare />
+                  <Icons.logo />
                   <div className="ml-2 flex-none font-medium text-sm uppercase lg:block md:hidden">
                      {SITE_NAME}
                   </div>

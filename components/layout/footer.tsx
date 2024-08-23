@@ -1,5 +1,5 @@
 import FooterMenu from "components/layout/footer-menu"
-import LogoSquare from "components/logo-square"
+import { Icons } from "components/ui/icons"
 import { getMenu } from "lib/shopify"
 import Link from "next/link"
 import { Suspense } from "react"
@@ -22,7 +22,7 @@ export async function Footer() {
                   className="flex items-center gap-2 text-black md:pt-1 dark:text-white"
                   href="/"
                >
-                  <LogoSquare size="sm" />
+                  <Icons.logo />
                   <span className="uppercase">{SITE_NAME}</span>
                </Link>
             </div>
