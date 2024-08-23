@@ -4,8 +4,11 @@ import { getCart } from "@/lib/shopify"
 import { GeistSans } from "geist/font/sans"
 import { cookies } from "next/headers"
 import type { ReactNode } from "react"
-import { Toaster } from "sonner"
 import "./globals.css"
+import { ModalProvider } from "@/components/modals"
+import { Toaster } from "@/components/ui/toast"
+import { TooltipProvider } from "@/components/ui/tooltip"
+import * as Portal from "@radix-ui/react-portal"
 
 const { SITE_NAME } = process.env
 const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
@@ -39,11 +42,14 @@ export default async function RootLayout({
       >
          <body className="bg-neutral-50 text-black dark:bg-neutral-900 dark:selection:bg-pink-500 selection:bg-teal-300 dark:selection:text-white dark:text-white">
             <CartProvider cartPromise={cart}>
-               <Navbar />
-               <main>
-                  {children}
-                  <Toaster closeButton />
-               </main>
+               <TooltipProvider delayDuration={300}>
+                  <ModalProvider />
+                  <Portal.Root>
+                     <Toaster />
+                  </Portal.Root>
+                  <Navbar />
+                  <main>{children}</main>
+               </TooltipProvider>
             </CartProvider>
          </body>
       </html>

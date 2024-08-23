@@ -1,3 +1,5 @@
+export const MOBILE_BREAKPOINT = 768
+
 export type SortFilterItem = {
    title: string
    slug: string | null
