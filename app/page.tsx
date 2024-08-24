@@ -3,7 +3,7 @@ import { HeartIcon, TrashIcon } from "@heroicons/react/24/outline"
 
 export default function HomePage() {
    return (
-      <div className="border p-10">
+      <div className=" p-10">
          <div className="flex gap-3 ">
             <Button>Add to cart</Button>
             <Button
@@ -29,7 +29,7 @@ export default function HomePage() {
                   className="size-5"
                   strokeWidth={2}
                />
-           Add to cart
+               Add to cart
             </Button>
             <Button variant={"secondary"}>
                <HeartIcon
@@ -45,7 +45,10 @@ export default function HomePage() {
                />
                Trash this
             </Button>
-            <Button size={'icon'} variant={"destructive"}>
+            <Button
+               size={"icon"}
+               variant={"destructive"}
+            >
                <TrashIcon
                   className="size-5"
                   strokeWidth={2}

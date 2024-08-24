@@ -6,17 +6,17 @@ module.exports = {
    darkMode: "class",
    content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
    theme: {
-      // container: {
-      //    center: true,
-      //    padding: "1.25rem",
-      //    screens: {
-      //       sm: "100%",
-      //       md: "100%",
-      //       lg: "632px",
-      //       xl: "632px",
-      //       "2xl": "632px",
-      //    },
-      // },
+      container: {
+         center: true,
+         padding: "1.25rem",
+         screens: {
+            sm: "100%",
+            md: "100%",
+            lg: "1024px",
+            xl: "1324px",
+            "2xl": "1524px",
+         },
+      },
       extend: {
          fontFamily: {
             primary: ["var(--font-geist-sans)"],
