@@ -37,8 +37,8 @@ export function Chip({
             `items-center rounded-[10px] border bg-[color-mix(in_lch,_canvas,_canvasText_calc(var(--intent)*10%))] px-3 py-[7px] text-[var(--accent)] `,
             `leading-[1.25] after:pointer-events-none after:absolute after:z-[2] has-[input:disabled]:cursor-not-allowed after:rounded-[10px]`,
             `dark:border-foreground/10 dark:has-[input:checked]:border-foreground/10 has-[input:checked]:border-primary/10 dark:bg-muted/75 dark:hover:bg-muted`,
-            `has-[:checked]:text-[var(--selected)] after:opacity-[var(--active)] after:transition-opacity after:duration-[var(--transition)]`,
-            `dark:has-[input:disabled]:!bg-muted/50 dark:shadow-md after:ease-[var(--ease)] has-[:checked]:[--active:1] hover:[--intent:0.3]`,
+            `has-[:checked]:text-[var(--selected)] after:opacity-[var(--active)] after:transition-opacity`,
+            `dark:has-[input:disabled]:!bg-muted/50 dark:shadow-md has-[:checked]:[--active:1] hover:[--intent:0.3]`,
             isSafari()
                ? "after:bg-primary/15 dark:after:bg-foreground/20"
                : "after:bg-[color-mix(in_lch,_var(--selected),_#0000_80%)]",
@@ -50,7 +50,11 @@ export function Chip({
          </span>
          <span className="relative flex h-[19px] items-center">
             <svg
-               className="absolute left-[0.5ch] size-5 w-full self-end opacity-[var(--active)] transition-opacity duration-[var(--transition)] ease-[var(--ease)]"
+               style={{
+                  transitionTimingFunction: "var(--ease)",
+                  transitionDuration: "var(--transition)",
+               }}
+               className="absolute left-[0.5ch] size-5 w-full self-end opacity-[var(--active)] transition-opacity"
                aria-hidden="true"
                xmlns="http://www.w3.org/2000/svg"
                viewBox="0 0 24 24"

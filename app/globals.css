@@ -192,6 +192,10 @@
     --selected: hsl(var(--primary));
     --accent: color-mix(in lch, canvasText, canvas 50%);
   }
+  [data-chip]:after {
+    transition-timing-function: var(--ease);
+    transition-duration: var(--transition);
+  }
   .dark [data-chip] {
     --selected: hsl(var(--slate-12));
     --accent: color-mix(in lch, canvasText, canvas 35%);
