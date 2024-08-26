@@ -55,8 +55,6 @@ export default function HomePage() {
                />
             </Button>
          </div>
-         {/* <Carousel /> */}
-         {/* <Footer /> */}
       </div>
    )
 }
