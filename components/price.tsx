@@ -5,6 +5,7 @@ export function Price({
    className,
    currencyCode = "USD",
    currencyCodeClassName,
+   ...props
 }: {
    amount: string
    className?: string
@@ -15,6 +16,7 @@ export function Price({
       <p
          suppressHydrationWarning
          className={className}
+         {...props}
       >
          {`${new Intl.NumberFormat(undefined, {
             style: "currency",

@@ -7,6 +7,14 @@ export function cn(...inputs: ClassValue[]) {
 
 import type { ReadonlyURLSearchParams } from "next/navigation"
 
+export const formatCurrency = (amount: string) => {
+   const formatter = new Intl.NumberFormat("en-US", {
+      style: "decimal",
+   })
+
+   return formatter.format(Number(amount))
+}
+
 export const createUrl = (
    pathname: string,
    params: URLSearchParams | ReadonlyURLSearchParams,

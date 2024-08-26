@@ -66,7 +66,7 @@ type ExtractVariables<T> = T extends { variables: object }
    : never
 
 export async function shopifyFetch<T>({
-   cache = "force-cache",
+   // cache = "force-cache",
    headers,
    query,
    tags,
@@ -86,11 +86,11 @@ export async function shopifyFetch<T>({
             "X-Shopify-Storefront-Access-Token": key,
             ...headers,
          },
+         cache: "no-store",
          body: JSON.stringify({
             ...(query && { query }),
             ...(variables && { variables }),
          }),
-         cache,
          ...(tags && { next: { tags } }),
       })
 

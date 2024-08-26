@@ -6,7 +6,7 @@ import { cookies } from "next/headers"
 import { type ReactNode, Suspense } from "react"
 import "./globals.css"
 import CartModal from "@/components/cart/modal"
-import Search, { SearchSkeleton } from "@/components/layout/navbar/search"
+import Search from "@/components/layout/navbar/search"
 import { ModalProvider } from "@/components/modals"
 import { Icons } from "@/components/ui/icons"
 import { Toaster } from "@/components/ui/toast"
@@ -64,7 +64,7 @@ export default async function RootLayout({
                         <Icons.logo />
                      </Link>
                      <div className="mx-auto">
-                        <Suspense fallback={<SearchSkeleton />}>
+                        <Suspense fallback={<>loading..</>}>
                            <Search />
                         </Suspense>
                      </div>

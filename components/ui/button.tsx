@@ -10,12 +10,12 @@ const buttonVariants = cva(
       variants: {
          variant: {
             default: `bg-primary/90 shadow-sm hover:shadow-md focus-visible:ring-accent text-primary-foreground/95 hover:bg-primary active:shadow-sm hover:text-primary-foreground`,
-            secondary: `bg-muted font-medium text-muted-foreground hover:bg-border data-[state=open]:bg-border dark:bg-muted/50 dark:data-[state=open]:bg-muted dark:hover:bg-muted hover:text-foreground/95 data-[state=open]:text-foreground/85 dark:shadow-md`,
+            secondary: `bg-muted/70 font-medium text-muted-foreground hover:bg-muted data-[state=open]:bg-muted dark:bg-muted/50 dark:data-[state=open]:bg-muted dark:hover:bg-muted hover:text-foreground/95 data-[state=open]:text-foreground/85 dark:shadow-md`,
             "secondary-primary": `bg-muted font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary`,
             "secondary-destructive": `bg-destructive/20 font-medium hover:bg-destructive/15 text-destructive hover:text-destructive/90`,
-            outline: `bg-background dark:bg-muted dark:border-foreground/[0.07] dark:shadow-md border text-foreground hover:bg-muted/40 shadow-sm`,
+            outline: `bg-background dark:bg-muted dark:border-foreground/[0.07] dark:shadow-md border text-foreground hover:bg-muted/30 shadow-sm`,
             destructive: `bg-destructive/90 hover:bg-destructive text-destructive-foreground/90 hover:text-destructive-foreground`,
-            ghost: "border border-transparent aria-[current=page]:bg-border/70 dark:hover:bg-border hover:bg-muted",
+            ghost: "border border-transparent aria-[current=page]:bg-muted dark:hover:bg-border hover:bg-muted/70",
             link: "!h-auto !rounded-none !p-0 text-foreground/70 underline transition-none hover:text-foreground",
          },
          size: {

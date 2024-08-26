@@ -11,7 +11,7 @@ export async function Navbar() {
    ]
 
    return (
-      <nav className="border-b ">
+      <nav className="mb-8 border-b">
          <ul className="container flex items-center gap-10 pb-4">
             {menu.map((item: Menu) => (
                <li key={item.title}>

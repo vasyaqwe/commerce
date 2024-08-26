@@ -1,6 +1,5 @@
 "use client"
 
-import { GridTileImage } from "@/components/grid/tile"
 import { useProduct, useUpdateURL } from "@/components/product/product-context"
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
@@ -17,7 +16,7 @@ export function Gallery({
       imageIndex === 0 ? images.length - 1 : imageIndex - 1
 
    const buttonClassName =
-      "h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black dark:hover:text-white flex items-center justify-center"
+      "h-full px-6 transition-all ease-in-out hover:scale-110 flex items-center justify-center"
 
    return (
       <form>
@@ -69,7 +68,7 @@ export function Gallery({
          {images.length > 1 ? (
             <ul className="my-12 flex items-center justify-center gap-2 overflow-auto py-1 lg:mb-0">
                {images.map((image, index) => {
-                  const isActive = index === imageIndex
+                  // const isActive = index === imageIndex
 
                   return (
                      <li
@@ -84,12 +83,11 @@ export function Gallery({
                            aria-label="Select product image"
                            className="h-full w-full"
                         >
-                           <GridTileImage
+                           <Image
                               alt={image.altText}
                               src={image.src}
                               width={80}
                               height={80}
-                              active={isActive}
                            />
                         </button>
                      </li>

@@ -5,8 +5,7 @@ import type { Menu } from "@/lib/shopify/types"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
-import { Suspense, useEffect, useState } from "react"
-import Search, { SearchSkeleton } from "./search"
+import { useEffect, useState } from "react"
 
 export default function MobileMenu({ menu }: { menu: Menu[] }) {
    const pathname = usePathname()
@@ -36,7 +35,7 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
          <button
             onClick={openMobileMenu}
             aria-label="Open mobile menu"
-            className="flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors md:hidden dark:border-neutral-700 dark:text-white"
+            className="flex h-11 w-11 items-center justify-center rounded-md border transition-colors md:hidden"
          >
             <Bars3Icon className="h-4" />
          </button>
@@ -44,7 +43,7 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
             open={isOpen}
             onOpenChange={setIsOpen}
          >
-            <DialogContent className="fixed top-0 right-0 bottom-0 left-0 flex h-full w-full flex-col bg-white pb-6 dark:bg-black">
+            <DialogContent className="fixed top-0 right-0 bottom-0 left-0 flex h-full w-full flex-col pb-6">
                <div className="p-4">
                   <button
                      className="mb-4 flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white"
@@ -55,9 +54,9 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
                   </button>
 
                   <div className="mb-4 w-full">
-                     <Suspense fallback={<SearchSkeleton />}>
+                     {/* <Suspense fallback={<SearchSkeleton />}>
                         <Search />
-                     </Suspense>
+                     </Suspense> */}
                   </div>
                   {menu.length ? (
                      <ul className="flex w-full flex-col">

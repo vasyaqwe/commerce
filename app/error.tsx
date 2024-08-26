@@ -23,7 +23,7 @@ export default function Error({ reset }: { reset: () => void }) {
                again later.
             </p>
             <Button
-               className="active:scale-100"
+               className="active:!scale-100"
                onClick={reset}
             >
                Try again

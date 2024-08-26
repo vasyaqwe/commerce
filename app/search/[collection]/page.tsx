@@ -1,5 +1,3 @@
-import Grid from "@/components/grid"
-import { ProductGridItems } from "@/components/layout/product-grid-items"
 import { defaultSort, sorting } from "@/lib/constants"
 import { getCollection, getCollectionProducts } from "@/lib/shopify"
 import type { Metadata } from "next"
@@ -43,11 +41,7 @@ export default async function CategoryPage({
       <section>
          {products.length === 0 ? (
             <p className="py-3 text-lg">{`No products found in this collection`}</p>
-         ) : (
-            <Grid className="grid-cols-1 lg:grid-cols-3 sm:grid-cols-2">
-               <ProductGridItems products={products} />
-            </Grid>
-         )}
+         ) : null}
       </section>
    )
 }

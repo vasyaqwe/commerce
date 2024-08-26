@@ -1,6 +1,4 @@
 "use client"
-
-import { Price } from "@/components/price"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Loading } from "@/components/ui/loading"
@@ -58,7 +56,7 @@ export default function CartModal() {
             <ShoppingCartIcon className="size-6" />
 
             {cart?.totalQuantity ? (
-               <div className="-mr-2 -mt-2 absolute top-0 right-0 h-4 w-4 rounded bg-blue-600 font-medium text-[11px] text-white">
+               <div className="absolute top-0 right-0 size-5 rounded-sm font-medium text-xs">
                   {cart.totalQuantity}
                </div>
             ) : null}
@@ -139,7 +137,7 @@ export default function CartModal() {
                                              onClick={closeCart}
                                              className="z-30 ml-2 flex flex-row space-x-4"
                                           >
-                                             <div className="flex flex-1 flex-col text-base">
+                                             <div className="flex flex-1 flex-col">
                                                 <span className="leading-tight">
                                                    {
                                                       item.merchandise.product
@@ -156,16 +154,9 @@ export default function CartModal() {
                                           </Link>
                                        </div>
                                        <div className="flex h-16 flex-col justify-between">
-                                          <Price
-                                             className="flex justify-end space-y-2 text-right text-sm"
-                                             amount={
-                                                item.cost.totalAmount.amount
-                                             }
-                                             currencyCode={
-                                                item.cost.totalAmount
-                                                   .currencyCode
-                                             }
-                                          />
+                                          <p className="flex justify-end space-y-2 text-right text-sm">
+                                             {item.cost.totalAmount.amount}
+                                          </p>
                                           <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-neutral-200 dark:border-neutral-700">
                                              <EditItemQuantityButton
                                                 item={item}
@@ -193,16 +184,12 @@ export default function CartModal() {
                               )
                            })}
                      </ul>
-                     <div className="py-4 text-neutral-500 text-sm dark:text-neutral-400">
+                     <div className="py-4">
                         <div className="mb-3 flex items-center justify-between border-neutral-200 border-b pb-1 dark:border-neutral-700">
                            <p>Taxes</p>
-                           <Price
-                              className="text-right text-base text-black dark:text-white"
-                              amount={cart.cost.totalTaxAmount.amount}
-                              currencyCode={
-                                 cart.cost.totalTaxAmount.currencyCode
-                              }
-                           />
+                           <p className="text-right">
+                              {cart.cost.totalTaxAmount.amount}
+                           </p>
                         </div>
                         <div className="mb-3 flex items-center justify-between border-neutral-200 border-b pt-1 pb-1 dark:border-neutral-700">
                            <p>Shipping</p>
@@ -210,11 +197,9 @@ export default function CartModal() {
                         </div>
                         <div className="mb-3 flex items-center justify-between border-neutral-200 border-b pt-1 pb-1 dark:border-neutral-700">
                            <p>Total</p>
-                           <Price
-                              className="text-right text-base text-black dark:text-white"
-                              amount={cart.cost.totalAmount.amount}
-                              currencyCode={cart.cost.totalAmount.currencyCode}
-                           />
+                           <p className="text-right">
+                              {cart.cost.totalAmount.amount}
+                           </p>
                         </div>
                      </div>
                      <form action={redirectToCheckout}>
@@ -233,7 +218,7 @@ function CheckoutButton() {
 
    return (
       <button
-         className="block w-full rounded-full bg-blue-600 p-3 text-center font-medium text-sm text-white opacity-90 hover:opacity-100"
+         className="block w-full rounded-full p-3 text-center font-medium text-sm opacity-90 hover:opacity-100"
          type="submit"
          disabled={pending}
       >
