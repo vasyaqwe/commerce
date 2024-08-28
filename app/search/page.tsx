@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card"
 import { defaultSort, sorting } from "@/lib/constants"
 import { getProducts } from "@/lib/shopify"
-import { formatCurrency } from "@/lib/utils"
+import { cn, formatCurrency } from "@/lib/utils"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
 import Link from "next/link"
@@ -40,33 +40,37 @@ export default async function SearchPage({
             </div>
          )}
          {products.length > 0 ? (
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4">
                {products.map((product) => (
                   <Link
                      key={product.handle}
-                     className="relative inline-block h-full w-full"
+                     className={cn(
+                        "relative inline-block h-full w-full overflow-hidden rounded-2xl p-0",
+                     )}
                      href={`/product/${product.handle}`}
                      prefetch={true}
                   >
                      <div
-                        className="relative"
-                        style={{ aspectRatio: "5/4" }}
+                        className={cn("relative overflow-hidden rounded-2xl")}
+                        style={{ aspectRatio: "5/6" }}
                      >
                         <Image
-                           className="rounded-2xl object-cover"
+                           className="object-cover"
                            alt={product.title}
                            src={product.featuredImage?.url}
                            fill
                            sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
                         />
                      </div>
-                     <h2 className="mt-2 font-medium"> {product.title}</h2>
-                     <p className="mt-2 font-bold text-lg">
-                        ₴
-                        {formatCurrency(
-                           product.priceRange.maxVariantPrice.amount,
-                        )}{" "}
-                     </p>
+                     <div className="pt-4">
+                        <h2 className="font-normal"> {product.title}</h2>
+                        <p className="mt-1 font-semibold text-lg">
+                           ₴
+                           {formatCurrency(
+                              product.priceRange.maxVariantPrice.amount,
+                           )}{" "}
+                        </p>
+                     </div>
                   </Link>
                ))}
             </div>

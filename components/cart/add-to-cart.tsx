@@ -2,9 +2,9 @@
 
 import { addItem } from "@/components/cart/actions"
 import { useProduct } from "@/components/product/product-context"
+import { Button } from "@/components/ui/button"
 import type { Product, ProductVariant } from "@/lib/shopify/types"
-import { cn } from "@/lib/utils"
-import { PlusIcon } from "@heroicons/react/24/outline"
+import { ShoppingBagIcon } from "@heroicons/react/24/outline"
 import { useFormState } from "react-dom"
 import { useCart } from "./cart-context"
 
@@ -15,48 +15,44 @@ function SubmitButton({
    availableForSale: boolean
    selectedVariantId: string | undefined
 }) {
-   const buttonClasses =
-      "relative flex w-full items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide"
-   const disabledClasses = "cursor-not-allowed opacity-60 hover:opacity-60"
-
    if (!availableForSale) {
       return (
-         <button
+         <Button
+            className="h-12 w-full flex-1 gap-3 text-lg lg:h-[3.75rem] lg:rounded-2xl"
             disabled
-            className={cn(buttonClasses, disabledClasses)}
          >
             Out Of Stock
-         </button>
+         </Button>
       )
    }
 
    if (!selectedVariantId) {
       return (
-         <button
+         <Button
+            className="h-12 w-full flex-1 gap-3 text-lg lg:h-[3.75rem] lg:rounded-2xl"
             aria-label="Please select an option"
             disabled
-            className={cn(buttonClasses, disabledClasses)}
          >
-            <div className="absolute left-0 ml-4">
-               <PlusIcon className="h-5" />
-            </div>
-            Add To Cart
-         </button>
+            <ShoppingBagIcon
+               className="size-6"
+               strokeWidth={2}
+            />
+            Add to cart
+         </Button>
       )
    }
 
    return (
-      <button
+      <Button
+         className="h-12 w-full flex-1 gap-3 text-lg lg:h-[3.75rem] lg:rounded-2xl"
          aria-label="Add to cart"
-         className={cn(buttonClasses, {
-            "hover:opacity-90": true,
-         })}
       >
-         <div className="absolute left-0 ml-4">
-            <PlusIcon className="h-5" />
-         </div>
-         Add To Cart
-      </button>
+         <ShoppingBagIcon
+            className="size-6"
+            strokeWidth={2}
+         />
+         Add to Cart
+      </Button>
    )
 }
 
@@ -82,6 +78,7 @@ export function AddToCart({ product }: { product: Product }) {
 
    return (
       <form
+         className="w-full"
          action={async () => {
             addCartItem(finalVariant, product)
             await actionWithVariant()

@@ -48,7 +48,7 @@ export default async function RootLayout({
          lang="en"
          className={cn("font-primary antialiased", GeistSans.variable)}
       >
-         <body className="bg-background text-foreground">
+         <body className="bg-background pb-20 text-base text-foreground">
             <CartProvider cartPromise={cart}>
                <TooltipProvider delayDuration={300}>
                   <ModalProvider />
@@ -74,6 +74,7 @@ export default async function RootLayout({
                   </header>
                   <Navbar />
                   <main>{children}</main>
+                  {/* <Footer /> */}
                </TooltipProvider>
             </CartProvider>
          </body>

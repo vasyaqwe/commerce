@@ -1,13 +1,10 @@
-import { Footer } from "@/components/layout/footer"
 import { Gallery } from "@/components/product/gallery"
 import { ProductProvider } from "@/components/product/product-context"
 import { ProductDescription } from "@/components/product/product-description"
 import { HIDDEN_PRODUCT_TAG } from "@/lib/constants"
-import { getProduct, getProductRecommendations } from "@/lib/shopify"
+import { getProduct } from "@/lib/shopify"
 import type { Image as ShopifyImage } from "@/lib/shopify/types"
 import type { Metadata } from "next"
-import Image from "next/image"
-import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 
@@ -56,7 +53,7 @@ export default async function ProductPage({
 
    if (!product) return notFound()
 
-   const relatedProducts = await getProductRecommendations(product.id)
+   // const relatedProducts = await getProductRecommendations(product.id)
 
    const productJsonLd = {
       "@context": "https://schema.org",
@@ -83,57 +80,29 @@ export default async function ProductPage({
                __html: JSON.stringify(productJsonLd),
             }}
          />
-         <div className="mx-auto max-w-screen-2xl px-4">
-            <div className="flex flex-col rounded-lg border p-8 lg:flex-row lg:gap-8 md:p-12">
-               <div className="h-full w-full basis-full lg:basis-4/6">
-                  <Suspense
-                     fallback={
-                        <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden" />
-                     }
-                  >
-                     <Gallery
-                        images={product.images
-                           .slice(0, 5)
-                           .map((image: ShopifyImage) => ({
-                              src: image.url,
-                              altText: image.altText,
-                           }))}
-                     />
-                  </Suspense>
+         <div className="container grid gap-14 lg:grid-cols-2">
+            <Suspense
+               fallback={
+                  <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden" />
+               }
+            >
+               <div className="rounded-2xl ">
+                  <Gallery
+                     images={product.images
+                        .slice(0, 5)
+                        .map((image: ShopifyImage) => ({
+                           src: image.url,
+                           altText: image.altText,
+                        }))}
+                  />
                </div>
-
-               <div className="basis-full lg:basis-2/6">
-                  <Suspense fallback={null}>
-                     <ProductDescription product={product} />
-                  </Suspense>
+            </Suspense>
+            <Suspense fallback={null}>
+               <div>
+                  <ProductDescription product={product} />
                </div>
-            </div>
-            <div className="py-8">
-               <h2 className="mb-4 font-bold text-2xl">Related Products</h2>
-               <ul className="flex w-full gap-4 overflow-x-auto pt-1">
-                  {relatedProducts.map((product) => (
-                     <li
-                        key={product.handle}
-                        className="aspect-square w-full flex-none lg:w-1/5 md:w-1/4 min-[475px]:w-1/2 sm:w-1/3"
-                     >
-                        <Link
-                           className="relative h-full w-full"
-                           href={`/product/${product.handle}`}
-                           prefetch={true}
-                        >
-                           <Image
-                              alt={product.title}
-                              src={product.featuredImage?.url}
-                              fill
-                              sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-                           />
-                        </Link>
-                     </li>
-                  ))}
-               </ul>
-            </div>
+            </Suspense>
          </div>
-         <Footer />
       </ProductProvider>
    )
 }

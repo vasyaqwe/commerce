@@ -4,7 +4,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Loading } from "@/components/ui/loading"
 import { DEFAULT_OPTION } from "@/lib/constants"
 import { createUrl } from "@/lib/utils"
-import { ShoppingCartIcon } from "@heroicons/react/24/outline"
+import { ShoppingBagIcon, ShoppingCartIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
@@ -52,13 +52,17 @@ export default function CartModal() {
             size={"icon"}
             aria-label="Open cart"
             onClick={openCart}
+            className="size-14 flex-col overflow-visible font-semibold text-[13px]"
          >
-            <ShoppingCartIcon className="size-6" />
-
+            <ShoppingBagIcon
+               className="mb-[3px] size-6"
+               strokeWidth={2}
+            />
+            Cart
             {cart?.totalQuantity ? (
-               <div className="absolute top-0 right-0 size-5 rounded-sm font-medium text-xs">
+               <span className="absolute top-1.5 right-1.5 grid size-[18px] place-content-center rounded-full bg-accent font-semibold text-xs shadow-sm">
                   {cart.totalQuantity}
-               </div>
+               </span>
             ) : null}
          </Button>
          <Dialog
