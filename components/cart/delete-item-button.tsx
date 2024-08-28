@@ -23,13 +23,17 @@ export function DeleteItemButton({
             optimisticUpdate(merchandiseId, "delete")
             await actionWithVariant()
          }}
+         className="absolute top-2.5 left-2.5 z-[2]"
       >
          <button
             type="submit"
             aria-label="Remove cart item"
-            className="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-neutral-500"
+            className="grid size-7 place-content-center rounded-full border border-foreground/10 bg-border text-foreground/70 ring-offset-background transition-[transform,background-color] disabled:pointer-events-none active:scale-95 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
          >
-            <XMarkIcon className="mx-[1px] h-4 w-4 " />
+            <XMarkIcon
+               className="size-[18px]"
+               strokeWidth={2}
+            />
          </button>
          <p
             aria-live="polite"

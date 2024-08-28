@@ -41,8 +41,11 @@ export function VariantSelector({
    }))
 
    return options.map((option) => (
-      <form key={option.id}>
-         <dl className="mb-8">
+      <form
+         key={option.id}
+         className="space-y-5"
+      >
+         <dl className="">
             <dt className="mb-4 font-medium text-sm tracking-wide">
                {option.name}
             </dt>

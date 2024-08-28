@@ -80,27 +80,21 @@ export default async function ProductPage({
                __html: JSON.stringify(productJsonLd),
             }}
          />
-         <div className="container grid gap-14 lg:grid-cols-2">
+         <div className="container grid gap-4 lg:grid-cols-[52%,1fr] lg:gap-14 xl:gap-24">
             <Suspense
                fallback={
                   <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden" />
                }
             >
-               <div className="rounded-2xl ">
-                  <Gallery
-                     images={product.images
-                        .slice(0, 5)
-                        .map((image: ShopifyImage) => ({
-                           src: image.url,
-                           altText: image.altText,
-                        }))}
-                  />
-               </div>
+               <Gallery
+                  images={product.images.map((image: ShopifyImage) => ({
+                     src: image.url,
+                     altText: image.altText,
+                  }))}
+               />
             </Suspense>
             <Suspense fallback={null}>
-               <div>
-                  <ProductDescription product={product} />
-               </div>
+               <ProductDescription product={product} />
             </Suspense>
          </div>
       </ProductProvider>

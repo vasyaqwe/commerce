@@ -1,5 +1,7 @@
 "use client"
 
+import { CartModal } from "@/components/cart/cart-modal"
+import { Drawer } from "@/components/ui/drawer"
 import { createPushModal } from "pushmodal"
 
 export const {
@@ -12,9 +14,14 @@ export const {
    ModalProvider,
 } = createPushModal({
    modals: {
-      // "example-name": {
-      //    Wrapper,
-      //    Component: ComponentName,
-      // },
+      cart: {
+         Wrapper: (props) => (
+            <Drawer
+               {...props}
+               direction="right"
+            />
+         ),
+         Component: CartModal,
+      },
    },
 })

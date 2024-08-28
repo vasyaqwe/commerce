@@ -1,7 +1,8 @@
 "use client"
 
 import { useProduct, useUpdateURL } from "@/components/product/product-context"
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline"
+import { cn } from "@/lib/utils"
+import {} from "@heroicons/react/24/outline"
 import Image from "next/image"
 
 export function Gallery({
@@ -11,16 +12,16 @@ export function Gallery({
    const updateURL = useUpdateURL()
    const imageIndex = state.image ? parseInt(state.image) : 0
 
-   const nextImageIndex = imageIndex + 1 < images.length ? imageIndex + 1 : 0
-   const previousImageIndex =
+   const _nextImageIndex = imageIndex + 1 < images.length ? imageIndex + 1 : 0
+   const _previousImageIndex =
       imageIndex === 0 ? images.length - 1 : imageIndex - 1
 
-   const buttonClassName =
+   const _buttonClassName =
       "h-full px-6 transition-all ease-in-out hover:scale-110 flex items-center justify-center"
 
    return (
       <form>
-         <div className="relative aspect-square max-h-[70svh]">
+         <div className="relative aspect-square max-h-[60svh] w-full overflow-hidden rounded-2xl">
             {images[imageIndex] && (
                <Image
                   className="size-full object-cover"
@@ -31,7 +32,7 @@ export function Gallery({
                   priority={true}
                />
             )}
-
+            {/* 
             {images.length > 1 ? (
                <div className="absolute bottom-[15%] flex w-full justify-center">
                   <div className="mx-auto flex h-11 items-center rounded-full border border-white bg-neutral-50/80 text-neutral-500 backdrop-blur dark:border-black dark:bg-neutral-900/80">
@@ -62,38 +63,37 @@ export function Gallery({
                      </button>
                   </div>
                </div>
-            ) : null}
+            ) : null} */}
          </div>
 
          {images.length > 1 ? (
-            <ul className="flex items-center justify-center gap-2">
+            <div className="no-scrollbar flex items-center gap-3 overflow-x-auto px-1 py-3">
                {images.map((image, index) => {
-                  // const isActive = index === imageIndex
+                  const isActive = index === imageIndex
 
                   return (
-                     <li
+                     <button
                         key={image.src}
-                        className="h-20 w-20"
+                        formAction={() => {
+                           const newState = updateImage(index.toString())
+                           updateURL(newState)
+                        }}
+                        aria-label="Select product image"
+                        className={cn(
+                           "size-16 overflow-hidden rounded-xl ring ring-transparent transition-all duration-200 lg:size-24 hover:ring-accent/40",
+                           isActive ? "ring-accent/40" : "",
+                        )}
                      >
-                        <button
-                           formAction={() => {
-                              const newState = updateImage(index.toString())
-                              updateURL(newState)
-                           }}
-                           aria-label="Select product image"
-                           className="h-full w-full"
-                        >
-                           <Image
-                              alt={image.altText}
-                              src={image.src}
-                              width={80}
-                              height={80}
-                           />
-                        </button>
-                     </li>
+                        <Image
+                           alt={image.altText}
+                           src={image.src}
+                           width={120}
+                           height={120}
+                        />
+                     </button>
                   )
                })}
-            </ul>
+            </div>
          ) : null}
       </form>
    )

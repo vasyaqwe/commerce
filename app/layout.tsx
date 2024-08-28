@@ -3,17 +3,14 @@ import { Navbar } from "@/components/layout/navbar"
 import { getCart } from "@/lib/shopify"
 import { GeistSans } from "geist/font/sans"
 import { cookies } from "next/headers"
-import { type ReactNode, Suspense } from "react"
+import type { ReactNode } from "react"
 import "./globals.css"
-import CartModal from "@/components/cart/modal"
-import Search from "@/components/layout/navbar/search"
+import { Header } from "@/components/layout/header"
 import { ModalProvider } from "@/components/modals"
-import { Icons } from "@/components/ui/icons"
 import { Toaster } from "@/components/ui/toast"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import * as Portal from "@radix-ui/react-portal"
-import Link from "next/link"
 
 const { SITE_NAME } = process.env
 const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
@@ -55,23 +52,7 @@ export default async function RootLayout({
                   <Portal.Root>
                      <Toaster />
                   </Portal.Root>
-                  <header className="container flex items-center py-6">
-                     <Link
-                        href="/"
-                        prefetch={true}
-                        className="mb-1"
-                     >
-                        <Icons.logo />
-                     </Link>
-                     <div className="mx-auto">
-                        <Suspense fallback={<>loading..</>}>
-                           <Search />
-                        </Suspense>
-                     </div>
-                     <div>
-                        <CartModal />
-                     </div>
-                  </header>
+                  <Header />
                   <Navbar />
                   <main>{children}</main>
                   {/* <Footer /> */}

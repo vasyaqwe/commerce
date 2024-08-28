@@ -1,60 +1,13 @@
 "use client"
 
 import { addItem } from "@/components/cart/actions"
+import { pushModal } from "@/components/modals"
 import { useProduct } from "@/components/product/product-context"
 import { Button } from "@/components/ui/button"
 import type { Product, ProductVariant } from "@/lib/shopify/types"
 import { ShoppingBagIcon } from "@heroicons/react/24/outline"
 import { useFormState } from "react-dom"
 import { useCart } from "./cart-context"
-
-function SubmitButton({
-   availableForSale,
-   selectedVariantId,
-}: {
-   availableForSale: boolean
-   selectedVariantId: string | undefined
-}) {
-   if (!availableForSale) {
-      return (
-         <Button
-            className="h-12 w-full flex-1 gap-3 text-lg lg:h-[3.75rem] lg:rounded-2xl"
-            disabled
-         >
-            Out Of Stock
-         </Button>
-      )
-   }
-
-   if (!selectedVariantId) {
-      return (
-         <Button
-            className="h-12 w-full flex-1 gap-3 text-lg lg:h-[3.75rem] lg:rounded-2xl"
-            aria-label="Please select an option"
-            disabled
-         >
-            <ShoppingBagIcon
-               className="size-6"
-               strokeWidth={2}
-            />
-            Add to cart
-         </Button>
-      )
-   }
-
-   return (
-      <Button
-         className="h-12 w-full flex-1 gap-3 text-lg lg:h-[3.75rem] lg:rounded-2xl"
-         aria-label="Add to cart"
-      >
-         <ShoppingBagIcon
-            className="size-6"
-            strokeWidth={2}
-         />
-         Add to Cart
-      </Button>
-   )
-}
 
 export function AddToCart({ product }: { product: Product }) {
    const { variants, availableForSale } = product
@@ -74,20 +27,28 @@ export function AddToCart({ product }: { product: Product }) {
       (variant) => variant.id === selectedVariantId,
    )
 
-   if (!finalVariant) return null
-
    return (
       <form
          className="w-full"
          action={async () => {
+            if (!finalVariant) return
+
             addCartItem(finalVariant, product)
             await actionWithVariant()
+            pushModal("cart")
          }}
       >
-         <SubmitButton
-            availableForSale={availableForSale}
-            selectedVariantId={selectedVariantId}
-         />
+         <Button
+            disabled={!availableForSale || !selectedVariantId}
+            className="h-12 w-full flex-1 gap-3 text-[1rem] lg:h-[3.75rem] lg:rounded-2xl lg:text-lg"
+            aria-label="Add to cart"
+         >
+            <ShoppingBagIcon
+               className="-mt-0.5 size-5 lg:size-6"
+               strokeWidth={2}
+            />
+            Add to Cart
+         </Button>
          <p
             aria-live="polite"
             className="sr-only"

@@ -194,7 +194,6 @@
   }
   [data-chip]:after {
     transition-timing-function: var(--ease);
-    transition-duration: var(--transition);
   }
   .dark [data-chip] {
     --selected: hsl(var(--slate-12));

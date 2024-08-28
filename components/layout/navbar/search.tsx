@@ -5,13 +5,13 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
 import Form from "next/form"
 import { useSearchParams } from "next/navigation"
 
-export default function Search() {
+export function Search() {
    const searchParams = useSearchParams()
 
    return (
       <Form
          action="/search"
-         className="relative w-full max-w-[400px]"
+         className="relative mx-auto w-full max-w-[380px]"
       >
          <MagnifyingGlassIcon className="-translate-y-1/2 absolute top-1/2 left-3 size-6 text-foreground/35" />
          <Input

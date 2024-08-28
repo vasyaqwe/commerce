@@ -1,6 +1,7 @@
 "use client"
 
 import { updateItemQuantity } from "@/components/cart/actions"
+import { Button } from "@/components/ui/button"
 import type { CartItem } from "@/lib/shopify/types"
 import { cn } from "@/lib/utils"
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline"
@@ -8,24 +9,26 @@ import { useFormState } from "react-dom"
 
 function SubmitButton({ type }: { type: "plus" | "minus" }) {
    return (
-      <button
+      <Button
+         size={"icon"}
+         variant={"ghost"}
          type="submit"
          aria-label={
             type === "plus" ? "Increase item quantity" : "Reduce item quantity"
          }
          className={cn(
-            "ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 transition-all duration-200 hover:border-neutral-800 hover:opacity-80",
+            "size-7 shrink-0 rounded-[7px] hover:enabled:bg-background",
             {
                "ml-auto": type === "minus",
             },
          )}
       >
          {type === "plus" ? (
-            <PlusIcon className="h-4 w-4 dark:text-neutral-500" />
+            <PlusIcon className="size-5" />
          ) : (
-            <MinusIcon className="h-4 w-4 dark:text-neutral-500" />
+            <MinusIcon className="size-5" />
          )}
-      </button>
+      </Button>
    )
 }
 
@@ -48,6 +51,7 @@ export function EditItemQuantityButton({
 
    return (
       <form
+         className="size-7"
          action={async () => {
             optimisticUpdate(payload.merchandiseId, type)
             await actionWithVariant()
