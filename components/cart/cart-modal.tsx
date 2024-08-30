@@ -115,11 +115,6 @@ export function CartModal() {
                                     >
                                        <h3 className="line-clamp-1 font-medium text-lg">
                                           {item.merchandise.product.title}
-                                          {item.merchandise.product.title}
-                                          {item.merchandise.product.title}
-                                          {item.merchandise.product.title}
-                                          {item.merchandise.product.title}
-                                          {item.merchandise.product.title}
                                        </h3>
                                     </Link>
                                     <p className="text-foreground/70">

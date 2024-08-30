@@ -1,13 +1,13 @@
 "use client"
 
-import { addItem } from "@/components/cart/actions"
+import { addItem } from "@/app/product/[handle]/_components/actions"
+import { useCart } from "@/components/cart/cart-context"
 import { pushModal } from "@/components/modals"
 import { Button } from "@/components/ui/button"
 import type { Product, ProductVariant } from "@/lib/shopify/types"
 import { ShoppingBagIcon } from "@heroicons/react/24/outline"
 import { useSearchParams } from "next/navigation"
 import { useFormState } from "react-dom"
-import { useCart } from "./cart-context"
 
 export function AddToCart({ product }: { product: Product }) {
    const { variants, availableForSale } = product
