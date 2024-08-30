@@ -27,19 +27,19 @@ export function Header(props: ComponentProps<"header">) {
 
    return (
       <header
-         className="flex items-center border-b py-3"
+         className="flex items-center border-b py-1.5 md:py-3"
          {...props}
       >
          <div className="container flex items-center">
-            <div className="flex min-w-[180px] items-center gap-8">
+            <div className="flex items-center gap-8 md:min-w-[180px]">
                <Link
                   href="/"
                   prefetch={true}
-                  className="mb-1"
+                  className="mb-1 max-md:mr-4"
                >
                   <Icons.logo />
                </Link>
-               <nav>
+               <nav className="max-md:hidden">
                   <ul className="flex items-center gap-7">
                      {menu.map((item: Menu) => (
                         <li key={item.title}>
@@ -70,7 +70,7 @@ export function Header(props: ComponentProps<"header">) {
                   defaultValue={searchParams?.get("q") || ""}
                />
             </Form>
-            <div className="flex min-w-[180px] items-center justify-end">
+            <div className="max-md:-mr-2 flex items-center justify-end md:min-w-[180px]">
                <Button
                   variant={"ghost"}
                   size={"icon"}

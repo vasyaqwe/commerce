@@ -1,5 +1,9 @@
 export const MOBILE_BREAKPOINT = 768
 
+export const env = {
+   SITE_NAME: "Commerce",
+}
+
 export type SortFilterItem = {
    title: string
    slug: string | null

@@ -1,3 +1,4 @@
+import { Filters } from "@/app/search/_components/filters"
 import { Card } from "@/components/ui/card"
 import { defaultSort, sorting } from "@/lib/constants"
 import { getProducts } from "@/lib/shopify"
@@ -24,8 +25,13 @@ export default async function SearchPage({
 
    return (
       <>
+         <div className="mt-8 flex items-center bg-border/40 py-6">
+            <div className="container">
+               <Filters />
+            </div>
+         </div>
          {products.length === 0 && (
-            <div className="mt-16 flex w-full justify-center font-medium text-lg md:mt-28">
+            <div className="-mt-8 flex h-full w-full items-center justify-center font-medium text-lg">
                <div>
                   <div className="relative mb-8">
                      <Card className="absolute inset-0 mx-auto grid h-28 w-[5.5rem] rotate-6 place-content-center rounded-xl" />

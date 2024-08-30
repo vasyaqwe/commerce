@@ -1,20 +1,16 @@
 import { Icons } from "@/components/ui/icons"
+import { env } from "@/lib/constants"
 import { ImageResponse } from "next/og"
 
-export type Props = {
-   title?: string
-}
-
 export default async function OpengraphImage(
-   props?: Props,
+   {
+      title,
+   }: {
+      title?: string
+   } = {
+      title: env.SITE_NAME,
+   },
 ): Promise<ImageResponse> {
-   const { title } = {
-      ...{
-         title: process.env.SITE_NAME,
-      },
-      ...props,
-   }
-
    return new ImageResponse(
       <div tw="flex h-full w-full flex-col items-center justify-center bg-black">
          <div tw="flex flex-none items-center justify-center border border-neutral-700 h-[160px] w-[160px] rounded-3xl">

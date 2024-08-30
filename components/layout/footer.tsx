@@ -1,73 +1,94 @@
-import { Icons } from "@/components/ui/icons"
-import Link from "next/link"
-import { Suspense } from "react"
+"use client"
 
-const { COMPANY_NAME, SITE_NAME } = process.env
+import { buttonVariants } from "@/components/ui/button"
+import { Icons } from "@/components/ui/icons"
+import { env } from "@/lib/constants"
+import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 export async function Footer() {
-   const currentYear = new Date().getFullYear()
-   const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : "")
-   const skeleton =
-      "w-full h-6 animate-pulse rounded bg-neutral-200 dark:bg-neutral-700"
-   // const menu = await getMenu("next-js-frontend-footer-menu")
-   const copyrightName = COMPANY_NAME || SITE_NAME || ""
-
    return (
-      <footer className="text-sm ">
-         <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 border-t px-6 py-12 text-sm md:flex-row md:gap-12 md:px-4 min-[1320px]:px-0">
-            <div>
-               <Link
-                  className="flex items-center gap-2 md:pt-1"
-                  href="/"
-               >
-                  <Icons.logo />
-                  <span className="uppercase">{SITE_NAME}</span>
-               </Link>
-            </div>
-            <Suspense
-               fallback={
-                  <div className="flex h-[188px] w-[200px] flex-col gap-2">
-                     <div className={skeleton} />
-                     <div className={skeleton} />
-                     <div className={skeleton} />
-                     <div className={skeleton} />
-                     <div className={skeleton} />
-                     <div className={skeleton} />
-                  </div>
-               }
+      <footer className="bg-border/40 text-sm">
+         <div className="container flex flex-wrap items-start justify-around gap-8 py-12">
+            <Link
+               aria-label="Home"
+               className="flex items-center gap-2 md:mr-auto max-md:flex-1 md:pt-1"
+               href="/"
             >
-               {/* <FooterMenu menu={menu} /> */}
-            </Suspense>
-            <div className="md:ml-auto">
+               <Icons.logo />
+            </Link>
+            <div>
+               <h2 className="mb-4 font-semibold text-lg md:text-xl">
+                  Контакти
+               </h2>
                <a
-                  className="flex h-8 w-max flex-none items-center justify-center rounded-md border text-xs"
-                  aria-label="Deploy on Vercel"
-                  href="https://vercel.com/templates/next.js/nextjs-commerce"
+                  href="tel:+380681233212"
+                  className="font-medium text-lg md:text-xl hover:underline"
                >
-                  <span className="px-3">▲</span>
-                  <hr className="h-full border-neutral-200 border-r dark:border-neutral-700" />
-                  <span className="px-3">Deploy</span>
+                  068 123 32 12
                </a>
+               <ul className="-ml-2 mt-1.5">
+                  <li>
+                     <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://www.instagram.com/"
+                        className={cn(
+                           buttonVariants({
+                              variant: "ghost",
+                              size: "icon",
+                           }),
+                           "hover:bg-background",
+                        )}
+                     >
+                        <svg
+                           xmlns="http://www.w3.org/2000/svg"
+                           width="24"
+                           height="24"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           strokeWidth="1.5"
+                           strokeLinecap="round"
+                           strokeLinejoin="round"
+                        >
+                           <rect
+                              width="20"
+                              height="20"
+                              x="2"
+                              y="2"
+                              rx="5"
+                              ry="5"
+                           />
+                           <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                           <line
+                              x1="17.5"
+                              x2="17.51"
+                              y1="6.5"
+                              y2="6.5"
+                           />
+                        </svg>
+                     </a>
+                  </li>
+               </ul>
             </div>
          </div>
-         <div className="border-neutral-200 border-t py-6 text-sm dark:border-neutral-700">
-            <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-1 px-4 md:flex-row md:gap-0 md:px-4 min-[1320px]:px-0">
+         <div className="bg-foreground py-6 text-background">
+            <div className="container flex items-center justify-between gap-6 font-medium md:text-[1rem]">
                <p>
-                  &copy; {copyrightDate} {copyrightName}
-                  {copyrightName.length && !copyrightName.endsWith(".")
-                     ? "."
-                     : ""}{" "}
-                  All rights reserved.
+                  &copy; {new Date().getFullYear()} {env.SITE_NAME}
                </p>
-               <hr className="mx-4 hidden h-4 w-[1px] border-neutral-400 border-l md:inline-block" />
-               <p>
-                  <a href="https://github.com/vercel/commerce">
-                     View the source
-                  </a>
-               </p>
-               <p className="md:ml-auto">
-                  <a href="https://vercel.com">Created by ▲ Vercel</a>
-               </p>
+
+               <ul className="flex items-center gap-2">
+                  <li>
+                     <Link
+                        href="/terms"
+                        className="hover:underline"
+                     >
+                        Умови використання
+                     </Link>
+                  </li>
+               </ul>
             </div>
          </div>
       </footer>

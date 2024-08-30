@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export default function Loading() {
    return (
-      <>
+      <div className="container">
          <div className="grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-3 xl:grid-cols-4">
             {Array(12)
                .fill(0)
@@ -22,6 +22,6 @@ export default function Loading() {
                   )
                })}
          </div>
-      </>
+      </div>
    )
 }

@@ -1,9 +1,11 @@
+import { Footer } from "@/components/layout/footer"
 import "./globals.css"
 import { CartProvider } from "@/components/cart/cart-context"
 import { Header } from "@/components/layout/header"
 import { ModalProvider } from "@/components/modals"
 import { Toaster } from "@/components/ui/toast"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { env } from "@/lib/constants"
 import { getCart } from "@/lib/shopify"
 import { cn } from "@/lib/utils"
 import * as Portal from "@radix-ui/react-portal"
@@ -11,7 +13,6 @@ import { GeistSans } from "geist/font/sans"
 import { cookies } from "next/headers"
 import type { ReactNode } from "react"
 
-const { SITE_NAME } = process.env
 const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
    : "http://localhost:3000"
@@ -19,9 +20,8 @@ const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
 export const metadata = {
    metadataBase: new URL(baseUrl),
    title: {
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      default: SITE_NAME!,
-      template: `%s | ${SITE_NAME}`,
+      default: env.SITE_NAME,
+      template: `%s | ${env.SITE_NAME}`,
    },
    openGraph: {
       type: "website",
@@ -44,7 +44,7 @@ export default async function RootLayout({
          lang="en"
          className={cn("font-primary antialiased", GeistSans.variable)}
       >
-         <body className="bg-background pb-20 text-base text-foreground">
+         <body className="grid min-h-svh grid-rows-[auto_1fr_auto] bg-background text-base text-foreground">
             <CartProvider cartPromise={cart}>
                <TooltipProvider delayDuration={300}>
                   <ModalProvider />
@@ -53,7 +53,7 @@ export default async function RootLayout({
                   </Portal.Root>
                   <Header />
                   <main>{children}</main>
-                  {/* <Footer /> */}
+                  <Footer />
                </TooltipProvider>
             </CartProvider>
          </body>
