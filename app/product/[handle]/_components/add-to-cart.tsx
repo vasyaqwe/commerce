@@ -55,7 +55,7 @@ export function AddToCart({ product }: { product: Product }) {
                className="-mt-0.5 size-5 lg:size-6"
                strokeWidth={2}
             />
-            Add to Cart
+            Додати до кошика
          </Button>
          <p
             aria-live="polite"

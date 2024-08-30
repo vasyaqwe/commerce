@@ -42,7 +42,7 @@ export function EditItemQuantityButton({
                   : "Reduce item quantity"
             }
             className={cn(
-               "size-7 shrink-0 rounded-[7px] hover:enabled:bg-background",
+               "size-7 shrink-0 rounded-[6px] hover:enabled:bg-background",
                {
                   "ml-auto": type === "minus",
                },

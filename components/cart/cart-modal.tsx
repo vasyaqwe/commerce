@@ -9,7 +9,7 @@ import {
    DrawerTitle,
 } from "@/components/ui/drawer"
 import { Loading } from "@/components/ui/loading"
-import { DEFAULT_OPTION } from "@/lib/constants"
+import { DEFAULT_PRODUCT_TITLE } from "@/lib/constants"
 import { createUrl, formatCurrency } from "@/lib/utils"
 import { ShoppingCartIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
@@ -33,7 +33,7 @@ export function CartModal() {
    return (
       <DrawerContent>
          <DrawerHeader>
-            <DrawerTitle>Cart</DrawerTitle>
+            <DrawerTitle>Кошик</DrawerTitle>
          </DrawerHeader>
          {!cart || cart.lines.length === 0 ? (
             <div className=" -mt-16 flex h-full w-full flex-col items-center justify-center overflow-hidden">
@@ -44,10 +44,10 @@ export function CartModal() {
                   </Card>
                </div>
                <p className="mb-5 font-medium text-lg opacity-70">
-                  Your cart is empty.
+                  Тут нічого немає.
                </p>
                <Button onClick={() => popModal("cart")}>
-                  Back to shopping
+                  Продовжити шопінг
                </Button>
             </div>
          ) : (
@@ -68,7 +68,7 @@ export function CartModal() {
                            // biome-ignore lint/complexity/noForEach: <explanation>
                            item.merchandise.selectedOptions.forEach(
                               ({ name, value }) => {
-                                 if (value !== DEFAULT_OPTION) {
+                                 if (value !== DEFAULT_PRODUCT_TITLE) {
                                     merchandiseSearchParams[
                                        name.toLowerCase()
                                     ] = value
@@ -117,13 +117,12 @@ export function CartModal() {
                                           {item.merchandise.product.title}
                                        </h3>
                                     </Link>
-                                    <p className="text-foreground/70">
-                                       {" "}
-                                       {item.merchandise.title !==
-                                       DEFAULT_OPTION ? (
-                                          <p>{item.merchandise.title}</p>
-                                       ) : null}
-                                    </p>
+                                    {item.merchandise.title ===
+                                    DEFAULT_PRODUCT_TITLE ? null : (
+                                       <p className="text-foreground/70 text-sm">
+                                          {item.merchandise.title}
+                                       </p>
+                                    )}
                                     <p className="mt-auto font-semibold text-[1rem]">
                                        ₴
                                        {formatCurrency(
@@ -132,7 +131,7 @@ export function CartModal() {
                                     </p>
                                  </div>
                                  <div className="ml-auto flex flex-col">
-                                    <div className="flex h-[35px] items-center gap-2 rounded-[10px] border border-foreground/10 bg-border/60 px-[3px] font-medium text-[1rem]">
+                                    <div className="flex h-[38px] items-center gap-2 rounded-[10px] border border-foreground/10 bg-border/60 px-1 font-medium text-[1rem]">
                                        <EditItemQuantityButton
                                           item={item}
                                           type="minus"
@@ -153,25 +152,25 @@ export function CartModal() {
                         })}
                   </ul>
                </section>
-               <section className="divide-y py-4">
+               <section className="mt-auto divide-y py-4">
                   <div className="flex items-center justify-between px-4 py-3">
-                     <p>Taxes</p>
+                     <p>Податки</p>
                      <p className="text-right">
-                        {cart.cost.totalTaxAmount.amount}
+                        ${formatCurrency(cart.cost.totalTaxAmount.amount)}
                      </p>
                   </div>
                   <div className="flex items-center justify-between px-4 py-3">
-                     <p>Shipping</p>
-                     <p className="text-right">Calculated at checkout</p>
+                     <p>Доставка</p>
+                     <p className="text-right">За тарифами перевізника</p>
                   </div>
                   <div className="flex items-center justify-between px-4 py-3">
-                     <p>Total</p>
+                     <p>До сплати</p>
                      <p className="text-right">
                         ₴{formatCurrency(cart.cost.totalAmount.amount)}
                      </p>
                   </div>
                </section>
-               <section className="mt-auto mb-5">
+               <section className="mb-5">
                   <form
                      className="px-4"
                      action={redirectToCheckout}
@@ -197,10 +196,10 @@ function CheckoutButton() {
       >
          {pending ? (
             <>
-               <Loading /> Processing..
+               <Loading /> Оброблюємо..
             </>
          ) : (
-            "Proceed to Checkout"
+            "Оформити замовлення"
          )}
       </Button>
    )

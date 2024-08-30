@@ -20,16 +20,16 @@ export default function Page() {
                   <MagnifyingGlassCircleIcon className="size-9" />
                </Card>
             </div>
-            <h1 className="mb-2 font-semibold text-xl">Not found</h1>
+            <h1 className="mb-2 font-semibold text-xl">Тут нічого немає..</h1>
             <p className="mb-5 text-lg leading-snug opacity-70">
-               This page does not exist — <br /> it may have been moved or
-               deleted.
+               Ця сторінка не більше існує — <br /> можливо вона переїхала, або
+               її видалили.
             </p>
             <Link
                href={"/"}
                className={buttonVariants()}
             >
-               Back home
+               Додому
             </Link>
          </div>
       </div>

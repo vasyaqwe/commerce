@@ -19,19 +19,20 @@ export function Header(props: ComponentProps<"header">) {
    const { cart } = useCart()
    // const menu = await getMenu("next-js-frontend-header-menu")
    const menu = [
-      { title: "Women", path: "/women" },
-      { title: "Men", path: "/men" },
+      { title: "Жінкам", path: "/women" },
+      { title: "Чоловікам", path: "/men" },
+      { title: "Аксесуари", path: "/accessories" },
    ]
 
    const searchParams = useSearchParams()
 
    return (
       <header
-         className="flex items-center border-b py-1.5 md:py-3"
+         className="mb-12 flex items-center border-b py-1.5 md:py-3"
          {...props}
       >
          <div className="container flex items-center">
-            <div className="flex items-center gap-8 md:min-w-[180px]">
+            <div className="flex items-center gap-8 md:min-w-[300px]">
                <Link
                   href="/"
                   prefetch={true}
@@ -65,12 +66,12 @@ export function Header(props: ComponentProps<"header">) {
                   className="pl-11"
                   type="text"
                   name="q"
-                  placeholder="Search"
+                  placeholder="Шукати"
                   autoComplete="off"
                   defaultValue={searchParams?.get("q") || ""}
                />
             </Form>
-            <div className="max-md:-mr-2 flex items-center justify-end md:min-w-[180px]">
+            <div className="max-md:-mr-2 flex items-center justify-end md:min-w-[300px]">
                <Button
                   variant={"ghost"}
                   size={"icon"}
@@ -82,7 +83,7 @@ export function Header(props: ComponentProps<"header">) {
                      className="mb-[3px] size-6"
                      strokeWidth={2}
                   />
-                  Cart
+                  Кошик
                   {cart?.totalQuantity ? (
                      <span className="absolute top-1.5 right-1.5 grid size-[18px] place-content-center rounded-full bg-accent font-semibold text-xs shadow-sm">
                         {cart.totalQuantity}

@@ -102,7 +102,7 @@ export default async function ProductPage({
                      <h1 className="mb-2 font-semibold text-2xl lg:text-3xl">
                         {product.title}
                      </h1>
-                     <p className="text-foreground/70 lg:mt-2 ">42 reviews</p>
+                     <p className="text-foreground/70 lg:mt-2 ">42 відгуки</p>
                      <p className="mt-4 font-bold text-2xl lg:mt-8 lg:text-[2.25rem]">
                         ₴
                         {formatCurrency(
@@ -132,8 +132,8 @@ export default async function ProductPage({
                      </Button>
                   </div>
                   <p className="mt-5 flex items-center gap-2 font-medium text-sm lg:mt-8">
-                     <TruckIcon className="-mt-0.5 size-6" /> Free Shipping on
-                     orders over $50
+                     <TruckIcon className="-mt-0.5 size-6" /> Безкоштовна
+                     доставка від суми більше ніж ₴1000
                   </p>
                </div>
             </Suspense>

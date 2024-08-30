@@ -21,25 +21,25 @@ export const defaultSort: SortFilterItem = {
 export const sorting: SortFilterItem[] = [
    defaultSort,
    {
-      title: "Trending",
+      title: "Популярне",
       slug: "trending-desc",
       sortKey: "BEST_SELLING",
       reverse: false,
    }, // asc
    {
-      title: "Latest arrivals",
+      title: "Спочатку нове",
       slug: "latest-desc",
       sortKey: "CREATED_AT",
       reverse: true,
    },
    {
-      title: "Price: Low to high",
+      title: "Спочатку дешевше",
       slug: "price-asc",
       sortKey: "PRICE",
       reverse: false,
    }, // asc
    {
-      title: "Price: High to low",
+      title: "Спочатку дорожче",
       slug: "price-desc",
       sortKey: "PRICE",
       reverse: true,
@@ -53,5 +53,5 @@ export const TAGS = {
 }
 
 export const HIDDEN_PRODUCT_TAG = "hidden"
-export const DEFAULT_OPTION = "Default Title"
+export const DEFAULT_PRODUCT_TITLE = "Default Title"
 export const SHOPIFY_GRAPHQL_API_ENDPOINT = "/api/2023-01/graphql.json"

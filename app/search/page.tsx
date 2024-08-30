@@ -1,4 +1,3 @@
-import { Filters } from "@/app/search/_components/filters"
 import { Card } from "@/components/ui/card"
 import { defaultSort, sorting } from "@/lib/constants"
 import { getProducts } from "@/lib/shopify"
@@ -25,13 +24,8 @@ export default async function SearchPage({
 
    return (
       <>
-         <div className="mt-8 flex items-center bg-border/40 py-6">
-            <div className="container">
-               <Filters />
-            </div>
-         </div>
          {products.length === 0 && (
-            <div className="-mt-8 flex h-full w-full items-center justify-center font-medium text-lg">
+            <div className="-mt-8 flex h-full w-full items-center justify-center text-balance px-8 text-center font-medium text-lg">
                <div>
                   <div className="relative mb-8">
                      <Card className="absolute inset-0 mx-auto grid h-28 w-[5.5rem] rotate-6 place-content-center rounded-xl" />
@@ -40,13 +34,14 @@ export default async function SearchPage({
                      </Card>
                   </div>
                   <p className="text-foreground/90">
-                     We couldn't find match &quot;{searchValue}&quot;
+                     За запитом &quot;{searchValue}&quot; не знайдено жодного
+                     товару.
                   </p>
                </div>
             </div>
          )}
          {products.length > 0 ? (
-            <div className="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="container grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4">
                {products.map((product) => (
                   <Link
                      key={product.handle}

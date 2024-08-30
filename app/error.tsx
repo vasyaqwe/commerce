@@ -15,18 +15,16 @@ export default function Error({ reset }: { reset: () => void }) {
                   <XCircleIcon className="size-9 text-destructive" />
                </Card>
             </div>
-            <h1 className="mb-2 font-semibold text-xl">
-               An unknown error occurred
-            </h1>
+            <h1 className="mb-2 font-semibold text-xl">От-такої..</h1>
             <p className="mb-5 text-lg leading-snug opacity-70">
-               We're experiencing techincal difficulties. <br /> Please try
-               again later.
+               Сталася технічна проблема. <br /> Будь ласка, спробуйте ще раз
+               пізніше.
             </p>
             <Button
                className="active:!scale-100"
                onClick={reset}
             >
-               Try again
+               Перезавантажити
             </Button>
          </div>
       </div>
