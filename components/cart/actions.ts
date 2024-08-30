@@ -12,27 +12,6 @@ import { revalidateTag } from "next/cache"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
-export async function addItem(
-   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-   _prevState: any,
-   selectedVariantId: string | undefined,
-) {
-   const cartId = cookies().get("cartId")?.value
-
-   if (!cartId || !selectedVariantId) {
-      return "Error adding item to cart"
-   }
-
-   try {
-      await addToCart(cartId, [
-         { merchandiseId: selectedVariantId, quantity: 1 },
-      ])
-      revalidateTag(TAGS.cart)
-   } catch (_e) {
-      return "Error adding item to cart"
-   }
-}
-
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export async function removeItem(_prevState: any, merchandiseId: string) {
    const cartId = cookies().get("cartId")?.value
