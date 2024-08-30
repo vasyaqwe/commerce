@@ -7,31 +7,6 @@ import { cn } from "@/lib/utils"
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline"
 import { useFormState } from "react-dom"
 
-function SubmitButton({ type }: { type: "plus" | "minus" }) {
-   return (
-      <Button
-         size={"icon"}
-         variant={"ghost"}
-         type="submit"
-         aria-label={
-            type === "plus" ? "Increase item quantity" : "Reduce item quantity"
-         }
-         className={cn(
-            "size-7 shrink-0 rounded-[7px] hover:enabled:bg-background",
-            {
-               "ml-auto": type === "minus",
-            },
-         )}
-      >
-         {type === "plus" ? (
-            <PlusIcon className="size-5" />
-         ) : (
-            <MinusIcon className="size-5" />
-         )}
-      </Button>
-   )
-}
-
 export function EditItemQuantityButton({
    item,
    type,
@@ -57,7 +32,28 @@ export function EditItemQuantityButton({
             await actionWithVariant()
          }}
       >
-         <SubmitButton type={type} />
+         <Button
+            size={"icon"}
+            variant={"ghost"}
+            type="submit"
+            aria-label={
+               type === "plus"
+                  ? "Increase item quantity"
+                  : "Reduce item quantity"
+            }
+            className={cn(
+               "size-7 shrink-0 rounded-[7px] hover:enabled:bg-background",
+               {
+                  "ml-auto": type === "minus",
+               },
+            )}
+         >
+            {type === "plus" ? (
+               <PlusIcon className="size-5" />
+            ) : (
+               <MinusIcon className="size-5" />
+            )}
+         </Button>
          <p
             aria-live="polite"
             className="sr-only"
