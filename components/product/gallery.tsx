@@ -1,23 +1,18 @@
 "use client"
 
-import { useProduct, useUpdateURL } from "@/components/product/product-context"
 import { cn } from "@/lib/utils"
-import {} from "@heroicons/react/24/outline"
 import Image from "next/image"
+import { useState } from "react"
 
 export function Gallery({
    images,
 }: { images: { src: string; altText: string }[] }) {
-   const { state, updateImage } = useProduct()
-   const updateURL = useUpdateURL()
-   const imageIndex = state.image ? parseInt(state.image) : 0
+   const [image, setImage] = useState(0)
+   const imageIndex = image
 
    const _nextImageIndex = imageIndex + 1 < images.length ? imageIndex + 1 : 0
    const _previousImageIndex =
       imageIndex === 0 ? images.length - 1 : imageIndex - 1
-
-   const _buttonClassName =
-      "h-full px-6 transition-all ease-in-out hover:scale-110 flex items-center justify-center"
 
    return (
       <form>
@@ -75,8 +70,7 @@ export function Gallery({
                      <button
                         key={image.src}
                         formAction={() => {
-                           const newState = updateImage(index.toString())
-                           updateURL(newState)
+                           setImage(index)
                         }}
                         aria-label="Select product image"
                         className={cn(

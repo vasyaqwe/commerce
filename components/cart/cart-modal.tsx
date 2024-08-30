@@ -84,14 +84,14 @@ export function CartModal() {
                            return (
                               <li
                                  key={i}
-                                 className="relative flex w-full flex-row justify-between px-4 py-5"
+                                 className="relative flex w-full justify-between px-4 py-5"
                               >
                                  <DeleteItemButton
                                     item={item}
                                     optimisticUpdate={updateCartItem}
                                  />
 
-                                 <div className="">
+                                 <div className="mr-1 shrink-0">
                                     <Image
                                        className="relative size-[4.5rem] overflow-hidden rounded-lg border object-cover"
                                        width={100}
@@ -107,22 +107,33 @@ export function CartModal() {
                                        }
                                     />
                                  </div>
-                                 <div className="ml-2 flex flex-col ">
+                                 <div className="mr-4 ml-2 flex flex-col">
                                     <Link
                                        href={merchandiseUrl}
                                        onClick={() => popModal("cart")}
                                        className="flex flex-row space-x-4"
                                     >
-                                       <h3 className="font-medium text-xl">
+                                       <h3 className="line-clamp-1 font-medium text-lg">
+                                          {item.merchandise.product.title}
+                                          {item.merchandise.product.title}
+                                          {item.merchandise.product.title}
+                                          {item.merchandise.product.title}
+                                          {item.merchandise.product.title}
                                           {item.merchandise.product.title}
                                        </h3>
                                     </Link>
-                                    <p className="mt-auto text-foreground/70">
+                                    <p className="text-foreground/70">
                                        {" "}
                                        {item.merchandise.title !==
                                        DEFAULT_OPTION ? (
                                           <p>{item.merchandise.title}</p>
                                        ) : null}
+                                    </p>
+                                    <p className="mt-auto font-semibold text-[1rem]">
+                                       ₴
+                                       {formatCurrency(
+                                          item.cost.totalAmount.amount,
+                                       )}
                                     </p>
                                  </div>
                                  <div className="ml-auto flex flex-col">
@@ -141,12 +152,6 @@ export function CartModal() {
                                           optimisticUpdate={updateCartItem}
                                        />
                                     </div>
-                                    <p className="mt-auto font-semibold text-[1rem]">
-                                       ₴
-                                       {formatCurrency(
-                                          item.cost.totalAmount.amount,
-                                       )}
-                                    </p>
                                  </div>
                               </li>
                            )

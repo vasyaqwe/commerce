@@ -1,48 +1,55 @@
-import { Footer } from "@/components/layout/footer"
-import { FilterList } from "@/components/layout/search/filter"
-import { sorting } from "@/lib/constants"
-import { getCollections } from "@/lib/shopify"
-import { Suspense } from "react"
+"use client"
+
+import {
+   type SortFilterItem as SortFilterItemType,
+   sorting,
+} from "@/lib/constants"
+import { cn, createUrl } from "@/lib/utils"
+import Link from "next/link"
+import { usePathname, useSearchParams } from "next/navigation"
 import { ChildrenWrapper } from "./children-wrapper"
 
 export default function SearchLayout({
    children,
 }: { children: React.ReactNode }) {
    return (
-      <>
-         <div className="mx-auto flex max-w-screen-2xl flex-col gap-8 px-4 pb-4 md:flex-row">
-            <div className="order-first w-full flex-none md:max-w-[125px]">
-               <Collections />
-            </div>
-            <div className="order-last min-h-screen w-full md:order-none">
-               <ChildrenWrapper>{children}</ChildrenWrapper>
-            </div>
-            <div className="order-none flex-none md:order-last md:w-[125px]">
-               <FilterList
-                  list={sorting}
-                  title="Sort by"
+      <div className="container">
+         <div className="flex items-center">
+            {sorting.map((item) => (
+               <SortFilterItem
+                  item={item}
+                  key={item.slug}
                />
-            </div>
+            ))}
          </div>
-         <Footer />
-      </>
+         <ChildrenWrapper>{children}</ChildrenWrapper>
+      </div>
    )
 }
 
-async function CollectionList() {
-   const collections = await getCollections()
-   return (
-      <FilterList
-         list={collections}
-         title="Collections"
-      />
+function SortFilterItem({ item }: { item: SortFilterItemType }) {
+   const pathname = usePathname()
+   const searchParams = useSearchParams()
+   const active = searchParams.get("sort") === item.slug
+   const q = searchParams.get("q")
+   const href = createUrl(
+      pathname,
+      new URLSearchParams({
+         ...(q && { q }),
+         ...(item.slug?.length && { sort: item.slug }),
+      }),
    )
-}
+   const DynamicTag = active ? "p" : Link
 
-function Collections() {
    return (
-      <Suspense fallback={<>loading...</>}>
-         <CollectionList />
-      </Suspense>
+      <DynamicTag
+         prefetch={!active ? false : undefined}
+         href={href}
+         className={cn("w-full hover:underline hover:underline-offset-4", {
+            "underline underline-offset-4": active,
+         })}
+      >
+         {item.title}
+      </DynamicTag>
    )
 }

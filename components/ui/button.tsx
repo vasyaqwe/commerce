@@ -5,11 +5,11 @@ import { type VariantProps, cva } from "class-variance-authority"
 import { type ComponentProps, forwardRef } from "react"
 
 const buttonVariants = cva(
-   `relative inline-flex items-center justify-center font-medium transition-[color,background-color,transform,box-shadow] gap-1.5 leading-none overflow-hidden active:enabled:scale-95 duration-200 whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:opacity-75 disabled:cursor-not-allowed`,
+   `relative inline-flex items-center justify-center font-medium transition-[color,background-color,transform,box-shadow] gap-1.5 leading-none overflow-hidden active:enabled:scale-95 duration-200 whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:opacity-70 disabled:cursor-not-allowed`,
    {
       variants: {
          variant: {
-            default: `bg-primary/90 shadow-sm hover:enabled:shadow-md border border-transparent focus-visible:ring-accent text-primary-foreground/95 hover:enabled:bg-primary disabled:bg-border disabled:text-foreground disabled:border-foreground/15 active:enabled:shadow-sm hover:enabled:text-primary-foreground`,
+            default: `bg-primary/90 shadow-sm hover:enabled:shadow-md border border-transparent focus-visible:ring-accent text-primary-foreground/95 hover:enabled:bg-primary disabled:bg-border disabled:text-foreground disabled:border-foreground/[0.12] active:enabled:shadow-sm hover:enabled:text-primary-foreground`,
             secondary: `bg-muted/70 font-medium text-muted-foreground hover:enabled:bg-muted data-[state=open]:bg-muted dark:bg-muted/50 dark:data-[state=open]:bg-muted dark:hover:enabled:bg-muted hover:enabled:text-foreground/95 data-[state=open]:text-foreground/85 dark:shadow-md`,
             "secondary-primary": `bg-muted font-medium text-muted-foreground hover:enabled:bg-primary/10 hover:enabled:text-primary`,
             "secondary-destructive": `bg-destructive/20 font-medium hover:enabled:bg-destructive/15 text-destructive hover:enabled:text-destructive/90`,

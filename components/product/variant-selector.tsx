@@ -1,15 +1,19 @@
 "use client"
 
-import { useProduct, useUpdateURL } from "@/components/product/product-context"
 import { Chip } from "@/components/ui/chip"
 import type { ProductOption, ProductVariant } from "@/lib/shopify/types"
+import { useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 type Combination = {
    id: string
    availableForSale: boolean
    [key: string]: string | boolean
 }
-
+type ProductState = {
+   [key: string]: string
+}
 export function VariantSelector({
    options,
    variants,
@@ -17,7 +21,23 @@ export function VariantSelector({
    options: ProductOption[]
    variants: ProductVariant[]
 }) {
-   const { state, updateOption } = useProduct()
+   const searchParams = useSearchParams()
+   const getInitialState = () => {
+      const params: ProductState = {}
+      for (const [key, value] of searchParams.entries()) {
+         params[key] = value
+      }
+      return params
+   }
+
+   const [state, setOptimisticState] = useState(getInitialState())
+
+   const updateOption = (name: string, value: string) => {
+      const newState = { [name]: value }
+      setOptimisticState(newState)
+      return { ...state, ...newState }
+   }
+
    const updateURL = useUpdateURL()
    const hasNoOptionsOrJustOneOption =
       !options.length ||
@@ -103,4 +123,17 @@ export function VariantSelector({
          </dl>
       </form>
    ))
+}
+
+function useUpdateURL() {
+   const router = useRouter()
+
+   return (state: ProductState) => {
+      const newParams = new URLSearchParams(window.location.search)
+      // biome-ignore lint/complexity/noForEach: <explanation>
+      Object.entries(state).forEach(([key, value]) => {
+         newParams.set(key, value)
+      })
+      router.push(`?${newParams.toString()}`, { scroll: false })
+   }
 }

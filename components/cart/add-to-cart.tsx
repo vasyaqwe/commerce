@@ -2,18 +2,26 @@
 
 import { addItem } from "@/components/cart/actions"
 import { pushModal } from "@/components/modals"
-import { useProduct } from "@/components/product/product-context"
 import { Button } from "@/components/ui/button"
 import type { Product, ProductVariant } from "@/lib/shopify/types"
 import { ShoppingBagIcon } from "@heroicons/react/24/outline"
+import { useSearchParams } from "next/navigation"
 import { useFormState } from "react-dom"
 import { useCart } from "./cart-context"
 
 export function AddToCart({ product }: { product: Product }) {
    const { variants, availableForSale } = product
    const { addCartItem } = useCart()
-   const { state } = useProduct()
+   const searchParams = useSearchParams()
+   const getInitialState = () => {
+      const params: Record<string, string> = {}
+      for (const [key, value] of searchParams.entries()) {
+         params[key] = value
+      }
+      return params
+   }
    const [message, formAction] = useFormState(addItem, null)
+   const state = getInitialState()
 
    const variant = variants.find((variant: ProductVariant) =>
       variant.selectedOptions.every(

@@ -24,13 +24,12 @@ export function Chip({
             } as CSSProperties
          }
          className={cn(
-            `has-[input:disabled]:!bg-background has-[:focus-visible]:!outline-2 grid cursor-pointer grid-cols-[auto,calc(var(--active)*20px)] bg-[hsl(var(--primary)/calc(var(--active)-0.1))] active:scale-[97%]`,
+            `has-[input:disabled]:!bg-background has-[:focus-visible]:!outline-2 grid cursor-pointer grid-cols-[auto,calc(var(--active)*20px)] bg-[hsl(var(--primary)/calc(var(--active)-0.1))] active:enabled:scale-[97%]`,
             `items-center rounded-[12px] border px-3.5 py-[9px] text-[var(--accent)] shadow-sm `,
             `leading-[1.25] has-[input:disabled]:cursor-not-allowed`,
             `dark:border-foreground/10 dark:has-[input:checked]:border-foreground/10 has-[input:checked]:border-primary/10 dark:bg-muted/75 dark:hover:bg-muted`,
             `[&:not(:has(:checked))]:hover:bg-border/50 has-[:checked]:text-background`,
             `dark:has-[input:disabled]:!bg-muted/50 dark:shadow-md has-[:checked]:[--active:1] hover:[--intent:0.3]`,
-            "",
             className,
          )}
       >

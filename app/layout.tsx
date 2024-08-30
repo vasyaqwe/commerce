@@ -1,5 +1,4 @@
 import { CartProvider } from "@/components/cart/cart-context"
-import { Navbar } from "@/components/layout/navbar"
 import { getCart } from "@/lib/shopify"
 import { GeistSans } from "geist/font/sans"
 import { cookies } from "next/headers"
@@ -53,7 +52,6 @@ export default async function RootLayout({
                      <Toaster />
                   </Portal.Root>
                   <Header />
-                  <Navbar />
                   <main>{children}</main>
                   {/* <Footer /> */}
                </TooltipProvider>
