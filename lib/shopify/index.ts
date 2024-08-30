@@ -3,7 +3,7 @@ import {
    SHOPIFY_GRAPHQL_API_ENDPOINT,
    TAGS,
 } from "@/lib/constants"
-import { isShopifyError } from "@/lib/type-guards"
+import { isShopifyError } from "@/lib/utils"
 import { ensureStartsWith } from "@/lib/utils"
 import { revalidateTag } from "next/cache"
 import { headers } from "next/headers"
@@ -180,13 +180,16 @@ const reshapeImages = (images: Connection<Image>, productTitle: string) => {
    })
 }
 
-const reshapeProduct = (
-   product: ShopifyProduct,
-   filterHiddenProducts = true,
-) => {
+const reshapeProduct = ({
+   product,
+   filterHidden = true,
+}: {
+   product: ShopifyProduct
+   filterHidden?: boolean
+}) => {
    if (
       !product ||
-      (filterHiddenProducts && product.tags.includes(HIDDEN_PRODUCT_TAG))
+      (filterHidden && product.tags.includes(HIDDEN_PRODUCT_TAG))
    ) {
       return undefined
    }
@@ -205,7 +208,7 @@ const reshapeProducts = (products: ShopifyProduct[]) => {
 
    for (const product of products) {
       if (product) {
-         const reshapedProduct = reshapeProduct(product)
+         const reshapedProduct = reshapeProduct({ product })
 
          if (reshapedProduct) {
             reshapedProducts.push(reshapedProduct)
@@ -414,7 +417,10 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
       },
    })
 
-   return reshapeProduct(res.body.data.product, false)
+   return reshapeProduct({
+      product: res.body.data.product,
+      filterHidden: false,
+   })
 }
 
 export async function getProductRecommendations(

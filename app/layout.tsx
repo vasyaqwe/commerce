@@ -1,15 +1,15 @@
-import { CartProvider } from "@/components/cart/cart-context"
-import { getCart } from "@/lib/shopify"
-import { GeistSans } from "geist/font/sans"
-import { cookies } from "next/headers"
-import type { ReactNode } from "react"
 import "./globals.css"
+import { CartProvider } from "@/components/cart/cart-context"
 import { Header } from "@/components/layout/header"
 import { ModalProvider } from "@/components/modals"
 import { Toaster } from "@/components/ui/toast"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { getCart } from "@/lib/shopify"
 import { cn } from "@/lib/utils"
 import * as Portal from "@radix-ui/react-portal"
+import { GeistSans } from "geist/font/sans"
+import { cookies } from "next/headers"
+import type { ReactNode } from "react"
 
 const { SITE_NAME } = process.env
 const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
