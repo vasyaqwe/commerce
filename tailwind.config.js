@@ -81,6 +81,8 @@ module.exports = {
          boxShadow: {
             "popover-shadow": "var(--popover-shadow)",
             "popover-side-shadow": "var(--popover-side-shadow)",
+            button:
+               "0px 1px 1px -1px rgba(0,0,0,.1),0px 2px 2px -1px rgba(0,0,0,.1),0px 0px 0px 1px rgba(0,0,0,.08),inset 0px 1px 0px #fff,inset 0px 1px 2px 1px #fff,inset 0px 1px 2px rgba(0,0,0,.08)",
          },
       },
    },

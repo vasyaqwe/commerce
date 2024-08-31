@@ -8,7 +8,7 @@ import Link from "next/link"
 
 export function Footer() {
    return (
-      <footer className="mt-24 bg-border/40 text-sm md:mt-44">
+      <footer className="mt-24 bg-border/25 text-sm md:mt-44">
          <div className="container flex flex-wrap items-start justify-around gap-8 py-12">
             <Link
                aria-label="Home"

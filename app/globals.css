@@ -7,16 +7,16 @@
   --foreground: 240deg 6% 10%;
   --popover: 240deg 6% 13%;
   --popover-foreground: 0deg 0% 64%;
-  --popover-highlight: 220deg 6% 27%;
+  --popover-highlight: 0deg 0% 30%;
   --popover-icon: #acacac;
   --primary: 240deg 6% 10%;
   --primary-foreground: 0deg 0% 100%;
   --accent: 48deg 80% 65;
-  --muted: 0deg 0% 90%;
+  --muted: 0deg 0% 87%;
   --muted-foreground: 45deg 24% 25%;
   --destructive: 358 75% 55%;
   --destructive-foreground: 0deg 0% 98%;
-  --border: 0deg 0% 93%;
+  --border: 0deg 0% 91%;
   --ring: 228deg 5% 82%;
 
   --intentful: light-dark(color-mix(in lch, canvas, canvasText 15%), black);

@@ -5,7 +5,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
    return (
       <>
          <ChildrenWrapper>
-            <div className="mb-8 flex items-center bg-border/40 py-6">
+            <div className="mb-8 flex items-center bg-border/25 py-6">
                <div className="container">
                   <Filters />
                </div>

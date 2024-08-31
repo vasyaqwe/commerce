@@ -1,4 +1,4 @@
-import { defaultSort, sorting } from "@/lib/constants"
+import { defaultSortFilter, sortFilter } from "@/lib/constants"
 import { getCollection, getCollectionProducts } from "@/lib/shopify"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
@@ -30,7 +30,7 @@ export default async function Page({
 }) {
    const { sort } = searchParams as { [key: string]: string }
    const { sortKey, reverse } =
-      sorting.find((item) => item.slug === sort) || defaultSort
+      sortFilter.find((item) => item.slug === sort) || defaultSortFilter
    const products = await getCollectionProducts({
       collection: params.collection,
       sortKey,

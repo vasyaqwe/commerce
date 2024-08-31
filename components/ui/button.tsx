@@ -5,7 +5,7 @@ import { type VariantProps, cva } from "class-variance-authority"
 import { type ComponentProps, forwardRef } from "react"
 
 const buttonVariants = cva(
-   `relative inline-flex items-center justify-center font-medium transition-[color,background-color,transform,box-shadow] gap-1.5 leading-none overflow-hidden active:enabled:scale-95 duration-200 whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground disabled:opacity-70 disabled:cursor-not-allowed`,
+   `relative inline-flex items-center justify-center font-medium transition-all gap-1.5 leading-none overflow-hidden active:enabled:scale-95 duration-200 whitespace-nowrap focus-visible:ring-1 ring-offset-[1px] focus-visible:ring-accent/80 focus-visible:outline-accent/30 outline outline-3 outline-transparent outline-offset-2 disabled:opacity-70 disabled:cursor-not-allowed`,
    {
       variants: {
          variant: {
@@ -13,7 +13,7 @@ const buttonVariants = cva(
             secondary: `bg-muted/70 font-medium text-muted-foreground hover:enabled:bg-muted data-[state=open]:bg-muted dark:bg-muted/50 dark:data-[state=open]:bg-muted dark:hover:enabled:bg-muted hover:enabled:text-foreground/95 data-[state=open]:text-foreground/85 dark:shadow-md`,
             "secondary-primary": `bg-muted font-medium text-muted-foreground hover:enabled:bg-primary/10 hover:enabled:text-primary`,
             "secondary-destructive": `bg-destructive/20 font-medium hover:enabled:bg-destructive/15 text-destructive hover:enabled:text-destructive/90`,
-            outline: `bg-background dark:bg-muted dark:border-foreground/[0.07] dark:shadow-md border text-foreground hover:enabled:bg-muted/30 shadow-sm`,
+            outline: `bg-background dark:bg-muted dark:border-foreground/[0.07] border border-transparent text-foreground data-[state=open]:border-border/50 hover:enabled:border-border/50 shadow-button`,
             destructive: `bg-destructive/90 hover:enabled:bg-destructive text-destructive-foreground/90 hover:enabled:text-destructive-foreground`,
             ghost: "border border-transparent aria-[current=page]:bg-muted dark:hover:enabled:bg-border hover:enabled:bg-muted/70",
             link: "!h-auto !rounded-none !p-0 text-foreground/70 underline transition-none hover:enabled:text-foreground",

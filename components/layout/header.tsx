@@ -60,7 +60,7 @@ export function Header(props: ComponentProps<"header">) {
                action="/search"
                className="relative mx-auto w-full max-w-[340px]"
             >
-               <MagnifyingGlassIcon className="-translate-y-1/2 absolute top-1/2 left-3 size-6 text-foreground/35" />
+               <MagnifyingGlassIcon className="-translate-y-1/2 absolute top-1/2 left-3 size-6 text-foreground/30" />
                <Input
                   key={searchParams?.get("q")}
                   className="pl-11"

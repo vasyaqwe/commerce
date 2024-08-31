@@ -53,7 +53,7 @@ import type {
 const domain = process.env.SHOPIFY_STORE_DOMAIN
    ? ensureStartsWith(process.env.SHOPIFY_STORE_DOMAIN, "https://")
    : ""
-const endpoint = `${domain}/api/2023-01/graphql.json`
+const endpoint = `${domain}/api/2024-10/graphql.json`
 // biome-ignore lint/style/noNonNullAssertion: <explanation>
 const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!
 
@@ -439,19 +439,37 @@ export const getProducts = async ({
    query,
    reverse,
    sortKey,
+   color,
+   size,
+   style,
+   material,
 }: {
    query?: string
    reverse?: boolean
    sortKey?: string
+   color?: string
+   size?: string
+   style?: string
+   material?: string
 }): Promise<Product[]> => {
+   let queryString = query || ""
+
+   if (color) queryString += ` AND variants.options:color:${color}`
+   if (size) queryString += ` AND variants.options:size:${size}`
+   if (style) queryString += ` AND product_type:${style}`
+   if (material) queryString += ` AND vendor:${material}`
+
+   const variables = {
+      query: queryString,
+      sortKey,
+      reverse,
+      first: 100,
+   }
+
    const res = await shopifyFetch<ShopifyProductsOperation>({
       query: getProductsQuery,
       tags: [TAGS.products],
-      variables: {
-         query,
-         reverse,
-         sortKey,
-      },
+      variables,
    })
 
    return reshapeProducts(removeEdgesAndNodes(res.body.data.products))

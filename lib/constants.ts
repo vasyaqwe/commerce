@@ -4,22 +4,15 @@ export const env = {
    SITE_NAME: "Commerce",
 }
 
-export type SortFilterItem = {
-   title: string
-   slug: string | null
-   sortKey: "RELEVANCE" | "BEST_SELLING" | "CREATED_AT" | "PRICE"
-   reverse: boolean
-}
-
-export const defaultSort: SortFilterItem = {
-   title: "Relevance",
+export const defaultSortFilter = {
+   title: "Релевантне",
    slug: null,
    sortKey: "RELEVANCE",
    reverse: false,
-}
+} as const
 
-export const sorting: SortFilterItem[] = [
-   defaultSort,
+export const sortFilter = [
+   defaultSortFilter,
    {
       title: "Популярне",
       slug: "trending-desc",
@@ -44,7 +37,31 @@ export const sorting: SortFilterItem[] = [
       sortKey: "PRICE",
       reverse: true,
    },
-]
+] as const
+
+export const colorFilter = {
+   title: "Колір",
+   slug: "color",
+   values: ["Червоний", "Синій", "Зелений", "Чорний", "Білий"],
+}
+
+export const sizeFilter = {
+   title: "Розмір",
+   slug: "size",
+   values: ["XS", "S", "M", "L", "XL"],
+}
+
+export const styleFilter = {
+   title: "Стиль",
+   slug: "style",
+   values: ["Казуальний", "Офіційний", "Спортивний", "Вінтажний"],
+}
+
+export const materialFilter = {
+   title: "Material",
+   slug: "material",
+   values: ["Бавовна", "Полієстер", "Шовк", "Джинс"],
+}
 
 export const TAGS = {
    collections: "collections",

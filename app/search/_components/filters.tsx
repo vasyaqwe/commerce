@@ -1,43 +1,58 @@
 "use client"
 
-import { sorting } from "@/lib/constants"
-import { cn, createUrl } from "@/lib/utils"
-import Link from "next/link"
-import { usePathname, useSearchParams } from "next/navigation"
+import {
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+} from "@/components/ui/select"
+import { sortFilter } from "@/lib/constants"
+import { createUrl } from "@/lib/utils"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 export function Filters() {
    const pathname = usePathname()
+   const router = useRouter()
    const searchParams = useSearchParams()
    const q = searchParams.get("q")
 
    return (
       <>
-         {sorting.map((item) => {
-            const active = searchParams.get("sort") === item.slug
-            const href = createUrl(
-               pathname,
-               new URLSearchParams({
-                  ...(q && { q }),
-                  ...(item.slug?.length && { sort: item.slug }),
-               }),
-            )
-
-            return (
-               <Link
-                  key={item.title}
-                  prefetch={!active ? false : undefined}
-                  href={href}
-                  className={cn(
-                     "w-full hover:underline hover:underline-offset-4",
-                     {
-                        "underline underline-offset-4": active,
-                     },
-                  )}
-               >
-                  {item.title}
-               </Link>
-            )
-         })}
+         <Select
+            value={searchParams.get("sort") ?? "relevance"}
+            onValueChange={(slug) => {
+               if (slug === "relevance") {
+                  return router.push(
+                     createUrl(
+                        pathname,
+                        new URLSearchParams({ ...(q && { q }) }),
+                     ),
+                  )
+               }
+               const href = createUrl(
+                  pathname,
+                  new URLSearchParams({
+                     ...(q && { q }),
+                     ...(slug?.length && { sort: slug }),
+                  }),
+               )
+               router.push(href)
+            }}
+         >
+            <SelectTrigger>Сортувати</SelectTrigger>
+            <SelectContent>
+               {sortFilter.map((item) => {
+                  return (
+                     <SelectItem
+                        value={item.slug ?? "relevance"}
+                        key={item.title}
+                     >
+                        {item.title}
+                     </SelectItem>
+                  )
+               })}
+            </SelectContent>
+         </Select>
       </>
    )
 }
