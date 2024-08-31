@@ -1,9 +1,7 @@
 import { Filters } from "@/app/search/_components/filters"
-import { ChildrenWrapper } from "./children-wrapper"
+import { ChildrenWrapper } from "./_components/children-wrapper"
 
-export default function SearchLayout({
-   children,
-}: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
    return (
       <>
          <ChildrenWrapper>

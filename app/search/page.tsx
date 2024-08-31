@@ -11,7 +11,7 @@ export const metadata = {
    description: "Search for products in the store.",
 }
 
-export default async function SearchPage({
+export default async function Page({
    searchParams,
 }: {
    searchParams?: { [key: string]: string | string[] | undefined }

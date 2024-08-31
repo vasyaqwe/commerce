@@ -54,4 +54,3 @@ export const TAGS = {
 
 export const HIDDEN_PRODUCT_TAG = "hidden"
 export const DEFAULT_PRODUCT_TITLE = "Default Title"
-export const SHOPIFY_GRAPHQL_API_ENDPOINT = "/api/2023-01/graphql.json"

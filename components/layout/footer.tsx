@@ -6,7 +6,7 @@ import { env } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 
-export async function Footer() {
+export function Footer() {
    return (
       <footer className="mt-24 bg-border/40 text-sm md:mt-44">
          <div className="container flex flex-wrap items-start justify-around gap-8 py-12">

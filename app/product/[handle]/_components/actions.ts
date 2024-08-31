@@ -5,11 +5,11 @@ import { addToCart } from "@/lib/shopify"
 import { revalidateTag } from "next/cache"
 import { cookies } from "next/headers"
 
-export async function addItem(
+export const addItem = async (
    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
    _prevState: any,
    selectedVariantId: string | undefined,
-) {
+) => {
    const cartId = cookies().get("cartId")?.value
 
    if (!cartId || !selectedVariantId) {

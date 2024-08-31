@@ -13,7 +13,7 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export async function removeItem(_prevState: any, merchandiseId: string) {
+export const removeItem = async (_prevState: any, merchandiseId: string) => {
    const cartId = cookies().get("cartId")?.value
 
    if (!cartId) {
@@ -42,14 +42,14 @@ export async function removeItem(_prevState: any, merchandiseId: string) {
    }
 }
 
-export async function updateItemQuantity(
+export const updateItemQuantity = async (
    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
    _prevState: any,
    payload: {
       merchandiseId: string
       quantity: number
    },
-) {
+) => {
    const cartId = cookies().get("cartId")?.value
 
    if (!cartId) {
@@ -93,7 +93,7 @@ export async function updateItemQuantity(
    }
 }
 
-export async function redirectToCheckout() {
+export const redirectToCheckout = async () => {
    const cartId = cookies().get("cartId")?.value
 
    if (!cartId) {
@@ -109,7 +109,7 @@ export async function redirectToCheckout() {
    redirect(cart.checkoutUrl)
 }
 
-export async function createCartAndSetCookie() {
+export const createCartAndSetCookie = async () => {
    const cart = await createCart()
    cookies().set("cartId", cart.id ?? "")
 }

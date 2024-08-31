@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { HeartIcon, TrashIcon } from "@heroicons/react/24/outline"
 
-export default function HomePage() {
+export default function Page() {
    return (
       <div className=" p-10">
          <div className="flex flex-wrap gap-3">

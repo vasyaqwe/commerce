@@ -21,7 +21,7 @@ export async function generateMetadata({
    }
 }
 
-export default async function CategoryPage({
+export default async function Page({
    params,
    searchParams,
 }: {

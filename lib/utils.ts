@@ -1,11 +1,8 @@
 import { type ClassValue, clsx } from "clsx"
+import type { ReadonlyURLSearchParams } from "next/navigation"
 import { twMerge } from "tailwind-merge"
 
-export function cn(...inputs: ClassValue[]) {
-   return twMerge(clsx(inputs))
-}
-
-import type { ReadonlyURLSearchParams } from "next/navigation"
+export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs))
 
 export const formatCurrency = (amount: string) => {
    const formatter = new Intl.NumberFormat("en-US", {
@@ -30,12 +27,6 @@ export const ensureStartsWith = (stringToCheck: string, startsWith: string) =>
       ? stringToCheck
       : `${startsWith}${stringToCheck}`
 
-export type ShopifyErrorLike = {
-   status: number
-   message: Error
-   cause?: Error
-}
-
 const findError = <T extends object>(error: T): boolean => {
    if (Object.prototype.toString.call(error) === "[object Error]") {
       return true
@@ -52,7 +43,13 @@ const isObject = (object: unknown): object is Record<string, unknown> => {
    )
 }
 
-export const isShopifyError = (error: unknown): error is ShopifyErrorLike => {
+export const isShopifyError = (
+   error: unknown,
+): error is {
+   status: number
+   message: Error
+   cause?: Error
+} => {
    if (!isObject(error)) return false
 
    if (error instanceof Error) return true
