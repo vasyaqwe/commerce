@@ -8,15 +8,16 @@ export const SelectedItems = ({
 }: ComponentPropsWithoutRef<"span">) => {
    const ctx = useComboboxContext()
 
-   return ctx.multiple && ctx.selectedItems.length ? (
+   return ctx.multiple ? (
       <span
+         data-active={ctx.selectedItems.length > 0}
          className={cn(
-            "whitespace-nowrap rounded-sm border px-1.5 py-0.5",
+            "flex size-[28px] shrink-0 justify-center whitespace-nowrap rounded-sm border py-0.5 font-medium",
             className,
          )}
          {...props}
       >
-         {ctx.selectedItems.length} обрано
+         {ctx.selectedItems.length} <span className="sr-only">обрано</span>
       </span>
    ) : null
 }

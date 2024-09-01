@@ -81,22 +81,16 @@ export const Input = forwardRef(
          ref: inputRef,
       })
 
-      const hasPlaceholder = ctx.multiple
-         ? ctx.selectedItems.length === 0
-         : ctx.selectedItem === null
-
       return (
          <>
             <PopoverTrigger asChild>
                <input
                   type="text"
-                  {...(hasPlaceholder && { placeholder })}
+                  placeholder={placeholder}
                   className={cn(
                      "appearence-none w-full",
                      "cursor-pointer focus:cursor-text",
-                     ctx.selectedItems.length === 0 || !ctx.multiple
-                        ? "pl-2"
-                        : "pl-0",
+                     !ctx.multiple ? "pl-2" : "pl-0",
                      className,
                   )}
                   {...props}

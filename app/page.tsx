@@ -19,29 +19,19 @@ export default function Page() {
       <div className=" p-10">
          <div className="flex flex-wrap gap-3">
             <Combobox
-               defaultValue={["book-1", "book-2"]}
+               defaultValue={["чорний", "червоний"]}
                multiple
             >
                <ComboboxTrigger className="w-[250px]">
                   <ComboboxSelectedItems />
-                  <ComboboxInput placeholder="Pick a book" />
+                  <ComboboxInput placeholder="Колір" />
                   <ComboboxClearButton />
                   <ComboboxDisclosure />
                </ComboboxTrigger>
                <ComboboxContent className="h-[280px] w-[255px]">
                   <ComboboxEmpty>No results found</ComboboxEmpty>
-                  <ComboboxItem value="book-1">
-                     To Kill a Mockingbird
-                  </ComboboxItem>
-                  <ComboboxItem value="book-2">War and Peace</ComboboxItem>
-                  <ComboboxItem value="book-3">The Idiot</ComboboxItem>
-                  <ComboboxItem value="book-4">
-                     A Picture of Dorian Gray
-                  </ComboboxItem>
-                  <ComboboxItem value="book-5">1984</ComboboxItem>
-                  <ComboboxItem value="book-6">
-                     Pride and Prejudice but it is an extremely long title
-                  </ComboboxItem>
+                  <ComboboxItem value="чорний">Чорний</ComboboxItem>
+                  <ComboboxItem value="червоний">Червоний</ComboboxItem>
                </ComboboxContent>
             </Combobox>
             <Button>Add to cart</Button>

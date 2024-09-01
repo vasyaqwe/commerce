@@ -1,4 +1,5 @@
 "use client"
+
 import { buttonVariants } from "@/components/ui/button"
 import { ComboboxPrimitive } from "@/components/ui/combobox-primitive"
 import { cn } from "@/lib/utils"
@@ -23,7 +24,7 @@ const ComboboxClearButton = forwardRef<
       ref={ref}
       className={cn(
          buttonVariants({ variant: "ghost", size: "icon" }),
-         "size-[26px] shrink-0 rounded-md",
+         "size-[22px] shrink-0 rounded-md",
          className,
       )}
       {...props}
@@ -71,7 +72,7 @@ const ComboboxInput = forwardRef<
    <ComboboxPrimitive.Input
       ref={ref}
       className={cn(
-         "placeholder:text-muted-foreground/80 focus:outline-none",
+         "placeholder:text-muted-foreground/90 focus:outline-none",
          className,
       )}
       {...props}
@@ -112,7 +113,7 @@ const ComboboxSelectedItems = forwardRef<
 >(({ className, ...props }) => (
    <ComboboxPrimitive.SelectedItems
       className={cn(
-         "flex h-7 items-center rounded-lg border-2 border-muted border-dashed bg-border/25 px-1.5 text-[0.925rem]",
+         "flex h-7 items-center rounded-lg border-2 border-muted border-dashed bg-border/25 text-[0.965rem] opacity-60 transition-opacity data-[active=true]:opacity-100",
          className,
       )}
       {...props}
@@ -128,7 +129,7 @@ const ComboboxTrigger = forwardRef<
       ref={ref}
       className={cn(
          buttonVariants({ variant: "outline" }),
-         "justify-start gap-1 pl-1.5",
+         "justify-start pr-3 pl-1.5",
          className,
       )}
       {...props}

@@ -52,7 +52,7 @@ export const Trigger = forwardRef(
                      }
                   }}
                   className={cn(
-                     "flex cursor-pointer items-center gap-1 border pr-2.5 pl-1.5 outline outline-transparent outline-offset-2 ring-offset-[1px] has-[input:focus]:cursor-text hover:border-border/60 active:outline-accent/30 has-[input:focus-visible]:outline-accent/30 active:ring-1 active:ring-accent/80 has-[input:focus-visible]:ring-1 has-[input:focus-visible]:ring-accent/80",
+                     "flex cursor-pointer items-center gap-1.5 border pr-2.5 pl-1.5 outline outline-transparent outline-offset-2 ring-offset-[1px] has-[input:focus]:cursor-text hover:border-border/60 active:outline-accent/30 has-[input:focus-visible]:outline-accent/30 active:ring-1 active:ring-accent/80 has-[input:focus-visible]:ring-1 has-[input:focus-visible]:ring-accent/80",
                      className,
                   )}
                   {...props}
