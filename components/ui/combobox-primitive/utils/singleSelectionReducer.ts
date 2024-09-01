@@ -1,7 +1,7 @@
 import { type UseComboboxProps, useCombobox } from "downshift"
 import type { ComboboxItem } from "../types"
 
-interface Props {
+type Props = {
    allowCustomValue?: boolean
    filteredItems: ComboboxItem[]
    setSelectedItem: (value: ComboboxItem | null) => void

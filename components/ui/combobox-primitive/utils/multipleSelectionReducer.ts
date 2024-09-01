@@ -7,7 +7,7 @@ import type React from "react"
 import { getIndexByKey } from "."
 import type { ComboboxItem, ItemsMap } from "../types"
 
-interface Props {
+type Props = {
    allowCustomValue?: boolean
    items: ItemsMap
    selectedItems: ComboboxItem[]

@@ -3,10 +3,11 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline"
 import { type ComponentProps, type Ref, forwardRef } from "react"
 import { useComboboxContext } from "./ComboboxContext"
 
-type DisclosureProps = ComponentProps<"button">
-
 export const Disclosure = forwardRef(
-   ({ ...props }: DisclosureProps, forwardedRef: Ref<HTMLButtonElement>) => {
+   (
+      { ...props }: ComponentProps<"button">,
+      forwardedRef: Ref<HTMLButtonElement>,
+   ) => {
       const ctx = useComboboxContext()
 
       const { ref: downshiftRef, ...downshiftDisclosureProps } =

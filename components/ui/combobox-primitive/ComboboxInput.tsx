@@ -24,7 +24,6 @@ type InputProps = Omit<
 export const Input = forwardRef(
    (
       {
-         "aria-label": ariaLabel,
          className,
          placeholder,
          value,
@@ -88,14 +87,6 @@ export const Input = forwardRef(
 
       return (
          <>
-            {ariaLabel && (
-               <label
-                  className="sr-only"
-                  {...ctx.getLabelProps()}
-               >
-                  {ariaLabel}
-               </label>
-            )}
             <PopoverTrigger asChild>
                <input
                   type="text"
@@ -111,7 +102,6 @@ export const Input = forwardRef(
                   {...props}
                   {...downshiftInputProps}
                   value={ctx.inputValue}
-                  aria-label={ariaLabel}
                   disabled={ctx.disabled}
                   readOnly={ctx.readOnly}
                />

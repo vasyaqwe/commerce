@@ -18,7 +18,7 @@ import { getElementByIndex, getItemsFromChildren } from "./utils"
 import { multipleSelectionReducer } from "./utils/multipleSelectionReducer"
 import { singleSelectionReducer } from "./utils/singleSelectionReducer"
 
-export interface ComboboxContextState extends DownshiftState {
+export type ComboboxContextState = DownshiftState & {
    itemsMap: ItemsMap
    filteredItemsMap: ItemsMap
    highlightedItem: ComboboxItem | undefined
@@ -81,7 +81,7 @@ export type ComboboxContextCommonProps = PropsWithChildren<{
    isLoading?: boolean
 }>
 
-interface ComboboxPropsSingle {
+type ComboboxPropsSingle = {
    /**
     * Prop 'multiple' indicating whether multiple values are allowed.
     */
@@ -100,7 +100,7 @@ interface ComboboxPropsSingle {
    onValueChange?: (value: string) => void
 }
 
-interface ComboboxPropsMultiple {
+type ComboboxPropsMultiple = {
    /**
     * Prop 'multiple' indicating whether multiple values are allowed.
     */

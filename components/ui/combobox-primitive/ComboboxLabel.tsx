@@ -1,5 +1,4 @@
 import { type ComponentPropsWithoutRef, type Ref, forwardRef } from "react"
-
 import { useComboboxGroupContext } from "./ComboboxItemsGroupContext"
 
 export const Label = forwardRef(

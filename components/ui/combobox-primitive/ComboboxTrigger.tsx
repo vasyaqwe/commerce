@@ -6,11 +6,9 @@ import { type ComponentPropsWithoutRef, type Ref, forwardRef } from "react"
 import { useComboboxContext } from "./ComboboxContext"
 import { findElement } from "./utils"
 
-type TriggerProps = ComponentPropsWithoutRef<"div">
-
 export const Trigger = forwardRef(
    (
-      { className, children, ...props }: TriggerProps,
+      { className, children, ...props }: ComponentPropsWithoutRef<"div">,
       forwardedRef: Ref<HTMLDivElement>,
    ) => {
       const ctx = useComboboxContext()

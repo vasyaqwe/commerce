@@ -1,7 +1,7 @@
 import { type ReactNode, useContext } from "react"
 import { createContext } from "react"
 
-export interface FormFieldContextState {
+export type FormFieldContextState = {
    /**
     * Generated id for the input component.
     */
@@ -79,7 +79,7 @@ type State = Partial<
    >
 >
 
-export interface FormFieldControlProps {
+export type FormFieldControlProps = {
    children: (state: State) => ReactNode
 }
 
