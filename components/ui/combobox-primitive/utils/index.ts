@@ -48,7 +48,7 @@ export const getOrderedItems = (
    React.Children.forEach(children, (child) => {
       if (!isValidElement(child)) return
 
-      if (getElementDisplayName(child) === "Combobox.Item") {
+      if (getElementDisplayName(child) === "ComboboxPrimitive.Item") {
          const childProps = child.props as ItemProps
          result.push({
             value: childProps.value,
@@ -72,7 +72,9 @@ const findNestedItemText = (children: React.ReactNode): string => {
       if (React.isValidElement(child)) {
          const childElement = child as React.ReactElement
 
-         if (getElementDisplayName(childElement) === "Combobox.ItemText") {
+         if (
+            getElementDisplayName(childElement) === "ComboboxPrimitive.ItemText"
+         ) {
             return childElement.props.children
          }
 
@@ -86,9 +88,9 @@ const findNestedItemText = (children: React.ReactNode): string => {
 }
 
 /**
- * If Combobox.Item children:
+ * If ComboboxPrimitive.Item children:
  * - is a string, then the string is used.
- * - is JSX markup, then we look for Combobox.ItemText to get its string value.
+ * - is JSX markup, then we look for ComboboxPrimitive.ItemText to get its string value.
  */
 export const getItemText = (children: React.ReactNode): string => {
    return typeof children === "string" ? children : findNestedItemText(children)

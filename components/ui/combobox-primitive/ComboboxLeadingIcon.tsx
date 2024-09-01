@@ -4,4 +4,4 @@ export const LeadingIcon = ({ children }: { children: ReactElement }) => {
    return <div className="shrink-0">{children}</div>
 }
 
-LeadingIcon.displayName = "Combobox.LeadingIcon"
+LeadingIcon.displayName = "ComboboxPrimitive.LeadingIcon"

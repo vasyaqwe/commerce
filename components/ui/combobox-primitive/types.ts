@@ -3,7 +3,7 @@ import type {
    UseMultipleSelectionReturnValue,
 } from "downshift"
 
-export interface ComboboxItem {
+export type ComboboxItem = {
    disabled: boolean
    value: string
    text: string

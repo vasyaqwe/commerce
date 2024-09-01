@@ -6,4 +6,4 @@ export const Combobox = ({ children, ...props }: ComboboxProps) => {
    return <ComboboxProvider {...props}>{children}</ComboboxProvider>
 }
 
-Combobox.displayName = "Combobox"
+Combobox.displayName = "ComboboxPrimitive"

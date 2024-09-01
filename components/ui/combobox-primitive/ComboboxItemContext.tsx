@@ -11,7 +11,7 @@ import { getIndexByKey, getItemText } from "./utils"
 
 type ItemTextId = string | undefined
 
-interface ComboboxItemContextState {
+type ComboboxItemContextState = {
    textId: ItemTextId
    setTextId: React.Dispatch<React.SetStateAction<ItemTextId>>
    isSelected: boolean

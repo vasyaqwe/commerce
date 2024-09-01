@@ -8,4 +8,4 @@ export const Portal: typeof RadixPopoverPortal = ({
    <RadixPopoverPortal {...rest}>{children}</RadixPopoverPortal>
 )
 
-Portal.displayName = "Combobox.Portal"
+Portal.displayName = "ComboboxPrimitive.Portal"

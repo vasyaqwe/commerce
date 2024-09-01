@@ -1,21 +1,19 @@
-import { PopoverTrigger as RadixPopoverTrigger } from "@/components/ui/popover"
+import { PopoverTrigger } from "@/components/ui/popover"
 import { useCombinedState } from "@/hooks/use-combined-state"
 import { useMergeRefs } from "@/hooks/use-merge-refs"
-import { cx } from "class-variance-authority"
+import { cn } from "@/lib/utils"
 import {
    type ComponentPropsWithoutRef,
-   Fragment,
    type Ref,
    forwardRef,
    useEffect,
 } from "react"
-
 import { useComboboxContext } from "./ComboboxContext"
 
-type InputPrimitiveProps = ComponentPropsWithoutRef<"input">
-
-interface InputProps
-   extends Omit<InputPrimitiveProps, "value" | "placeholder"> {
+type InputProps = Omit<
+   ComponentPropsWithoutRef<"input">,
+   "value" | "placeholder"
+> & {
    className?: string
    placeholder?: string
    value?: string
@@ -58,10 +56,6 @@ export const Input = forwardRef(
          }
       }, [])
 
-      const [PopoverTrigger, popoverTriggerProps] = ctx.hasPopover
-         ? [RadixPopoverTrigger, { asChild: true, type: undefined }]
-         : [Fragment, {}]
-
       const multiselectInputProps = ctx.getDropdownProps()
       const inputRef = useMergeRefs(
          forwardedRef,
@@ -102,15 +96,16 @@ export const Input = forwardRef(
                   {ariaLabel}
                </label>
             )}
-            <PopoverTrigger {...popoverTriggerProps}>
+            <PopoverTrigger asChild>
                <input
                   type="text"
                   {...(hasPlaceholder && { placeholder })}
-                  className={cx(
-                     "max-w-full shrink-0 grow basis-[80px]",
-                     "h-10 text-ellipsis bg-surface px-sm text-body-1 outline-none",
-                     "disabled:cursor-not-allowed disabled:bg-transparent disabled:text-on-surface/dim-3",
-                     "read-only:cursor-default read-only:bg-transparent read-only:text-on-surface",
+                  className={cn(
+                     "appearence-none w-full",
+                     "cursor-pointer focus:cursor-text",
+                     ctx.selectedItems.length === 0 || !ctx.multiple
+                        ? "pl-2"
+                        : "pl-0",
                      className,
                   )}
                   {...props}
@@ -126,4 +121,4 @@ export const Input = forwardRef(
    },
 )
 
-Input.displayName = "Combobox.Input"
+Input.displayName = "ComboboxPrimitive.Input"

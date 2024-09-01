@@ -1,16 +1,16 @@
-import { cx } from "class-variance-authority"
-import { type Ref, forwardRef, useEffect, useId } from "react"
+import {
+   type ComponentPropsWithoutRef,
+   type Ref,
+   forwardRef,
+   useEffect,
+   useId,
+} from "react"
 import { ID_PREFIX } from "./ComboboxContext"
 import { useComboboxItemContext } from "./ComboboxItemContext"
 
-export interface ItemTextProps {
-   children: string
-   className?: string
-}
-
 export const ItemText = forwardRef(
    (
-      { children, className }: ItemTextProps,
+      props: ComponentPropsWithoutRef<"span">,
       forwardedRef: Ref<HTMLSpanElement>,
    ) => {
       const id = `${ID_PREFIX}-item-text-${useId()}`
@@ -25,14 +25,12 @@ export const ItemText = forwardRef(
 
       return (
          <span
+            {...props}
             id={id}
-            className={cx("inline", className)}
             ref={forwardedRef}
-         >
-            {children}
-         </span>
+         />
       )
    },
 )
 
-ItemText.displayName = "Combobox.ItemText"
+ItemText.displayName = "ComboboxPrimitive.ItemText"

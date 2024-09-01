@@ -4,7 +4,6 @@ import { useCombinedState } from "@/hooks/use-combined-state"
 import { useCombobox, useMultipleSelection } from "downshift"
 import {
    type Dispatch,
-   Fragment,
    type PropsWithChildren,
    type SetStateAction,
    createContext,
@@ -15,26 +14,20 @@ import {
    useState,
 } from "react"
 import type { ComboboxItem, DownshiftState, ItemsMap } from "./types"
-import { multipleSelectionReducer } from "./useCombobox/multipleSelectionReducer"
-import { singleSelectionReducer } from "./useCombobox/singleSelectionReducer"
-import {
-   getElementByIndex,
-   getItemsFromChildren,
-   hasChildComponent,
-} from "./utils"
+import { getElementByIndex, getItemsFromChildren } from "./utils"
+import { multipleSelectionReducer } from "./utils/multipleSelectionReducer"
+import { singleSelectionReducer } from "./utils/singleSelectionReducer"
 
 export interface ComboboxContextState extends DownshiftState {
    itemsMap: ItemsMap
    filteredItemsMap: ItemsMap
    highlightedItem: ComboboxItem | undefined
-   hasPopover: boolean
    multiple: boolean
    disabled: boolean
    readOnly: boolean
    wrap?: boolean
    state?: "error" | "alert" | "success"
    lastInteractionType: "mouse" | "keyboard"
-   setHasPopover: Dispatch<SetStateAction<boolean>>
    setLastInteractionType: (type: "mouse" | "keyboard") => void
    setOnInputValueChange: Dispatch<SetStateAction<((v: string) => void) | null>>
    innerInputRef: React.RefObject<HTMLInputElement>
@@ -185,6 +178,7 @@ export const ComboboxProvider = ({
    const [itemsMap, setItemsMap] = useState<ItemsMap>(
       getItemsFromChildren(children),
    )
+
    const [filteredItemsMap, setFilteredItems] = useState(
       shouldFilterItems ? getFilteredItemsMap(itemsMap, inputValue) : itemsMap,
    )
@@ -257,9 +251,6 @@ export const ComboboxProvider = ({
    const disabled = field.disabled ?? disabledProp
    const readOnly = field.readOnly ?? readOnlyProp
 
-   const [hasPopover, setHasPopover] = useState<boolean>(
-      hasChildComponent(children, "Combobox.Popover"),
-   )
    const [lastInteractionType, setLastInteractionType] = useState<
       "mouse" | "keyboard"
    >("mouse")
@@ -436,11 +427,8 @@ export const ComboboxProvider = ({
    /**
     * Warning:
     * Downshift is expecting the items list to always be rendered, as per a11y guidelines.
-    * This is why the `Popover` is always opened in this component, but visually hidden instead from Combobox.Popover.
+    * This is why the `Popover` is always opened in this component, but visually hidden instead from ComboboxPrimitive.Popover.
     */
-   const [WrapperComponent, wrapperProps] = hasPopover
-      ? [Popover, { open: true }]
-      : [Fragment, {}]
 
    return (
       <ComboboxContext.Provider
@@ -456,8 +444,6 @@ export const ComboboxProvider = ({
             multiple,
             disabled,
             readOnly,
-            hasPopover,
-            setHasPopover,
             state,
             lastInteractionType,
             setLastInteractionType,
@@ -477,7 +463,12 @@ export const ComboboxProvider = ({
             setIsTyping,
          }}
       >
-         <WrapperComponent {...wrapperProps}>{children}</WrapperComponent>
+         <Popover
+            open={downshift.isOpen}
+            onOpenChange={onOpenChange}
+         >
+            {children}
+         </Popover>
       </ComboboxContext.Provider>
    )
 }

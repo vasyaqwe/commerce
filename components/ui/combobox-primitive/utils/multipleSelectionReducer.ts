@@ -4,8 +4,8 @@ import {
    useCombobox,
 } from "downshift"
 import type React from "react"
+import { getIndexByKey } from "."
 import type { ComboboxItem, ItemsMap } from "../types"
-import { getIndexByKey } from "../utils"
 
 interface Props {
    allowCustomValue?: boolean
