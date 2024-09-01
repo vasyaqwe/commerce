@@ -1,4 +1,4 @@
-import { type ComboboxContextProps, ComboboxProvider } from "./ComboboxContext"
+import { type ComboboxContextProps, ComboboxProvider } from "./combobox-context"
 
 export type ComboboxProps = ComboboxContextProps
 

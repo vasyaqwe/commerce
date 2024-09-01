@@ -5,7 +5,7 @@ import {
    useContext,
    useState,
 } from "react"
-import { useComboboxContext } from "./ComboboxContext"
+import { useComboboxContext } from "./combobox-context"
 import type { ComboboxItem } from "./types"
 import { getIndexByKey, getItemText } from "./utils"
 

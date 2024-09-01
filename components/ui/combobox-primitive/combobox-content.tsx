@@ -1,4 +1,4 @@
-import { useComboboxContext } from "@/components/ui/combobox-primitive/ComboboxContext"
+import { useComboboxContext } from "@/components/ui/combobox-primitive/combobox-context"
 import { PopoverContent as RadixPopoverContent } from "@/components/ui/popover"
 import { useMergeRefs } from "@/hooks/use-merge-refs"
 import {

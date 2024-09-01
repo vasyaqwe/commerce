@@ -1,7 +1,7 @@
 import { useMergeRefs } from "@/hooks/use-merge-refs"
 import { ChevronDownIcon } from "@heroicons/react/24/outline"
 import { type ComponentProps, type Ref, forwardRef } from "react"
-import { useComboboxContext } from "./ComboboxContext"
+import { useComboboxContext } from "./combobox-context"
 
 export const Disclosure = forwardRef(
    (

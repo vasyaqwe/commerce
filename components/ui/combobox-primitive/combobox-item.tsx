@@ -1,10 +1,10 @@
 import { useMergeRefs } from "@/hooks/use-merge-refs"
 import { type HTMLAttributes, type Ref, forwardRef } from "react"
-import { useComboboxContext } from "./ComboboxContext"
+import { useComboboxContext } from "./combobox-context"
 import {
    ComboboxItemProvider,
    useComboboxItemContext,
-} from "./ComboboxItemContext"
+} from "./combobox-item-context"
 
 export type ItemProps = HTMLAttributes<HTMLDivElement> & {
    disabled?: boolean

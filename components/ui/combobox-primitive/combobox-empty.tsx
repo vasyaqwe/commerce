@@ -1,5 +1,5 @@
 import { type ComponentPropsWithoutRef, type Ref, forwardRef } from "react"
-import { useComboboxContext } from "./ComboboxContext"
+import { useComboboxContext } from "./combobox-context"
 
 export const Empty = forwardRef(
    (

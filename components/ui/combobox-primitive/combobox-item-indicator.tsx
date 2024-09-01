@@ -1,6 +1,6 @@
 import { CheckIcon } from "@heroicons/react/24/outline"
 import { type ComponentPropsWithoutRef, type Ref, forwardRef } from "react"
-import { useComboboxItemContext } from "./ComboboxItemContext"
+import { useComboboxItemContext } from "./combobox-item-context"
 
 export type ItemIndicatorProps = ComponentPropsWithoutRef<"span">
 

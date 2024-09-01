@@ -5,8 +5,8 @@ import {
    useEffect,
    useId,
 } from "react"
-import { ID_PREFIX } from "./ComboboxContext"
-import { useComboboxItemContext } from "./ComboboxItemContext"
+import { ID_PREFIX } from "./combobox-context"
+import { useComboboxItemContext } from "./combobox-item-context"
 
 export const ItemText = forwardRef(
    (

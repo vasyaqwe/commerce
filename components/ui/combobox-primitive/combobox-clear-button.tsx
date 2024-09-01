@@ -3,7 +3,7 @@ import {
    type MouseEventHandler,
    forwardRef,
 } from "react"
-import { useComboboxContext } from "./ComboboxContext"
+import { useComboboxContext } from "./combobox-context"
 
 export const ClearButton = forwardRef<
    HTMLButtonElement,

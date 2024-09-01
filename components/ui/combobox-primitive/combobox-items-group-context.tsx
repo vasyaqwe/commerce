@@ -1,5 +1,5 @@
 import { type PropsWithChildren, createContext, useContext, useId } from "react"
-import { ID_PREFIX } from "./ComboboxContext"
+import { ID_PREFIX } from "./combobox-context"
 
 export type ComboboxContextState = {
    groupLabelId: string
