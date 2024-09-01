@@ -1,4 +1,5 @@
 import { useMergeRefs } from "@/hooks/use-merge-refs"
+import { cn } from "@/lib/utils"
 import { type HTMLAttributes, type Ref, forwardRef } from "react"
 import { useComboboxContext } from "./combobox-context"
 import {
@@ -33,7 +34,7 @@ export const Item = forwardRef(
 
 const ItemContent = forwardRef(
    (
-      { disabled = false, value, children, ...props }: ItemProps,
+      { disabled = false, value, className, children, ...props }: ItemProps,
       forwardedRef: Ref<HTMLDivElement>,
    ) => {
       const ctx = useComboboxContext()
@@ -60,6 +61,10 @@ const ItemContent = forwardRef(
             data-disabled={disabled}
             aria-selected={itemCtx.isSelected}
             aria-labelledby={itemCtx.textId}
+            className={cn(
+               "relative flex cursor-pointer items-center rounded-md py-2 pr-9 pl-3 data-[focused=true]:bg-accent",
+               className,
+            )}
          >
             {children}
          </div>

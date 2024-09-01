@@ -1,6 +1,7 @@
 import { useComboboxContext } from "@/components/ui/combobox-primitive/combobox-context"
 import { PopoverContent as RadixPopoverContent } from "@/components/ui/popover"
 import { useMergeRefs } from "@/hooks/use-merge-refs"
+import { cn } from "@/lib/utils"
 import {
    type ComponentProps,
    type Ref,
@@ -13,6 +14,7 @@ export const Content = forwardRef(
    (
       {
          children,
+         className,
          sideOffset = 4,
          ...props
       }: ComponentProps<typeof RadixPopoverContent>,
@@ -56,6 +58,7 @@ export const Content = forwardRef(
                 */
                e.preventDefault()
             }}
+            className={cn("mt-0.5 p-1", className)}
             {...props}
          >
             <div

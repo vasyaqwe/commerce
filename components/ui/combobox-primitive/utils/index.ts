@@ -4,7 +4,7 @@ import React, {
    type ReactElement,
    type ReactNode,
 } from "react"
-import type { ItemProps } from "../ComboboxItem"
+import type { ItemProps } from "../combobox-item"
 import type { ComboboxItem, ItemsMap } from "../types"
 
 export function getIndexByKey(map: ItemsMap, targetKey: string) {

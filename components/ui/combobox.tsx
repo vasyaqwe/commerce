@@ -1,9 +1,12 @@
 "use client"
-
 import { buttonVariants } from "@/components/ui/button"
 import { ComboboxPrimitive } from "@/components/ui/combobox-primitive"
 import { cn } from "@/lib/utils"
-import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline"
+import {
+   CheckIcon,
+   ChevronDownIcon,
+   XMarkIcon,
+} from "@heroicons/react/24/outline"
 import { forwardRef } from "react"
 
 const Combobox = ComboboxPrimitive
@@ -26,7 +29,7 @@ const ComboboxClearButton = forwardRef<
       {...props}
    >
       <XMarkIcon
-         className="size-4"
+         className="size-4 opacity-90"
          strokeWidth={2.5}
       />
    </ComboboxPrimitive.ClearButton>
@@ -40,7 +43,12 @@ const ComboboxDisclosure = forwardRef<
    <ComboboxPrimitive.Disclosure
       ref={ref}
       {...props}
-   />
+   >
+      <ChevronDownIcon
+         className="size-3.5 opacity-90"
+         strokeWidth={2.5}
+      />
+   </ComboboxPrimitive.Disclosure>
 ))
 ComboboxDisclosure.displayName = ComboboxPrimitive.Disclosure.displayName
 
@@ -78,7 +86,7 @@ const ComboboxItem = forwardRef<
    <ComboboxPrimitive.Item
       ref={ref}
       className={cn(
-         `relative flex cursor-pointer items-center rounded-[8px] py-2.5 pr-10 pl-3 text-background data-[focused=true]:bg-popover-highlight`,
+         `rounded-[8px] py-2 pr-8 pl-3 text-background/95 data-[focused=true]:bg-popover-highlight`,
          className,
       )}
       {...props}
@@ -120,7 +128,7 @@ const ComboboxTrigger = forwardRef<
       ref={ref}
       className={cn(
          buttonVariants({ variant: "outline" }),
-         "justify-start gap-1 pl-1.5 outline outline-3 outline-transparent outline-offset-2 ring-offset-[1px] hover:border-border/60 active:outline-accent/30 has-[input:focus-visible]:outline-accent/30 active:ring-1 active:ring-accent/80 has-[input:focus-visible]:ring-1 has-[input:focus-visible]:ring-accent/80 ",
+         "justify-start gap-1 pl-1.5",
          className,
       )}
       {...props}
@@ -134,7 +142,7 @@ const ComboboxContent = forwardRef<
 >(({ className, children, ...props }, ref) => (
    <ComboboxPrimitive.Content
       ref={ref}
-      className={cn("mt-1 p-1", className)}
+      className={cn("", className)}
       {...props}
    >
       {children}

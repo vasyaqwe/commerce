@@ -19,7 +19,6 @@ export const ItemText = forwardRef(
 
       useEffect(() => {
          setTextId(id)
-
          return () => setTextId(undefined)
       })
 

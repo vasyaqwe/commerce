@@ -8,7 +8,7 @@ import {
    forwardRef,
    useEffect,
 } from "react"
-import { useComboboxContext } from "./ComboboxContext"
+import { useComboboxContext } from "./combobox-context"
 
 type InputProps = Omit<
    ComponentPropsWithoutRef<"input">,

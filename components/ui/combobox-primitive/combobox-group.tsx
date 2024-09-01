@@ -3,11 +3,11 @@ import React, {
    forwardRef,
    type Ref,
 } from "react"
-import { useComboboxContext } from "./ComboboxContext"
+import { useComboboxContext } from "./combobox-context"
 import {
    ComboboxGroupProvider,
    useComboboxGroupContext,
-} from "./ComboboxItemsGroupContext"
+} from "./combobox-items-group-context"
 
 type GroupProps = ComponentPropsWithoutRef<"div">
 
