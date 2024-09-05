@@ -439,7 +439,7 @@ export const getProducts = async ({
    query,
    reverse,
    sortKey,
-   color,
+   colors,
    size,
    style,
    material,
@@ -447,14 +447,19 @@ export const getProducts = async ({
    query?: string
    reverse?: boolean
    sortKey?: string
-   color?: string
+   colors?: string[] // Accept an array of colors
    size?: string
    style?: string
    material?: string
 }): Promise<Product[]> => {
    let queryString = query || ""
 
-   if (color) queryString += ` AND variants.options:color:${color}`
+   if (colors && colors.length > 0) {
+      // Construct the color query part
+      const colorQuery = colors.join(" OR ")
+      queryString += ` AND (variants.options:color:(${colorQuery}))`
+   }
+
    if (size) queryString += ` AND variants.options:size:${size}`
    if (style) queryString += ` AND product_type:${style}`
    if (material) queryString += ` AND vendor:${material}`
@@ -465,7 +470,7 @@ export const getProducts = async ({
       reverse,
       first: 100,
    }
-
+   console.log(queryString)
    const res = await shopifyFetch<ShopifyProductsOperation>({
       query: getProductsQuery,
       tags: [TAGS.products],

@@ -30,8 +30,8 @@ const ComboboxClearButton = forwardRef<
       {...props}
    >
       <XMarkIcon
-         className="size-4 opacity-90"
-         strokeWidth={2.5}
+         className="size-4 opacity-70"
+         strokeWidth={3}
       />
    </ComboboxPrimitive.ClearButton>
 ))
@@ -43,11 +43,12 @@ const ComboboxDisclosure = forwardRef<
 >(({ className, ...props }, ref) => (
    <ComboboxPrimitive.Disclosure
       ref={ref}
+      className="ml-auto"
       {...props}
    >
       <ChevronDownIcon
-         className="size-3.5 opacity-90"
-         strokeWidth={2.5}
+         className="size-4 opacity-70"
+         strokeWidth={3}
       />
    </ComboboxPrimitive.Disclosure>
 ))
@@ -59,7 +60,7 @@ const ComboboxEmpty = forwardRef<
 >(({ className, ...props }, ref) => (
    <ComboboxPrimitive.Empty
       ref={ref}
-      className={cn("mt-5 text-center text-popover-foreground", className)}
+      className={cn("my-5 text-center text-popover-foreground", className)}
       {...props}
    />
 ))
@@ -129,7 +130,7 @@ const ComboboxTrigger = forwardRef<
       ref={ref}
       className={cn(
          buttonVariants({ variant: "outline" }),
-         "justify-start pr-3 pl-1.5",
+         "justify-start pr-3 pl-1.5 data-[disabled=true]:hover:border-transparent",
          className,
       )}
       {...props}

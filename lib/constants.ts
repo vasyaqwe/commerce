@@ -6,7 +6,7 @@ export const env = {
 
 export const defaultSortFilter = {
    title: "Релевантне",
-   slug: null,
+   slug: "relevance",
    sortKey: "RELEVANCE",
    reverse: false,
 } as const
@@ -39,11 +39,28 @@ export const sortFilter = [
    },
 ] as const
 
-export const colorFilter = {
-   title: "Колір",
-   slug: "color",
-   values: ["Червоний", "Синій", "Зелений", "Чорний", "Білий"],
-}
+export const colorFilter = [
+   {
+      title: "Червоний",
+      slug: "red",
+   },
+   {
+      title: "Синій",
+      slug: "blue",
+   },
+   {
+      title: "Зелений",
+      slug: "green",
+   },
+   {
+      title: "Чорний",
+      slug: "black",
+   },
+   {
+      title: "Білий",
+      slug: "white",
+   },
+] as const
 
 export const sizeFilter = {
    title: "Розмір",

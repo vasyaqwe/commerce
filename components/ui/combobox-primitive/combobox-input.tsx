@@ -1,4 +1,3 @@
-import { PopoverTrigger } from "@/components/ui/popover"
 import { useCombinedState } from "@/hooks/use-combined-state"
 import { useMergeRefs } from "@/hooks/use-merge-refs"
 import { cn } from "@/lib/utils"
@@ -82,25 +81,20 @@ export const Input = forwardRef(
       })
 
       return (
-         <>
-            <PopoverTrigger asChild>
-               <input
-                  type="text"
-                  placeholder={placeholder}
-                  className={cn(
-                     "appearence-none w-full",
-                     "cursor-pointer focus:cursor-text",
-                     !ctx.multiple ? "pl-2" : "pl-0",
-                     className,
-                  )}
-                  {...props}
-                  {...downshiftInputProps}
-                  value={ctx.inputValue}
-                  disabled={ctx.disabled}
-                  readOnly={ctx.readOnly}
-               />
-            </PopoverTrigger>
-         </>
+         <input
+            type="text"
+            placeholder={placeholder}
+            className={cn(
+               "appearence-none w-full cursor-pointer bg-transparent focus:cursor-text",
+               !ctx.multiple ? "pl-2" : "pl-0",
+               className,
+            )}
+            {...props}
+            {...downshiftInputProps}
+            value={ctx.inputValue}
+            disabled={ctx.disabled}
+            readOnly={ctx.readOnly}
+         />
       )
    },
 )

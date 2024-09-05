@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card"
-import { defaultSortFilter, sortFilter } from "@/lib/constants"
+import { colorFilter, defaultSortFilter, sortFilter } from "@/lib/constants"
 import { getProducts } from "@/lib/shopify"
 import { cn, formatCurrency } from "@/lib/utils"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
@@ -16,14 +16,22 @@ export default async function Page({
 }: {
    searchParams?: { [key: string]: string | string[] | undefined }
 }) {
-   const { sort, q: searchValue } = searchParams as { [key: string]: string }
+   const {
+      sort,
+      q: searchValue,
+      color: colorValue,
+   } = searchParams as { [key: string]: string }
    const { sortKey, reverse } =
       sortFilter.find((item) => item.slug === sort) ?? defaultSortFilter
+   const colors = colorFilter
+      .filter((item) => colorValue?.includes(item.slug))
+      .map((c) => c.slug)
 
    const products = await getProducts({
       sortKey,
       reverse,
       query: searchValue,
+      colors,
    })
 
    return (
