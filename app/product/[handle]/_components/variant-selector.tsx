@@ -2,7 +2,8 @@
 
 import { Chip } from "@/components/ui/chip"
 import type { ProductOption, ProductVariant } from "@/lib/shopify/types"
-import { useSearchParams } from "next/navigation"
+import { createUrl } from "@/lib/utils"
+import { usePathname, useSearchParams } from "next/navigation"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
@@ -22,6 +23,8 @@ export function VariantSelector({
    variants: ProductVariant[]
 }) {
    const searchParams = useSearchParams()
+   const pathname = usePathname()
+   const router = useRouter()
    const getInitialState = () => {
       const params: ProductState = {}
       for (const [key, value] of searchParams.entries()) {
@@ -38,7 +41,11 @@ export function VariantSelector({
       return { ...state, ...newState }
    }
 
-   const updateURL = useUpdateURL()
+   const updateURL = (params: URLSearchParams) => {
+      const href = createUrl(pathname, params)
+
+      router.replace(href)
+   }
    const hasNoOptionsOrJustOneOption =
       !options.length ||
       (options.length === 1 && options[0]?.values.length === 1)
@@ -107,7 +114,7 @@ export function VariantSelector({
                               optionNameLowerCase,
                               value,
                            )
-                           updateURL(newState)
+                           updateURL(new URLSearchParams(newState))
                         }}
                         checked={isActive}
                         key={value}
@@ -123,17 +130,4 @@ export function VariantSelector({
          </dl>
       </form>
    ))
-}
-
-function useUpdateURL() {
-   const router = useRouter()
-
-   return (state: ProductState) => {
-      const newParams = new URLSearchParams(window.location.search)
-      // biome-ignore lint/complexity/noForEach: <explanation>
-      Object.entries(state).forEach(([key, value]) => {
-         newParams.set(key, value)
-      })
-      router.push(`?${newParams.toString()}`, { scroll: false })
-   }
 }

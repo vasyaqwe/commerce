@@ -11,7 +11,7 @@ import {
    ComboboxSelectedItems,
    ComboboxTrigger,
 } from "@/components/ui/combobox"
-import { colorFilter, sortFilter } from "@/lib/constants"
+import { colorFilter, sizeFilter, sortFilter } from "@/lib/constants"
 import { createUrl } from "@/lib/utils"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
@@ -24,7 +24,7 @@ export function Filters() {
    return (
       <>
          <Combobox
-            value={searchParams.get("sort")}
+            value={searchParams.get("sort") ?? "relevance"}
             onValueChange={(sort) => {
                const href = createUrl(
                   pathname,
@@ -33,7 +33,7 @@ export function Filters() {
                      ...{ sort: sort ?? "relevance" },
                   }),
                )
-               router.push(href)
+               router.replace(href)
             }}
          >
             <ComboboxTrigger className="w-[230px]">
@@ -69,7 +69,7 @@ export function Filters() {
                      }),
                   }),
                )
-               router.push(href)
+               router.replace(href)
             }}
          >
             <ComboboxTrigger className="w-[180px]">
@@ -81,6 +81,42 @@ export function Filters() {
             <ComboboxContent className="w-[185px] ">
                <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
                {colorFilter.map((item) => {
+                  return (
+                     <ComboboxItem
+                        value={item.slug}
+                        key={item.title}
+                     >
+                        {item.title}
+                     </ComboboxItem>
+                  )
+               })}
+            </ComboboxContent>
+         </Combobox>
+         <Combobox
+            multiple
+            value={searchParams.getAll("size").join().split(",")}
+            onValueChange={(sizes) => {
+               const href = createUrl(
+                  pathname,
+                  new URLSearchParams({
+                     ...(q && { q }),
+                     ...(sizes.length > 0 && {
+                        size: sizes.join(","),
+                     }),
+                  }),
+               )
+               router.replace(href)
+            }}
+         >
+            <ComboboxTrigger className="w-[180px]">
+               <ComboboxSelectedItems />
+               <ComboboxInput placeholder="Розмір" />
+               <ComboboxClearButton />
+               <ComboboxDisclosure />
+            </ComboboxTrigger>
+            <ComboboxContent className="w-[185px] ">
+               <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
+               {sizeFilter.map((item) => {
                   return (
                      <ComboboxItem
                         value={item.slug}

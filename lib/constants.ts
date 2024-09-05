@@ -62,11 +62,32 @@ export const colorFilter = [
    },
 ] as const
 
-export const sizeFilter = {
-   title: "Розмір",
-   slug: "size",
-   values: ["XS", "S", "M", "L", "XL"],
-}
+export const sizeFilter = [
+   {
+      title: "XS",
+      slug: "xs",
+   },
+   {
+      title: "S",
+      slug: "s",
+   },
+   {
+      title: "M",
+      slug: "m",
+   },
+   {
+      title: "L",
+      slug: "l",
+   },
+   {
+      title: "XL",
+      slug: "xl",
+   },
+   {
+      title: "2XL",
+      slug: "2xl",
+   },
+]
 
 export const styleFilter = {
    title: "Стиль",
