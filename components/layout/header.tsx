@@ -17,10 +17,10 @@ import type { ComponentProps } from "react"
 
 export function Header(props: ComponentProps<"header">) {
    const { cart } = useCart()
-   // const menu = await getMenu("next-js-frontend-header-menu")
+
    const menu = [
-      { title: "Жінкам", path: "/women" },
-      { title: "Чоловікам", path: "/men" },
+      { title: "Верх", path: `/search/${encodeURI("верх")}` },
+      { title: "Низ", path: `/search/${encodeURI("низ")}` },
       { title: "Аксесуари", path: "/accessories" },
    ]
 

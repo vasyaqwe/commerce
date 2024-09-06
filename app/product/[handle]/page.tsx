@@ -16,7 +16,7 @@ export async function generateMetadata({
 }: {
    params: { handle: string }
 }): Promise<Metadata> {
-   const product = await getProduct(decodeURIComponent(params.handle))
+   const product = await getProduct(decodeURI(params.handle))
 
    if (!product) return notFound()
 
@@ -50,7 +50,7 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: { params: { handle: string } }) {
-   const product = await getProduct(params.handle)
+   const product = await getProduct(decodeURI(params.handle))
 
    if (!product) return notFound()
 

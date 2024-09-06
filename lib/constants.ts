@@ -42,23 +42,23 @@ export const sortFilter = [
 export const colorFilter = [
    {
       title: "Червоний",
-      slug: "red",
+      slug: "Червоний",
    },
    {
       title: "Синій",
-      slug: "blue",
+      slug: "Синій",
    },
    {
       title: "Зелений",
-      slug: "green",
+      slug: "Зелений",
    },
    {
       title: "Чорний",
-      slug: "black",
+      slug: "Чорний",
    },
    {
       title: "Білий",
-      slug: "white",
+      slug: "Білий",
    },
 ] as const
 

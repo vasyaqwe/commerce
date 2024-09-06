@@ -1,3 +1,4 @@
+import { ProductsList } from "@/app/search/_components/products-list"
 import { Card } from "@/components/ui/card"
 import {
    colorFilter,
@@ -6,10 +7,7 @@ import {
    sortFilter,
 } from "@/lib/constants"
 import { getProducts } from "@/lib/shopify"
-import { cn, formatCurrency } from "@/lib/utils"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
-import Image from "next/image"
-import Link from "next/link"
 
 export const metadata = {
    title: "Search",
@@ -27,13 +25,16 @@ export default async function Page({
       color: colorValue,
       size: sizeValue,
    } = searchParams as { [key: string]: string }
+
    const { sortKey, reverse } =
       sortFilter.find((item) => item.slug === sort) ?? defaultSortFilter
+
    const colors = colorFilter
-      .filter((item) => colorValue?.includes(item.slug))
+      .filter((item) => colorValue?.split(",").includes(item.slug))
       .map((c) => c.slug)
+
    const sizes = sizeFilter
-      .filter((item) => sizeValue?.includes(item.slug))
+      .filter((item) => sizeValue?.split(",").includes(item.slug))
       .map((c) => c.slug)
 
    const products = await getProducts({
@@ -62,42 +63,7 @@ export default async function Page({
                </div>
             </div>
          )}
-         {products.length > 0 ? (
-            <div className="container grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4">
-               {products.map((product) => (
-                  <Link
-                     key={product.handle}
-                     className={cn(
-                        "relative inline-block h-full w-full overflow-hidden rounded-2xl p-0",
-                     )}
-                     href={`/product/${product.handle}`}
-                     prefetch={true}
-                  >
-                     <div
-                        className={cn("relative overflow-hidden rounded-2xl")}
-                        style={{ aspectRatio: "5/6" }}
-                     >
-                        <Image
-                           className="object-cover"
-                           alt={product.title}
-                           src={product.featuredImage?.url}
-                           fill
-                           sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
-                        />
-                     </div>
-                     <div className="pt-4">
-                        <h2 className="font-normal"> {product.title}</h2>
-                        <p className="mt-1 font-semibold text-lg">
-                           ₴
-                           {formatCurrency(
-                              product.priceRange.maxVariantPrice.amount,
-                           )}{" "}
-                        </p>
-                     </div>
-                  </Link>
-               ))}
-            </div>
-         ) : null}
+         {products.length > 0 ? <ProductsList products={products} /> : null}
       </>
    )
 }

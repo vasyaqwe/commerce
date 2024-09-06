@@ -19,7 +19,7 @@ export function Gallery({
          <div className="relative aspect-square max-h-[60svh] w-full overflow-hidden rounded-2xl">
             {images[imageIndex] && (
                <Image
-                  className="size-full object-cover"
+                  className="size-full object-cover object-top"
                   fill
                   sizes="(min-width: 1024px) 66vw, 100vw"
                   alt={images[imageIndex]?.altText as string}

@@ -1,6 +1,7 @@
 "use client"
 
 import { Chip } from "@/components/ui/chip"
+import { Tooltip } from "@/components/ui/tooltip"
 import type { ProductOption, ProductVariant } from "@/lib/shopify/types"
 import { createUrl } from "@/lib/utils"
 import { usePathname, useSearchParams } from "next/navigation"
@@ -37,7 +38,7 @@ export function VariantSelector({
 
    const updateOption = (name: string, value: string) => {
       const newState = { [name]: value }
-      setOptimisticState(newState)
+      setOptimisticState({ ...state, ...newState })
       return { ...state, ...newState }
    }
 
@@ -67,67 +68,90 @@ export function VariantSelector({
       ),
    }))
 
-   return options.map((option) => (
-      <form
-         key={option.id}
-         className="space-y-5"
-      >
-         <dl className="">
-            <dt className="mb-4 font-medium text-sm tracking-wide">
-               {option.name}
-            </dt>
-            <dd className="flex flex-wrap gap-3">
-               {option.values.map((value) => {
-                  const optionNameLowerCase = option.name.toLowerCase()
+   return (
+      <div className="space-y-6">
+         {options.map((option) => (
+            <form key={option.id}>
+               <dl className="">
+                  <dt className="mb-3 font-medium text-sm tracking-wide">
+                     {option.name}
+                  </dt>
+                  <dd className="flex flex-wrap gap-3">
+                     {option.values.map((value) => {
+                        const optionNameLowerCase = option.name.toLowerCase()
 
-                  // Base option params on current selectedOptions so we can preserve any other param state.
-                  const optionParams = {
-                     ...state,
-                     [optionNameLowerCase]: value,
-                  }
+                        // Base option params on current selectedOptions so we can preserve any other param state.
+                        const optionParams = {
+                           ...state,
+                           [optionNameLowerCase]: value,
+                        }
 
-                  // Filter out invalid options and check if the option combination is available for sale.
-                  const filtered = Object.entries(optionParams).filter(
-                     ([key, value]) =>
-                        options.find(
-                           (option) =>
-                              option.name.toLowerCase() === key &&
-                              option.values.includes(value),
-                        ),
-                  )
-                  const isAvailableForSale = combinations.find((combination) =>
-                     filtered.every(
-                        ([key, value]) =>
-                           combination[key] === value &&
-                           combination.availableForSale,
-                     ),
-                  )
+                        // Filter out invalid options and check if the option combination is available for sale.
+                        const filtered = Object.entries(optionParams).filter(
+                           ([key, value]) =>
+                              options.find(
+                                 (option) =>
+                                    option.name.toLowerCase() === key &&
+                                    option.values.includes(value),
+                              ),
+                        )
+                        const isAvailableForSale = combinations.find(
+                           (combination) =>
+                              filtered.every(
+                                 ([key, value]) =>
+                                    combination[key] === value &&
+                                    combination.availableForSale,
+                              ),
+                        )
 
-                  // The option is active if it's in the selected options.
-                  const isActive = state[optionNameLowerCase] === value
+                        const isActive = state[optionNameLowerCase] === value
 
-                  return (
-                     <Chip
-                        name={option.name}
-                        onChange={() => {
-                           const newState = updateOption(
-                              optionNameLowerCase,
-                              value,
-                           )
-                           updateURL(new URLSearchParams(newState))
-                        }}
-                        checked={isActive}
-                        key={value}
-                        aria-disabled={!isAvailableForSale}
-                        disabled={!isAvailableForSale}
-                        title={`${option.name} ${value}${!isAvailableForSale ? " (Out of Stock)" : ""}`}
-                     >
-                        {value}
-                     </Chip>
-                  )
-               })}
-            </dd>
-         </dl>
-      </form>
-   ))
+                        const Component = (
+                           <Chip
+                              key={value}
+                              name={option.name}
+                              onChange={() => {
+                                 const newState = updateOption(
+                                    optionNameLowerCase,
+                                    value,
+                                 )
+                                 updateURL(new URLSearchParams(newState))
+                              }}
+                              checked={isActive}
+                              disabled={!isAvailableForSale}
+                           >
+                              {value}
+                           </Chip>
+                        )
+
+                        return !isAvailableForSale ? (
+                           <Tooltip
+                              content={
+                                 <span>
+                                    Немає в наявності{" "}
+                                    {/* <span
+                                       className={cn(
+                                          option.name !== "Розмір"
+                                             ? "lowercase"
+                                             : "",
+                                       )}
+                                    >
+                                       ({value} {option.name})
+                                    </span> */}
+                                 </span>
+                              }
+                              key={value}
+                           >
+                              <span>{Component}</span>
+                           </Tooltip>
+                        ) : (
+                           Component
+                        )
+                     })}
+                  </dd>
+               </dl>
+            </form>
+         ))}
+      </div>
+   )
 }
