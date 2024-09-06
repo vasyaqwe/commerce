@@ -16,20 +16,21 @@ export function Chip({
             {
                "--transition": `0.75s`,
                "--backdrop": `light-dark(white, black)`,
+               "--color-primary": "240deg 6% 10%",
                transition: `color, background-color, grid-template-columns, transform`,
                transitionDuration: `calc(var(--transition) * 0.5), 0.2s, var(--transition), 0.25s`,
                transitionTimingFunction: `var(--ease), ease, var(--ease), ease`,
                outline: `0px solid color-mix(in lch, canvas, canvasText 85%)`,
                outlineOffset: `2px`,
+               gridTemplateColumns: `auto calc(var(--active)*20px)`,
             } as CSSProperties
          }
          className={cn(
-            `has-[input:disabled]:!bg-background has-[:focus-visible]:!outline-2 grid cursor-pointer grid-cols-[auto,calc(var(--active)*20px)] bg-[hsl(var(--primary)/calc(var(--active)-0.1))] active:enabled:scale-[97%]`,
-            `items-center rounded-[12px] border px-3.5 py-[9px] text-[var(--accent)] shadow-sm `,
-            `leading-[1.25] has-[input:disabled]:cursor-not-allowed`,
-            `dark:border-foreground/10 dark:has-[input:checked]:border-foreground/10 has-[input:checked]:border-primary/10 dark:bg-muted/75 dark:hover:bg-muted`,
+            `has-[input:disabled]:!bg-background has-[:focus-visible]:!outline-2 grid cursor-pointer bg-[hsl(var(--color-primary)/calc(var(--active)-0.1))] active:enabled:scale-[97%]`,
+            `items-center rounded-[12px] border border-border px-3.5 py-[9px] text-[var(--accent)] shadow-sm`,
+            `leading-[1.25] has-[input:disabled]:cursor-not-allowed has-[input:checked]:border-primary/10`,
             `[&:not(:has(:checked))]:hover:bg-border/50 has-[:checked]:text-background`,
-            `dark:has-[input:disabled]:!bg-muted/50 dark:shadow-md has-[:checked]:[--active:1] hover:[--intent:0.3]`,
+            ` has-[:checked]:[--active:1] hover:[--intent:0.3]`,
             className,
          )}
       >

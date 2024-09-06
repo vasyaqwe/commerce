@@ -10,12 +10,12 @@ const buttonVariants = cva(
       variants: {
          variant: {
             default: `bg-primary/90 shadow-sm hover:enabled:shadow-lg border border-transparent focus-visible:ring-accent text-primary-foreground/95 hover:enabled:bg-primary disabled:bg-border disabled:text-foreground disabled:border-foreground/[0.12] active:enabled:shadow-md hover:enabled:text-primary-foreground`,
-            secondary: `bg-muted/70 font-medium text-muted-foreground hover:enabled:bg-muted data-[state=open]:bg-muted dark:bg-muted/50 dark:data-[state=open]:bg-muted dark:hover:enabled:bg-muted hover:enabled:text-foreground/95 data-[state=open]:text-foreground/85 dark:shadow-md`,
+            secondary: `bg-muted/70 font-medium text-muted-foreground hover:enabled:bg-muted data-[state=open]:bg-muted hover:enabled:text-foreground/95 data-[state=open]:text-foreground/85`,
             "secondary-primary": `bg-muted font-medium text-muted-foreground hover:enabled:bg-primary/10 hover:enabled:text-primary`,
             "secondary-destructive": `bg-destructive/20 font-medium hover:enabled:bg-destructive/15 text-destructive hover:enabled:text-destructive/90`,
-            outline: `bg-background dark:bg-muted dark:border-foreground/[0.07] border border-transparent text-foreground data-[state=open]:border-border/60 hover:enabled:border-border/60 shadow-button`,
+            outline: `bg-background border border-border text-foreground data-[state=open]:border-muted hover:enabled:border-muted`,
             destructive: `bg-destructive/90 hover:enabled:bg-destructive text-destructive-foreground/90 hover:enabled:text-destructive-foreground`,
-            ghost: "border border-transparent aria-[current=page]:bg-muted dark:hover:enabled:bg-border hover:enabled:bg-muted/70",
+            ghost: "border border-transparent aria-[current=page]:bg-muted hover:enabled:bg-muted/70",
             link: "!h-auto !rounded-none !p-0 text-foreground/70 underline transition-none hover:enabled:text-foreground",
          },
          size: {

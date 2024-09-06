@@ -1,6 +1,6 @@
-import { Header } from "@/app/_components/header"
-import "./globals.css"
+import "./styles/app.css"
 import { Footer } from "@/app/_components/footer"
+import { Header } from "@/app/_components/header"
 import { CartProvider } from "@/components/cart/cart-context"
 import { ModalProvider } from "@/components/modals"
 import { Toaster } from "@/components/ui/toast"
@@ -32,14 +32,14 @@ export const metadata = {
    },
 }
 
-export default async function Layout({ children }: { children: ReactNode }) {
+export default function Layout({ children }: { children: ReactNode }) {
    const cartId = cookies().get("cartId")?.value
    const cart = getCart(cartId)
 
    return (
       <html
          lang="en"
-         className={cn("font-primary antialiased", GeistSans.variable)}
+         className={cn("light font-primary antialiased", GeistSans.variable)}
       >
          <body className="grid min-h-svh grid-rows-[auto_1fr_auto] bg-background text-base text-foreground">
             <CartProvider cartPromise={cart}>

@@ -73,7 +73,7 @@ const ComboboxInput = forwardRef<
    <ComboboxPrimitive.Input
       ref={ref}
       className={cn(
-         "placeholder:text-muted-foreground/90 focus:outline-none",
+         "border-transparent placeholder:text-muted-foreground/90 focus:outline-none",
          className,
       )}
       {...props}

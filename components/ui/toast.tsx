@@ -62,7 +62,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
                translate: "-50% 0",
             },
             className:
-               "!border-none mx-auto select-none !w-max max-w-[--width] !left-1/2 max-md:mb-[calc(env(safe-area-inset-bottom)+3.25rem)] bg-popover dark:shadow-popover-shadow !right-auto text-popover-foreground py-3 text-base justify-center pointer-events-auto rounded-full",
+               "!border-none mx-auto select-none !w-max max-w-[--width] !left-1/2 max-md:mb-[calc(env(safe-area-inset-bottom)+3.25rem)] bg-popover !right-auto text-popover-foreground py-3 text-base justify-center pointer-events-auto rounded-full",
          }}
          expand
          position="bottom-center"

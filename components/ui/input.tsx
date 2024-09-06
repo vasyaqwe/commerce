@@ -9,7 +9,7 @@ import {
 import { buttonVariants } from "./button"
 
 const inputVariants = cva(
-   `block h-[42px] w-full rounded-xl transition-colors text-[0.975rem] border border-transparent focus:border-[var(--border-color)] px-3 bg-muted/40 focus:bg-muted/60 placeholder:text-foreground/40 focus:outline-none ring ring-transparent appearance-none [--ring:hsl(var(--primary)/0.15)] dark:[--ring:hsl(var(--primary)/0.3)] [--border-color:hsl(var(--foreground)/0.1)] dark:[--border-color:hsl(var(--primary)/0.9)] has-[+button[data-clearinput]:active]:border-[var(--border-color)] has-[+button[data-clearinput]:active]:ring-[var(--ring)]`,
+   `block h-[42px] w-full rounded-xl transition-colors text-[0.975rem] border border-transparent focus:border-[var(--border-color)] px-3 bg-muted/40 focus:bg-muted/60 placeholder:text-foreground/40 focus:outline-none ring ring-transparent appearance-none [--ring:var(--color-primary)] [--border-color:var(--color-muted)] has-[+button[data-clearinput]:active]:border-[var(--border-color)] has-[+button[data-clearinput]:active]:ring-[var(--color-primary)]`,
 )
 const Input = forwardRef<
    HTMLInputElement,
@@ -37,7 +37,7 @@ export function ClearInputButton({
          data-clearinput
          className={cn(
             buttonVariants({ variant: "outline" }),
-            "-translate-y-1/2 !size-[22px] !rounded-md absolute top-1/2 right-[7px] bg-background/90 p-[2px] text-foreground/70 shadow-shadow transition-all dark:bg-foreground/10",
+            "-translate-y-1/2 !size-[22px] !rounded-md absolute top-1/2 right-[7px] bg-background/90 p-[2px] text-foreground/70 shadow-shadow transition-all ",
             !props.disabled
                ? visible
                   ? "scale-100 opacity-100"

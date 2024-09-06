@@ -10,14 +10,6 @@ const badgeVariants = cva(
       variants: {
          variant: {
             default: `border-primary/10 bg-accent bg-primary/15 text-accent-foreground text-primary`,
-            destructive:
-               "bg-rose-400/20 text-rose-700 dark:bg-rose-400/10 dark:text-rose-400",
-            error: "!h-auto gap-2 bg-rose-400/20 px-2 py-1.5 text-rose-700 dark:bg-rose-400/10 dark:text-rose-400",
-            success:
-               "bg-lime-400/20 text-lime-700 dark:bg-lime-400/10 dark:text-lime-400",
-            positive: "bg-positive/20 text-positive",
-            neutral: "bg-neutral/20 text-neutral",
-            negative: "bg-negative/20 text-negative",
          },
          size: {
             default: "h-7 px-2",

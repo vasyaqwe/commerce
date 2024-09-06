@@ -53,7 +53,7 @@ export function CartModal() {
          ) : (
             <>
                <section>
-                  <ul className="flex-grow divide-y overflow-auto">
+                  <ul className="flex-grow divide-y divide-border overflow-auto">
                      {cart.lines
                         .sort((a, b) =>
                            a.merchandise.product.title.localeCompare(
@@ -152,7 +152,7 @@ export function CartModal() {
                         })}
                   </ul>
                </section>
-               <section className="mt-auto divide-y py-4">
+               <section className="mt-auto divide-y divide-border py-4">
                   <div className="flex items-center justify-between px-4 py-3">
                      <p>Податки</p>
                      <p className="text-right">

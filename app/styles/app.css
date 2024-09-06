@@ -1,0 +1,237 @@
+@import "tailwindcss";
+@import "tailwindcss/preflight" layer(base);
+@import "tailwindcss/utilities" layer(utilities);
+
+:root {
+  --intentful: light-dark(color-mix(in lch, canvas, canvasText 15%), black);
+  --ease: linear(
+    0 0%,
+    0.6832 7.89%,
+    0.9171 11.07%,
+    1.0251 12.99%,
+    1.1058 14.9%,
+    1.1619 16.86%,
+    1.1945 18.91%,
+    1.2024 20.02%,
+    1.2043 21.18%,
+    1.1907 23.72%,
+    1.1598 26.27%,
+    1.0604 32.59%,
+    1.0172 35.84%,
+    0.9839 39.49%,
+    0.967 43.26%,
+    0.9639 45.77%,
+    0.9661 48.59%,
+    0.9963 60.54%,
+    1.0054 67.42%,
+    1 100%
+  );
+}
+
+@theme default {
+  --color-background: #ffffff;
+  --color-foreground: #18181b;
+  --color-popover: #1f1f23;
+  --color-popover-foreground: #f5f5f5;
+  --color-popover-highlight: #4d4d4d;
+  --color-popover-icon: #acacac;
+  --color-primary: #18181b;
+  --color-primary-foreground: #ffffff;
+  --color-accent: #edd15e;
+  --color-muted: #dedede;
+  --color-muted-foreground: #4f4730;
+  --color-destructive: #e2363c;
+  --color-destructive-foreground: #f5f5f5;
+  --color-border: #e8e8e8;
+
+  --font-family-primary: var(--font-geist-sans), sans-serif;
+
+  --font-size-base: 0.925rem;
+  --font-size-lg: 1.125rem;
+
+  --shadow-button: 0px 1px 1px -1px rgba(0,0,0,.1),0px 2px 2px -1px rgba(0,0,0,.1),0px 0px 0px 1px rgba(0,0,0,.08),inset 0px 1px 0px #fff,inset 0px 1px 2px 1px #fff,inset 0px 1px 2px rgba(0,0,0,.08);
+
+  --animation-fade-in: fade-in 450ms var(--animation-delay, 0ms) ease forwards;
+
+  @keyframes fade-in {
+    from: {
+      opacity: "0",
+    }
+    to: {
+      opacity: "1",
+    }
+  }
+}
+
+@layer components {
+  .squircle {
+    clip-path: polygon(
+      100% 50%,
+      99.94% 60.28%,
+      99.77% 65.26%,
+      99.49% 69.2%,
+      99.1% 72.58%,
+      98.59% 75.56%,
+      97.96% 78.25%,
+      97.22% 80.7%,
+      96.37% 82.94%,
+      95.39% 85%,
+      94.3% 86.91%,
+      93.08% 88.66%,
+      91.74% 90.26%,
+      90.26% 91.74%,
+      88.66% 93.08%,
+      86.91% 94.3%,
+      85% 95.39%,
+      82.94% 96.37%,
+      80.7% 97.22%,
+      78.25% 97.96%,
+      75.56% 98.59%,
+      72.58% 99.1%,
+      69.2% 99.49%,
+      65.26% 99.77%,
+      60.28% 99.94%,
+      50% 100%,
+      39.72% 99.94%,
+      34.74% 99.77%,
+      30.8% 99.49%,
+      27.42% 99.1%,
+      24.44% 98.59%,
+      21.75% 97.96%,
+      19.3% 97.22%,
+      17.06% 96.37%,
+      15% 95.39%,
+      13.09% 94.3%,
+      11.34% 93.08%,
+      9.74% 91.74%,
+      8.26% 90.26%,
+      6.92% 88.66%,
+      5.7% 86.91%,
+      4.61% 85%,
+      3.63% 82.94%,
+      2.78% 80.7%,
+      2.04% 78.25%,
+      1.41% 75.56%,
+      0.9% 72.58%,
+      0.51% 69.2%,
+      0.23% 65.26%,
+      0.06% 60.28%,
+      0% 50%,
+      0.06% 39.72%,
+      0.23% 34.74%,
+      0.51% 30.8%,
+      0.9% 27.42%,
+      1.41% 24.44%,
+      2.04% 21.75%,
+      2.78% 19.3%,
+      3.63% 17.06%,
+      4.61% 15%,
+      5.7% 13.09%,
+      6.92% 11.34%,
+      8.26% 9.74%,
+      9.74% 8.26%,
+      11.34% 6.92%,
+      13.09% 5.7%,
+      15% 4.61%,
+      17.06% 3.63%,
+      19.3% 2.78%,
+      21.75% 2.04%,
+      24.44% 1.41%,
+      27.42% 0.9%,
+      30.8% 0.51%,
+      34.74% 0.23%,
+      39.72% 0.06%,
+      50% 0%,
+      60.28% 0.06%,
+      65.26% 0.23%,
+      69.2% 0.51%,
+      72.58% 0.9%,
+      75.56% 1.41%,
+      78.25% 2.04%,
+      80.7% 2.78%,
+      82.94% 3.63%,
+      85% 4.61%,
+      86.91% 5.7%,
+      88.66% 6.92%,
+      90.26% 8.26%,
+      91.74% 9.74%,
+      93.08% 11.34%,
+      94.3% 13.09%,
+      95.39% 15%,
+      96.37% 17.06%,
+      97.22% 19.3%,
+      97.96% 21.75%,
+      98.59% 24.44%,
+      99.1% 27.42%,
+      99.49% 30.8%,
+      99.77% 34.74%,
+      99.94% 39.72%,
+      100% 50%
+    );
+  }
+
+  .container {
+    margin-inline: auto;
+    padding-inline: 0.925rem;
+    width: min(100%, 1324px);
+  }
+
+  td::before {
+    content: attr(data-thead) !important;
+  }
+  [data-chip] {
+    --active: 0;
+    --intent: 0;
+    --selected: hsl(var(--primary));
+    --accent: color-mix(in lch, canvasText, canvas 50%);
+  }
+  [data-chip]:after {
+    transition-timing-function: var(--ease);
+  }
+}
+
+/* reset */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  text-wrap: balance;
+}
+
+p {
+  max-width: var(--width-prose);
+  text-wrap: pretty;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* sonner */
+:where([data-sonner-toast]) :where([data-title]) {
+  line-height: 1.35 !important;
+}
+[data-sonner-toaster] {
+  --mobile-offset: 0 !important;
+}

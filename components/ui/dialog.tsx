@@ -21,7 +21,7 @@ const DialogOverlay = React.forwardRef<
    <DialogPrimitive.Overlay
       ref={ref}
       className={cn(
-         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/40 data-[state=closed]:animate-out data-[state=open]:animate-in dark:bg-black/75",
+         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/40 data-[state=closed]:animate-out data-[state=open]:animate-inline",
          className,
       )}
       {...props}
@@ -34,13 +34,13 @@ const dialogVariants = cva(
    {
       variants: {
          variant: {
-            default: `max-w-lg [&>div]:p-4 data-[state=open]:slide-in-from-bottom-16 [&>form]:p-4 dark:bg-popover dark:shadow-popover-shadow shadow-lg`,
-            alert: "data-[state=open]:slide-in-from-bottom-16 max-w-md shadow-lg dark:bg-popover [&>div]:p-4 [&>form]:p-4 dark:shadow-popover-shadow",
+            default: `max-w-lg data-[state=open]:slide-in-from-bottom-16 shadow-lg`,
+            alert: "data-[state=open]:slide-in-from-bottom-16 max-w-md shadow-lg",
             overlay: "bg-transparent",
             command:
                "data-[state=closed]:!animate-none top-[20px] w-[90%] max-w-[430px] translate-y-0 animate-none bg-trasparent md:top-[75px]",
             toolbar:
-               "data-[state=open]:slide-in-from-bottom-2 data-[state=closed]:slide-out-to-bottom-2 top-auto bottom-[calc(env(safe-area-inset-bottom)+5rem)] flex w-fit translate-y-0 items-center gap-1 rounded-xl border border-muted p-[5px] shadow-md md:bottom-9 dark:border-muted dark:bg-popover ",
+               "data-[state=open]:slide-in-from-bottom-2 data-[state=closed]:slide-out-to-bottom-2 top-auto bottom-[calc(env(safe-area-inset-bottom)+5rem)] flex w-fit translate-y-0 items-center gap-1 rounded-xl border border-muted p-[5px] shadow-md md:bottom-9",
          },
       },
       defaultVariants: {

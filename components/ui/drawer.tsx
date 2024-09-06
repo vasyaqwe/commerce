@@ -23,10 +23,7 @@ const DrawerOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
    <DrawerPrimitive.Overlay
       ref={ref}
-      className={cn(
-         "fixed inset-0 z-50 bg-black/40 dark:bg-black/75",
-         className,
-      )}
+      className={cn("fixed inset-0 z-50 bg-black/40", className)}
       {...props}
    />
 ))
@@ -50,7 +47,7 @@ const DrawerContent = React.forwardRef<
          }}
          ref={ref}
          className={cn(
-            "group fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto max-h-[88svh] flex-col rounded-t-xl border bg-background shadow-[0_-8px_10px_0px_hsl(var(--foreground)/.06)] [&[vaul-drawer-direction=right]]:right-0 [&[vaul-drawer-direction=right]]:left-auto [&[vaul-drawer-direction=right]]:h-screen [&[vaul-drawer-direction=right]]:max-h-full [&[vaul-drawer-direction=right]]:w-[556px] [&[vaul-drawer-direction=right]]:rounded-r-none [&[vaul-drawer-direction=right]]:rounded-bl-xl dark:border-transparent dark:bg-popover [&[vaul-drawer-direction=right]]:dark:shadow-popover-side-shadow dark:shadow-popover-shadow",
+            "group fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto max-h-[88svh] flex-col rounded-t-xl border border-border bg-background shadow-[0_-8px_10px_0px_hsl(var(--foreground)/.06)] [&[vaul-drawer-direction=right]]:right-0 [&[vaul-drawer-direction=right]]:left-auto [&[vaul-drawer-direction=right]]:h-screen [&[vaul-drawer-direction=right]]:max-h-full [&[vaul-drawer-direction=right]]:w-[556px] [&[vaul-drawer-direction=right]]:rounded-r-none [&[vaul-drawer-direction=right]]:rounded-bl-xl ",
             className,
          )}
          {...props}
@@ -68,7 +65,10 @@ const DrawerHeader = ({
    ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
    <header
-      className={cn("grid gap-1.5 p-4 md:border-b max-md:pt-2", className)}
+      className={cn(
+         "grid gap-1.5 border-border p-4 md:border-b max-md:pt-2",
+         className,
+      )}
       {...props}
    >
       {children}
@@ -85,7 +85,7 @@ const DrawerFooter = ({
          paddingBottom: `max(calc(env(safe-area-inset-bottom) + 0.5rem), 1rem)`,
       }}
       className={cn(
-         "sticky bottom-0 mt-auto flex items-center justify-between gap-2 border-t-2 border-dashed p-4",
+         "sticky bottom-0 mt-auto flex items-center justify-between gap-2 border border-t-border p-4",
          className,
       )}
       {...props}

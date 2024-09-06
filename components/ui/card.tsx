@@ -3,7 +3,7 @@ import { cva } from "class-variance-authority"
 import { type ComponentProps, forwardRef } from "react"
 
 const cardVariants = cva(
-   `rounded-2xl border bg-background dark:bg-popover p-6 shadow-sm has-[[data-card-header=true]]:p-0`,
+   `rounded-2xl border border-border bg-background p-6 shadow-sm has-[[data-card-header=true]]:p-0`,
 )
 
 const Card = forwardRef<HTMLDivElement, ComponentProps<"div">>(
