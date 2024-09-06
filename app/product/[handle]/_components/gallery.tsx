@@ -14,6 +14,7 @@ export function Gallery({
    const _previousImageIndex =
       imageIndex === 0 ? images.length - 1 : imageIndex - 1
 
+   // TODO: add carousel
    return (
       <form>
          <div className="relative aspect-square max-h-[60svh] w-full overflow-hidden rounded-2xl">

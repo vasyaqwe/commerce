@@ -1,4 +1,4 @@
-import { ProductsList } from "@/app/search/_components/products-list"
+import { Product } from "@/app/search/_components/product"
 import { Card } from "@/components/ui/card"
 import {
    colorFilter,
@@ -10,8 +10,8 @@ import { getProducts } from "@/lib/shopify"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
 
 export const metadata = {
-   title: "Search",
-   description: "Search for products in the store.",
+   title: "Шукати",
+   description: "Шукайте будь-який одяг.",
 }
 
 export default async function Page({
@@ -63,7 +63,14 @@ export default async function Page({
                </div>
             </div>
          ) : (
-            <ProductsList products={products} />
+            <div className="container grid grid-cols-1 gap-2 lg:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4">
+               {products.map((p) => (
+                  <Product
+                     product={p}
+                     key={p.handle}
+                  />
+               ))}
+            </div>
          )}
       </>
    )

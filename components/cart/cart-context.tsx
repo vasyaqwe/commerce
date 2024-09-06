@@ -29,14 +29,14 @@ type CartContextType = {
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
-function calculateItemCost(quantity: number, price: string): string {
+const calculateItemCost = (quantity: number, price: string) => {
    return (Number(price) * quantity).toString()
 }
 
-function updateCartItem(
+const updateCartItem = (
    item: CartItem,
    updateType: UpdateType,
-): CartItem | null {
+): CartItem | null => {
    if (updateType === "delete") return null
 
    const newQuantity =
@@ -62,11 +62,11 @@ function updateCartItem(
    }
 }
 
-function createOrUpdateCartItem(
+const createOrUpdateCartItem = (
    existingItem: CartItem | undefined,
    variant: ProductVariant,
    product: Product,
-): CartItem {
+): CartItem => {
    const quantity = existingItem ? existingItem.quantity + 1 : 1
    const totalAmount = calculateItemCost(quantity, variant.price.amount)
 
@@ -93,9 +93,9 @@ function createOrUpdateCartItem(
    }
 }
 
-function updateCartTotals(
+const updateCartTotals = (
    lines: CartItem[],
-): Pick<Cart, "totalQuantity" | "cost"> {
+): Pick<Cart, "totalQuantity" | "cost"> => {
    const totalQuantity = lines.reduce((sum, item) => sum + item.quantity, 0)
    const totalAmount = lines.reduce(
       (sum, item) => sum + Number(item.cost.totalAmount.amount),
@@ -113,22 +113,20 @@ function updateCartTotals(
    }
 }
 
-function createEmptyCart(): Cart {
-   return {
-      id: undefined,
-      checkoutUrl: "",
-      totalQuantity: 0,
-      lines: [],
-      cost: {
-         subtotalAmount: { amount: "0", currencyCode: "USD" },
-         totalAmount: { amount: "0", currencyCode: "USD" },
-         totalTaxAmount: { amount: "0", currencyCode: "USD" },
-      },
-   }
-}
+const initialCart = {
+   id: undefined,
+   checkoutUrl: "",
+   totalQuantity: 0,
+   lines: [],
+   cost: {
+      subtotalAmount: { amount: "0", currencyCode: "USD" },
+      totalAmount: { amount: "0", currencyCode: "USD" },
+      totalTaxAmount: { amount: "0", currencyCode: "USD" },
+   },
+} satisfies Cart
 
-function cartReducer(state: Cart | undefined, action: CartAction): Cart {
-   const currentCart = state || createEmptyCart()
+const cartReducer = (state: Cart | undefined, action: CartAction) => {
+   const currentCart = state ?? initialCart
 
    switch (action.type) {
       case "UPDATE_ITEM": {

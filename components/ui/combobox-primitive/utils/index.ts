@@ -7,7 +7,7 @@ import React, {
 import type { ItemProps } from "../combobox-item"
 import type { ComboboxItem, ItemsMap } from "../types"
 
-export function getIndexByKey(map: ItemsMap, targetKey: string) {
+export const getIndexByKey = (map: ItemsMap, targetKey: string) => {
    let index = 0
    for (const [key] of map.entries()) {
       if (key === targetKey) {

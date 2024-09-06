@@ -1,4 +1,4 @@
-import { ProductsList } from "@/app/search/_components/products-list"
+import { Product } from "@/app/search/_components/product"
 import { Card } from "@/components/ui/card"
 import { defaultSortFilter, sortFilter } from "@/lib/constants"
 import { getCollection, getCollectionProducts } from "@/lib/shopify"
@@ -16,11 +16,11 @@ export async function generateMetadata({
    if (!collection) return notFound()
 
    return {
-      title: collection.seo?.title || collection.title,
+      title: collection.seo?.title ?? collection.title,
       description:
-         collection.seo?.description ||
-         collection.description ||
-         `${collection.title} товари`,
+         collection.seo?.description ??
+         collection.description ??
+         `Категорія "${collection.title}"`,
    }
 }
 
@@ -57,7 +57,14 @@ export default async function Page({
                </div>
             </div>
          ) : (
-            <ProductsList products={products} />
+            <div className="container grid grid-cols-1 gap-2 lg:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4">
+               {products.map((p) => (
+                  <Product
+                     product={p}
+                     key={p.handle}
+                  />
+               ))}
+            </div>
          )}
       </>
    )

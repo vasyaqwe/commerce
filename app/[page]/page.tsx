@@ -36,14 +36,11 @@ export default async function Page({ params }: { params: { page: string } }) {
             html={page.body as string}
          />
          <p className="text-sm italic">
-            {`This document was last updated on ${new Intl.DateTimeFormat(
-               undefined,
-               {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-               },
-            ).format(new Date(page.updatedAt))}.`}
+            {`Редагували ввостаннє ${new Intl.DateTimeFormat("uk-UA", {
+               year: "numeric",
+               month: "long",
+               day: "numeric",
+            }).format(new Date(page.updatedAt))}.`}
          </p>
       </>
    )
