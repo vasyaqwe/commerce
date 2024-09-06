@@ -10,7 +10,7 @@
       "attributePosition": "multiline"
    },
    "files": {
-      "ignore": ["out", ".next", ".wrangler"]
+      "ignore": ["out", ".next"]
    },
    "javascript": {
       "formatter": {

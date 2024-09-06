@@ -28,7 +28,7 @@ export function ProductsList({ products }: { products: Product[] }) {
                   />
                </div>
                <div className="pt-2">
-                  <h2 className="font-normal opacity-75"> {product.title}</h2>
+                  <h2 className="font-normal opacity-75">{product.title}</h2>
                   <p className="mt-1 font-semibold text-lg">
                      ₴
                      {formatCurrency(

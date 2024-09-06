@@ -20,7 +20,7 @@ export async function generateMetadata({
       description:
          collection.seo?.description ||
          collection.description ||
-         `${collection.title} products`,
+         `${collection.title} товари`,
    }
 }
 

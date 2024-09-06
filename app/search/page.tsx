@@ -47,7 +47,7 @@ export default async function Page({
 
    return (
       <>
-         {products.length === 0 && (
+         {products.length === 0 ? (
             <div className="-mt-8 flex h-full w-full items-center justify-center text-balance px-8 text-center font-medium text-lg">
                <div>
                   <div className="relative mb-8">
@@ -62,8 +62,9 @@ export default async function Page({
                   </p>
                </div>
             </div>
+         ) : (
+            <ProductsList products={products} />
          )}
-         {products.length > 0 ? <ProductsList products={products} /> : null}
       </>
    )
 }
