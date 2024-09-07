@@ -6,13 +6,9 @@
       "start": "next start",
       "format-lint": "biome check",
       "format-lint:fix": "biome check --write",
-      "typecheck": "tsc --noEmit",
-      "pages:build": "pnpm dlx @cloudflare/next-on-pages",
-      "preview": "bun run pages:build && wrangler pages dev",
-      "deploy": "bun install --production && bun run pages:build && wrangler pages deploy"
+      "typecheck": "tsc --noEmit"
    },
    "dependencies": {
-      "@cloudflare/next-on-pages": "^1.13.2",
       "@heroicons/react": "^2.1.5",
       "@radix-ui/react-avatar": "^1.1.0",
       "@radix-ui/react-checkbox": "^1.1.1",
