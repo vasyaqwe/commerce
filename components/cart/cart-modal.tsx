@@ -93,7 +93,7 @@ export function CartModal() {
 
                                  <div className="mr-1 shrink-0">
                                     <Image
-                                       className="relative size-[4.5rem] overflow-hidden rounded-lg border object-cover"
+                                       className="relative size-[4.5rem] overflow-hidden rounded-xl border object-cover"
                                        width={100}
                                        height={100}
                                        alt={
@@ -113,13 +113,13 @@ export function CartModal() {
                                        onClick={() => popModal("cart")}
                                        className="flex flex-row space-x-4"
                                     >
-                                       <h3 className="line-clamp-1 font-medium text-lg">
+                                       <h3 className="line-clamp-1 font-medium text-lg leading-none">
                                           {item.merchandise.product.title}
                                        </h3>
                                     </Link>
                                     {item.merchandise.title ===
                                     DEFAULT_PRODUCT_TITLE ? null : (
-                                       <p className="text-foreground/70 text-sm">
+                                       <p className="mt-1 font-medium text-foreground/70 text-sm">
                                           {item.merchandise.title}
                                        </p>
                                     )}

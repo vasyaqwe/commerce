@@ -19,9 +19,9 @@ export function Header(props: ComponentProps<"header">) {
    const { cart } = useCart()
 
    const menu = [
-      { title: "Верх", path: `/search/${encodeURI("верх")}` },
+      { title: "Верх", path: `/search/${encodeURI("топи")}` },
       { title: "Низ", path: `/search/${encodeURI("низ")}` },
-      { title: "Аксесуари", path: "/accessories" },
+      { title: "Аксесуари", path: `/search/${encodeURI("аксесуари")}` },
    ]
 
    const searchParams = useSearchParams()

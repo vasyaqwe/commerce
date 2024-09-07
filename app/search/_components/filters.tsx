@@ -20,6 +20,9 @@ export function Filters() {
    const router = useRouter()
    const searchParams = useSearchParams()
    const q = searchParams.get("q")
+   const sort = searchParams.get("sort")
+   const color = searchParams.get("color")
+   const size = searchParams.get("size")
 
    return (
       <>
@@ -30,6 +33,8 @@ export function Filters() {
                   pathname,
                   new URLSearchParams({
                      ...(q && { q }),
+                     ...(color && { color }),
+                     ...(size && { size }),
                      ...{ sort: sort ?? "relevance" },
                   }),
                )
@@ -64,6 +69,8 @@ export function Filters() {
                   pathname,
                   new URLSearchParams({
                      ...(q && { q }),
+                     ...(sort && { sort }),
+                     ...(size && { size }),
                      ...(colors.length > 0 && {
                         color: colors.join(","),
                      }),
@@ -100,6 +107,8 @@ export function Filters() {
                   pathname,
                   new URLSearchParams({
                      ...(q && { q }),
+                     ...(sort && { sort }),
+                     ...(color && { color }),
                      ...(sizes.length > 0 && {
                         size: sizes.join(","),
                      }),

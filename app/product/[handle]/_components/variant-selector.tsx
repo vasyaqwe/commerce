@@ -126,6 +126,7 @@ export function VariantSelector({
 
                         return !isAvailableForSale ? (
                            <Tooltip
+                              delayDuration={0}
                               content={
                                  <span>
                                     Немає в наявності{" "}

@@ -63,7 +63,7 @@ export function Gallery({
          </div>
 
          {images.length > 1 ? (
-            <div className="no-scrollbar flex items-center gap-3 overflow-x-auto px-1 py-3">
+            <div className="no-scrollbar flex items-center gap-2 overflow-x-auto px-1 py-2">
                {images.map((image, index) => {
                   const isActive = index === imageIndex
 
@@ -75,7 +75,7 @@ export function Gallery({
                         }}
                         aria-label="Select product image"
                         className={cn(
-                           "size-16 overflow-hidden rounded-xl ring ring-transparent transition-all duration-200 lg:size-24 hover:ring-accent/40",
+                           "size-16 overflow-hidden rounded-xl ring ring-[3px] ring-transparent transition-all duration-200 lg:size-24 hover:ring-accent/40",
                            isActive ? "ring-accent/40" : "",
                         )}
                      >

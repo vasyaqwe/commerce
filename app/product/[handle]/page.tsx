@@ -81,7 +81,7 @@ export default async function Page({ params }: { params: { handle: string } }) {
                __html: JSON.stringify(productJsonLd),
             }}
          />
-         <div className="container grid gap-4 lg:grid-cols-[52%,_1fr] lg:gap-14 xl:gap-24">
+         <div className="container grid gap-4 lg:grid-cols-2 lg:gap-14 xl:gap-24">
             <Suspense
                fallback={
                   <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden" />
@@ -108,7 +108,7 @@ export default async function Page({ params }: { params: { handle: string } }) {
                         )}
                      </p>
                   </div>
-                  <hr className="my-5 lg:my-8" />
+                  <hr className="my-5 border-border lg:my-8" />
                   <div className="mb-6 lg:mb-8">
                      <VariantSelector
                         options={product.options}

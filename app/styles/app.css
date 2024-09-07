@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@import "tailwindcss/preflight" layer(base);
-@import "tailwindcss/utilities" layer(utilities);
+@plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
 
 :root {
   --intentful: light-dark(color-mix(in lch, canvas, canvasText 15%), black);
@@ -49,18 +49,7 @@
   --font-size-base: 0.925rem;
   --font-size-lg: 1.125rem;
 
-  --shadow-button: 0px 1px 1px -1px rgba(0,0,0,.1),0px 2px 2px -1px rgba(0,0,0,.1),0px 0px 0px 1px rgba(0,0,0,.08),inset 0px 1px 0px #fff,inset 0px 1px 2px 1px #fff,inset 0px 1px 2px rgba(0,0,0,.08);
-
-  --animation-fade-in: fade-in 450ms var(--animation-delay, 0ms) ease forwards;
-
-  @keyframes fade-in {
-    from: {
-      opacity: "0",
-    }
-    to: {
-      opacity: "1",
-    }
-  }
+  --shadow-button: 0px 3px 3px -1px rgba(0,0,0,.15), 0px 0px 0px 2px rgba(0,0,0,.09);
 }
 
 @layer components {
@@ -179,6 +168,7 @@
   td::before {
     content: attr(data-thead) !important;
   }
+  
   [data-chip] {
     --active: 0;
     --intent: 0;
@@ -224,7 +214,7 @@ p {
   text-wrap: pretty;
 }
 
-button {
+button:enabled {
   cursor: pointer;
 }
 

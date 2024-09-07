@@ -57,8 +57,9 @@ export default async function Page({
                      </Card>
                   </div>
                   <p className="text-foreground/90">
-                     За запитом &quot;{searchValue}&quot; не знайдено жодного
-                     товару.
+                     {searchValue && searchValue.trim().length > 0
+                        ? `За запитом "${searchValue}" не знайдено жодного товару.`
+                        : "Не знайдено жодного товару."}
                   </p>
                </div>
             </div>

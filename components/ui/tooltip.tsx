@@ -30,6 +30,7 @@ function Tooltip({
    open,
    defaultOpen,
    onOpenChange,
+   delayDuration,
    ...props
 }: Omit<TooltipPrimitive.TooltipContentProps, "content"> & {
    children: React.ReactNode
@@ -37,12 +38,14 @@ function Tooltip({
    open?: boolean
    defaultOpen?: boolean
    onOpenChange?: (open: boolean) => void
+   delayDuration?: number
 }) {
    return (
       <TooltipPrimitive.Root
          open={open}
          defaultOpen={defaultOpen}
          onOpenChange={onOpenChange}
+         delayDuration={delayDuration}
       >
          <TooltipTrigger asChild>{children}</TooltipTrigger>
          <TooltipContent

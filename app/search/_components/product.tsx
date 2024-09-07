@@ -26,8 +26,8 @@ export function Product({ product }: { product: ProductType }) {
             />
          </div>
          <div className="pt-2">
-            <h2 className="font-normal opacity-75">{product.title}</h2>
-            <p className="mt-1 font-semibold text-lg">
+            <h2 className="font-normal opacity-70">{product.title}</h2>
+            <p className="mt-1 font-semibold text-xl">
                ₴{formatCurrency(product.priceRange.maxVariantPrice.amount)}{" "}
             </p>
          </div>

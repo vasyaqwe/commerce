@@ -21,7 +21,7 @@ const DialogOverlay = React.forwardRef<
    <DialogPrimitive.Overlay
       ref={ref}
       className={cn(
-         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/40 data-[state=closed]:animate-out data-[state=open]:animate-inline",
+         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/40 data-[state=open]:animate-in",
          className,
       )}
       {...props}
@@ -30,12 +30,12 @@ const DialogOverlay = React.forwardRef<
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
 const dialogVariants = cva(
-   `data-[state=closed]:fade-out-0 data-[state=open]:[animation-duration:750ms] data-[state=open]:fade-in-0 fixed z-50 grid w-full inset-0 !h-max m-auto rounded-xl bg-background data-[state=closed]:animate-out data-[state=open]:animate-in`,
+   `data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed z-50 grid w-full inset-0 !h-max m-auto rounded-xl bg-background data-[state=open]:animate-in`,
    {
       variants: {
          variant: {
-            default: `max-w-lg data-[state=open]:slide-in-from-bottom-16 shadow-lg`,
-            alert: "data-[state=open]:slide-in-from-bottom-16 max-w-md shadow-lg",
+            default: `max-w-lg data-[state=open]:slide-in-from-bottom-28 shadow-lg`,
+            alert: "data-[state=open]:slide-in-from-bottom-28 max-w-md shadow-lg",
             overlay: "bg-transparent",
             command:
                "data-[state=closed]:!animate-none top-[20px] w-[90%] max-w-[430px] translate-y-0 animate-none bg-trasparent md:top-[75px]",
@@ -61,9 +61,12 @@ const DialogContent = React.forwardRef<
                variant === "overlay"
                   ? "bg-background/85 backdrop-blur-[6px]"
                   : variant === "command"
-                    ? "data-[state=closed]:!animate-none bg-background/75"
+                    ? "bg-background/75"
                     : ""
             }
+            style={{
+               animationDuration: "250ms",
+            }}
          />
       )}
       <DialogPrimitive.Content
@@ -94,13 +97,14 @@ const DialogContent = React.forwardRef<
          )}
          style={{
             animationTimingFunction: `var(--ease)`,
+            animationDuration: "750ms",
             ...props.style,
          }}
          {...props}
       >
          {children}
          {(variant === "default" || !variant) && (
-            <DialogPrimitive.Close className="absolute top-3.5 right-3.5 grid size-7 place-content-center rounded-full bg-muted text-foreground/70 ring-offset-background transition-[transform,background-color] disabled:pointer-events-none active:scale-95 hover:bg-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2">
+            <DialogPrimitive.Close className="absolute top-3.5 right-3.5 grid size-7 place-content-center rounded-full bg-muted text-foreground/70 ring-offset-background transition-all disabled:pointer-events-none active:scale-95 hover:bg-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2">
                <XMarkIcon
                   className="size-4"
                   strokeWidth={3}
