@@ -9,7 +9,7 @@
       "typecheck": "tsc --noEmit",
       "pages:build": "pnpm dlx @cloudflare/next-on-pages",
       "preview": "bun run pages:build && wrangler pages dev",
-      "deploy": "bun install && bun run pages:build && wrangler pages deploy"
+      "deploy": "bun install --production && bun run pages:build && wrangler pages deploy"
    },
    "dependencies": {
       "@cloudflare/next-on-pages": "^1.13.2",
