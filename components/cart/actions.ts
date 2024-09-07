@@ -16,27 +16,21 @@ import { redirect } from "next/navigation"
 export const removeItem = async (_prevState: any, merchandiseId: string) => {
    const cartId = cookies().get("cartId")?.value
 
-   if (!cartId) {
-      return "Missing cart ID"
-   }
+   if (!cartId) return "Missing cart ID"
 
    try {
       const cart = await getCart(cartId)
 
-      if (!cart) {
-         return "Error fetching cart"
-      }
+      if (!cart) return "Error fetching cart"
 
       const lineItem = cart.lines.find(
          (line) => line.merchandise.id === merchandiseId,
       )
 
-      if (lineItem?.id) {
-         await removeFromCart(cartId, [lineItem.id])
-         revalidateTag(TAGS.cart)
-      } else {
-         return "Item not found in cart"
-      }
+      if (!lineItem?.id) return "Item not found in cart"
+
+      await removeFromCart(cartId, [lineItem.id])
+      revalidateTag(TAGS.cart)
    } catch (_e) {
       return "Error removing item from cart"
    }
@@ -52,18 +46,14 @@ export const updateItemQuantity = async (
 ) => {
    const cartId = cookies().get("cartId")?.value
 
-   if (!cartId) {
-      return "Missing cart ID"
-   }
+   if (!cartId) return "Missing cart ID"
 
    const { merchandiseId, quantity } = payload
 
    try {
       const cart = await getCart(cartId)
 
-      if (!cart) {
-         return "Error fetching cart"
-      }
+      if (!cart) return "Error fetching cart"
 
       const lineItem = cart.lines.find(
          (line) => line.merchandise.id === merchandiseId,
@@ -96,15 +86,11 @@ export const updateItemQuantity = async (
 export const redirectToCheckout = async () => {
    const cartId = cookies().get("cartId")?.value
 
-   if (!cartId) {
-      return "Missing cart ID"
-   }
+   if (!cartId) return "Missing cart ID"
 
    const cart = await getCart(cartId)
 
-   if (!cart) {
-      return "Error fetching cart"
-   }
+   if (!cart) return "Error fetching cart"
 
    redirect(cart.checkoutUrl)
 }

@@ -92,9 +92,7 @@ export const shopifyFetch = async <T>({
 
       const body = await result.json()
 
-      if (body.errors) {
-         throw body.errors[0]
-      }
+      if (body.errors) throw body.errors[0]
 
       return {
          status: result.status,
@@ -117,9 +115,8 @@ export const shopifyFetch = async <T>({
    }
 }
 
-const removeEdgesAndNodes = <T>(array: Connection<T>): T[] => {
-   return array.edges.map((edge) => edge?.node)
-}
+const removeEdgesAndNodes = <T>(array: Connection<T>): T[] =>
+   array.edges.map((edge) => edge?.node)
 
 const reshapeCart = (cart: ShopifyCart): Cart => {
    if (!cart.cost?.totalTaxAmount) {
@@ -138,9 +135,7 @@ const reshapeCart = (cart: ShopifyCart): Cart => {
 const reshapeCollection = (
    collection: ShopifyCollection,
 ): Collection | undefined => {
-   if (!collection) {
-      return undefined
-   }
+   if (!collection) return undefined
 
    return {
       ...collection,
@@ -274,9 +269,7 @@ export const updateCart = async (
 export const getCart = async (
    cartId: string | undefined,
 ): Promise<Cart | undefined> => {
-   if (!cartId) {
-      return undefined
-   }
+   if (!cartId) return undefined
 
    const res = await shopifyFetch<ShopifyCartOperation>({
       query: getCartQuery,
@@ -285,9 +278,7 @@ export const getCart = async (
    })
 
    // Old carts becomes `null` when you checkout.
-   if (!res.body.data.cart) {
-      return undefined
-   }
+   if (!res.body.data.cart) return undefined
 
    return reshapeCart(res.body.data.cart)
 }
@@ -325,10 +316,7 @@ export const getCollectionProducts = async ({
       },
    })
 
-   if (!res.body.data.collection) {
-      console.log(`No collection found for \`${collection}\``)
-      return []
-   }
+   if (!res.body.data.collection) return []
 
    return reshapeProducts(
       removeEdgesAndNodes(res.body.data.collection.products),
@@ -340,7 +328,9 @@ export const getCollections = async (): Promise<Collection[]> => {
       query: getCollectionsQuery,
       tags: [TAGS.collections],
    })
+
    const shopifyCollections = removeEdgesAndNodes(res.body?.data?.collections)
+
    const collections = [
       {
          handle: "",
