@@ -13,8 +13,8 @@ import { GeistSans } from "geist/font/sans"
 import { cookies } from "next/headers"
 import type { ReactNode } from "react"
 
-const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
-   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}`
    : "http://localhost:3000"
 
 export const metadata = {
@@ -31,6 +31,8 @@ export const metadata = {
       index: true,
    },
 }
+
+export const runtime = "edge"
 
 export default function Layout({ children }: { children: ReactNode }) {
    const cartId = cookies().get("cartId")?.value

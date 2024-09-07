@@ -460,7 +460,7 @@ export const getProducts = async ({
       reverse,
       first: 100,
    }
-
+   console.log(queryString)
    const res = await shopifyFetch<ShopifyProductsOperation>({
       query: getProductsQuery,
       tags: [TAGS.products],
