@@ -1,23 +1,24 @@
 "use client"
 
-import { useCart } from "@/components/cart/cart-context"
 import { pushModal } from "@/components/modals"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/ui/icons"
 import { Input } from "@/components/ui/input"
+import { cartQueryOptions } from "@/lib/queries"
 import type { Menu } from "@/lib/shopify/types"
+import { cn } from "@/lib/utils"
 import {
    MagnifyingGlassIcon,
    ShoppingBagIcon,
 } from "@heroicons/react/24/outline"
+import { useQuery } from "@tanstack/react-query"
 import Form from "next/form"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import type { ComponentProps } from "react"
 
 export function Header(props: ComponentProps<"header">) {
-   const { cart } = useCart()
-
+   const { data: cart } = useQuery(cartQueryOptions())
    const menu = [
       { title: "Верх", path: `/search/${encodeURI("топи")}` },
       { title: "Низ", path: `/search/${encodeURI("низ")}` },
@@ -77,18 +78,25 @@ export function Header(props: ComponentProps<"header">) {
                   size={"icon"}
                   aria-label="Open cart"
                   onClick={() => pushModal("cart")}
-                  className="size-14 flex-col overflow-visible font-semibold text-[13px]"
+                  className="size-14 flex-col gap-1 overflow-visible font-semibold text-[13px] leading-none"
                >
                   <ShoppingBagIcon
-                     className="mb-[3px] size-6"
+                     className="size-6"
                      strokeWidth={2}
                   />
                   Кошик
-                  {cart?.totalQuantity ? (
-                     <span className="absolute top-1.5 right-1.5 grid size-[18px] place-content-center rounded-full bg-accent font-semibold text-xs shadow-sm">
-                        {cart.totalQuantity}
-                     </span>
-                  ) : null}
+                  <span
+                     aria-hidden={!!cart?.totalQuantity}
+                     style={{
+                        transitionTimingFunction: "var(--ease)",
+                     }}
+                     className={cn(
+                        "absolute top-1.5 right-1.5 grid size-[18px] scale-0 place-content-center rounded-full bg-accent font-semibold text-xs shadow-sm transition-transform duration-1000",
+                        cart?.totalQuantity ? "scale-100" : "",
+                     )}
+                  >
+                     {cart?.totalQuantity ?? 0}
+                  </span>
                </Button>
             </div>
          </div>

@@ -1,16 +1,7 @@
-import { HIDDEN_PRODUCT_TAG, TAGS } from "@/lib/constants"
+import { HIDDEN_PRODUCT_TAG, TAGS } from "@/config"
 import { isShopifyError } from "@/lib/utils"
 import { ensureStartsWith } from "@/lib/utils"
-import { revalidateTag } from "next/cache"
-import { headers } from "next/headers"
-import { type NextRequest, NextResponse } from "next/server"
-import {
-   addToCartMutation,
-   createCartMutation,
-   editCartItemsMutation,
-   removeFromCartMutation,
-} from "./mutations/cart"
-import { getCartQuery } from "./queries/cart"
+import { createCartMutation } from "./mutations/cart"
 import {
    getCollectionProductsQuery,
    getCollectionQuery,
@@ -31,9 +22,7 @@ import type {
    Menu,
    Page,
    Product,
-   ShopifyAddToCartOperation,
    ShopifyCart,
-   ShopifyCartOperation,
    ShopifyCollection,
    ShopifyCollectionOperation,
    ShopifyCollectionProductsOperation,
@@ -46,8 +35,6 @@ import type {
    ShopifyProductOperation,
    ShopifyProductRecommendationsOperation,
    ShopifyProductsOperation,
-   ShopifyRemoveFromCartOperation,
-   ShopifyUpdateCartOperation,
 } from "./types"
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN
@@ -118,7 +105,7 @@ export const shopifyFetch = async <T>({
 const removeEdgesAndNodes = <T>(array: Connection<T>): T[] =>
    array.edges.map((edge) => edge?.node)
 
-const reshapeCart = (cart: ShopifyCart): Cart => {
+export const reshapeCart = (cart: ShopifyCart): Cart => {
    if (!cart.cost?.totalTaxAmount) {
       cart.cost.totalTaxAmount = {
          amount: "0.0",
@@ -217,70 +204,6 @@ export const createCart = async (): Promise<Cart> => {
    })
 
    return reshapeCart(res.body.data.cartCreate.cart)
-}
-
-export const addToCart = async (
-   cartId: string,
-   lines: { merchandiseId: string; quantity: number }[],
-): Promise<Cart> => {
-   const res = await shopifyFetch<ShopifyAddToCartOperation>({
-      query: addToCartMutation,
-      variables: {
-         cartId,
-         lines,
-      },
-      cache: "no-store",
-   })
-   return reshapeCart(res.body.data.cartLinesAdd.cart)
-}
-
-export const removeFromCart = async (
-   cartId: string,
-   lineIds: string[],
-): Promise<Cart> => {
-   const res = await shopifyFetch<ShopifyRemoveFromCartOperation>({
-      query: removeFromCartMutation,
-      variables: {
-         cartId,
-         lineIds,
-      },
-      cache: "no-store",
-   })
-
-   return reshapeCart(res.body.data.cartLinesRemove.cart)
-}
-
-export const updateCart = async (
-   cartId: string,
-   lines: { id: string; merchandiseId: string; quantity: number }[],
-): Promise<Cart> => {
-   const res = await shopifyFetch<ShopifyUpdateCartOperation>({
-      query: editCartItemsMutation,
-      variables: {
-         cartId,
-         lines,
-      },
-      cache: "no-store",
-   })
-
-   return reshapeCart(res.body.data.cartLinesUpdate.cart)
-}
-
-export const getCart = async (
-   cartId: string | undefined,
-): Promise<Cart | undefined> => {
-   if (!cartId) return undefined
-
-   const res = await shopifyFetch<ShopifyCartOperation>({
-      query: getCartQuery,
-      variables: { cartId },
-      tags: [TAGS.cart],
-   })
-
-   // Old carts becomes `null` when you checkout.
-   if (!res.body.data.cart) return undefined
-
-   return reshapeCart(res.body.data.cart)
 }
 
 export const getCollection = async (
@@ -468,44 +391,4 @@ export const getProducts = async ({
    })
 
    return reshapeProducts(removeEdgesAndNodes(res.body.data.products))
-}
-
-// This is called from `app/api/revalidate.ts` so providers can control revalidation logic.
-export const revalidate = async (req: NextRequest): Promise<NextResponse> => {
-   // We always need to respond with a 200 status code to Shopify,
-   // otherwise it will continue to retry the request.
-   const collectionWebhooks = [
-      "collections/create",
-      "collections/delete",
-      "collections/update",
-   ]
-   const productWebhooks = [
-      "products/create",
-      "products/delete",
-      "products/update",
-   ]
-   const topic = headers().get("x-shopify-topic") || "unknown"
-   const secret = req.nextUrl.searchParams.get("secret")
-   const isCollectionUpdate = collectionWebhooks.includes(topic)
-   const isProductUpdate = productWebhooks.includes(topic)
-
-   if (!secret || secret !== process.env.SHOPIFY_REVALIDATION_SECRET) {
-      console.error("Invalid revalidation secret.")
-      return NextResponse.json({ status: 200 })
-   }
-
-   if (!isCollectionUpdate && !isProductUpdate) {
-      // We don't need to revalidate anything for any other topics.
-      return NextResponse.json({ status: 200 })
-   }
-
-   if (isCollectionUpdate) {
-      revalidateTag(TAGS.collections)
-   }
-
-   if (isProductUpdate) {
-      revalidateTag(TAGS.products)
-   }
-
-   return NextResponse.json({ status: 200, revalidated: true, now: Date.now() })
 }

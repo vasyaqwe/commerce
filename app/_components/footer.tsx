@@ -2,7 +2,7 @@
 
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/ui/icons"
-import { env } from "@/lib/constants"
+import { env } from "@/config"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 

@@ -1,5 +1,4 @@
 import { getCollections, getPages, getProducts } from "@/lib/shopify"
-import { validateEnvironmentVariables } from "@/lib/utils"
 import type { MetadataRoute } from "next"
 
 type Route = {
@@ -12,6 +11,38 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
    : "http://localhost:3000"
 
 export const dynamic = "force-dynamic"
+
+const validateEnvironmentVariables = () => {
+   const requiredEnvironmentVariables = [
+      "SHOPIFY_STORE_DOMAIN",
+      "SHOPIFY_STOREFRONT_ACCESS_TOKEN",
+   ]
+   const missingEnvironmentVariables = [] as string[]
+
+   // biome-ignore lint/complexity/noForEach: <explanation>
+   requiredEnvironmentVariables.forEach((envVar) => {
+      if (!process.env[envVar]) {
+         missingEnvironmentVariables.push(envVar)
+      }
+   })
+
+   if (missingEnvironmentVariables.length) {
+      throw new Error(
+         `The following environment variables are missing. Your site will not work without them. Read more: https://vercel.com/docs/integrations/shopify#configure-environment-variables\n\n${missingEnvironmentVariables.join(
+            "\n",
+         )}\n`,
+      )
+   }
+
+   if (
+      process.env.SHOPIFY_STORE_DOMAIN?.includes("[") ||
+      process.env.SHOPIFY_STORE_DOMAIN?.includes("]")
+   ) {
+      throw new Error(
+         "Your `SHOPIFY_STORE_DOMAIN` environment variable includes brackets (ie. `[` and / or `]`). Your site will not work with them there. Please remove them.",
+      )
+   }
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
    validateEnvironmentVariables()

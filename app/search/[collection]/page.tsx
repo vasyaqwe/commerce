@@ -1,6 +1,6 @@
 import { Product } from "@/app/search/_components/product"
 import { Card } from "@/components/ui/card"
-import { defaultSortFilter, sortFilter } from "@/lib/constants"
+import { defaultSortFilter, sortFilter } from "@/config"
 import { getCollection, getCollectionProducts } from "@/lib/shopify"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import type { Metadata } from "next"

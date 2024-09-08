@@ -1,101 +1,72 @@
 "use server"
 
-import { TAGS } from "@/lib/constants"
+import { createCart, reshapeCart, shopifyFetch } from "@/lib/shopify"
 import {
-   addToCart,
-   createCart,
-   getCart,
-   removeFromCart,
-   updateCart,
-} from "@/lib/shopify"
-import { revalidateTag } from "next/cache"
+   addToCartMutation,
+   editCartItemsMutation,
+   removeFromCartMutation,
+} from "@/lib/shopify/mutations/cart"
+import type {
+   Cart,
+   ShopifyAddToCartOperation,
+   ShopifyRemoveFromCartOperation,
+   ShopifyUpdateCartOperation,
+} from "@/lib/shopify/types"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const removeItem = async (_prevState: any, merchandiseId: string) => {
-   const cartId = cookies().get("cartId")?.value
+export const removeFromCart = async (
+   cartId: string,
+   lineIds: string[],
+): Promise<Cart> => {
+   const res = await shopifyFetch<ShopifyRemoveFromCartOperation>({
+      query: removeFromCartMutation,
+      variables: {
+         cartId,
+         lineIds,
+      },
+      cache: "no-store",
+   })
 
-   if (!cartId) return "Missing cart ID"
-
-   try {
-      const cart = await getCart(cartId)
-
-      if (!cart) return "Error fetching cart"
-
-      const lineItem = cart.lines.find(
-         (line) => line.merchandise.id === merchandiseId,
-      )
-
-      if (!lineItem?.id) return "Item not found in cart"
-
-      await removeFromCart(cartId, [lineItem.id])
-      revalidateTag(TAGS.cart)
-   } catch (_e) {
-      return "Error removing item from cart"
-   }
+   return reshapeCart(res.body.data.cartLinesRemove.cart)
 }
 
-export const updateItemQuantity = async (
-   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-   _prevState: any,
-   payload: {
-      merchandiseId: string
-      quantity: number
-   },
-) => {
-   const cartId = cookies().get("cartId")?.value
-
-   if (!cartId) return "Missing cart ID"
-
-   const { merchandiseId, quantity } = payload
-
-   try {
-      const cart = await getCart(cartId)
-
-      if (!cart) return "Error fetching cart"
-
-      const lineItem = cart.lines.find(
-         (line) => line.merchandise.id === merchandiseId,
-      )
-
-      if (lineItem?.id) {
-         if (quantity === 0) {
-            await removeFromCart(cartId, [lineItem.id])
-         } else {
-            await updateCart(cartId, [
-               {
-                  id: lineItem.id,
-                  merchandiseId,
-                  quantity,
-               },
-            ])
-         }
-      } else if (quantity > 0) {
-         // If the item doesn't exist in the cart and quantity > 0, add it
-         await addToCart(cartId, [{ merchandiseId, quantity }])
-      }
-
-      revalidateTag(TAGS.cart)
-   } catch (e) {
-      console.error(e)
-      return "Error updating item quantity"
-   }
+export const addToCart = async (
+   cartId: string,
+   lines: { merchandiseId: string; quantity: number }[],
+): Promise<Cart> => {
+   const res = await shopifyFetch<ShopifyAddToCartOperation>({
+      query: addToCartMutation,
+      variables: {
+         cartId,
+         lines,
+      },
+      cache: "no-store",
+   })
+   return reshapeCart(res.body.data.cartLinesAdd.cart)
 }
 
-export const redirectToCheckout = async () => {
-   const cartId = cookies().get("cartId")?.value
+export const updateCart = async (
+   cartId: string,
+   lines: { id: string; merchandiseId: string; quantity: number }[],
+): Promise<Cart> => {
+   const res = await shopifyFetch<ShopifyUpdateCartOperation>({
+      query: editCartItemsMutation,
+      variables: {
+         cartId,
+         lines,
+      },
+      cache: "no-store",
+   })
 
-   if (!cartId) return "Missing cart ID"
-
-   const cart = await getCart(cartId)
-
-   if (!cart) return "Error fetching cart"
-
-   redirect(cart.checkoutUrl)
+   return reshapeCart(res.body.data.cartLinesUpdate.cart)
 }
+
+export const redirectToCheckout = async (checkoutUrl: string) =>
+   redirect(checkoutUrl)
 
 export const createCartAndSetCookie = async () => {
    const cart = await createCart()
-   cookies().set("cartId", cart.id ?? "")
+   if (!cart.id) return "Error creating cart"
+   cookies().set("cartId", cart.id)
 }

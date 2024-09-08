@@ -5,7 +5,7 @@ import {
    defaultSortFilter,
    sizeFilter,
    sortFilter,
-} from "@/lib/constants"
+} from "@/config"
 import { getProducts } from "@/lib/shopify"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
 

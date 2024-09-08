@@ -11,7 +11,7 @@ import {
    ComboboxSelectedItems,
    ComboboxTrigger,
 } from "@/components/ui/combobox"
-import { colorFilter, sizeFilter, sortFilter } from "@/lib/constants"
+import { colorFilter, sizeFilter, sortFilter } from "@/config"
 import { createUrl } from "@/lib/utils"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 

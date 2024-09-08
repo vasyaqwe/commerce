@@ -1,5 +1,5 @@
 import { Icons } from "@/components/ui/icons"
-import { env } from "@/lib/constants"
+import { env } from "@/config"
 import { ImageResponse } from "next/og"
 
 export default async function OpengraphImage(

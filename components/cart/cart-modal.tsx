@@ -1,5 +1,6 @@
 "use client"
 
+import { useRemoveCartItemMutation } from "@/components/cart/hooks"
 import { popModal } from "@/components/modals"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -9,20 +10,21 @@ import {
    DrawerTitle,
 } from "@/components/ui/drawer"
 import { Loading } from "@/components/ui/loading"
-import { DEFAULT_PRODUCT_TITLE } from "@/lib/constants"
+import { DEFAULT_PRODUCT_TITLE } from "@/config"
+import { cartQueryOptions } from "@/lib/queries"
+import type { CartItem } from "@/lib/shopify/types"
 import { createUrl, formatCurrency } from "@/lib/utils"
-import { ShoppingCartIcon } from "@heroicons/react/24/outline"
+import { ShoppingCartIcon, XMarkIcon } from "@heroicons/react/24/outline"
+import { useQuery } from "@tanstack/react-query"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect } from "react"
 import { useFormStatus } from "react-dom"
 import { createCartAndSetCookie, redirectToCheckout } from "./actions"
-import { useCart } from "./cart-context"
-import { DeleteItemButton } from "./delete-item-button"
 import { EditItemQuantityButton } from "./edit-item-quantity-button"
 
 export function CartModal() {
-   const { cart, updateCartItem } = useCart()
+   const { data: cart } = useQuery(cartQueryOptions())
 
    useEffect(() => {
       if (!cart) {
@@ -86,11 +88,7 @@ export function CartModal() {
                                  key={i}
                                  className="relative flex w-full justify-between px-4 py-5"
                               >
-                                 <DeleteItemButton
-                                    item={item}
-                                    optimisticUpdate={updateCartItem}
-                                 />
-
+                                 <DeleteItemButton item={item} />
                                  <div className="mr-1 shrink-0">
                                     <Image
                                        className="relative size-[4.5rem] overflow-hidden rounded-xl border object-cover"
@@ -135,7 +133,6 @@ export function CartModal() {
                                        <EditItemQuantityButton
                                           item={item}
                                           type="minus"
-                                          optimisticUpdate={updateCartItem}
                                        />
                                        <p className="w-5 text-center">
                                           {item.quantity}
@@ -143,7 +140,6 @@ export function CartModal() {
                                        <EditItemQuantityButton
                                           item={item}
                                           type="plus"
-                                          optimisticUpdate={updateCartItem}
                                        />
                                     </div>
                                  </div>
@@ -173,7 +169,7 @@ export function CartModal() {
                <section className="mb-5">
                   <form
                      className="px-4"
-                     action={redirectToCheckout}
+                     action={() => redirectToCheckout(cart.checkoutUrl)}
                   >
                      <CheckoutButton />
                   </form>
@@ -181,6 +177,32 @@ export function CartModal() {
             </>
          )}
       </DrawerContent>
+   )
+}
+
+function DeleteItemButton({
+   item,
+}: {
+   item: CartItem
+}) {
+   const merchandiseId = item.merchandise.id
+   const { mutate } = useRemoveCartItemMutation()
+
+   return (
+      <div className="absolute top-2.5 left-2.5 z-[2]">
+         <button
+            onClick={() => {
+               mutate(merchandiseId)
+            }}
+            aria-label="Remove cart item"
+            className="grid size-7 place-content-center rounded-full border border-foreground/10 bg-border text-foreground/70 ring-offset-background transition-all disabled:pointer-events-none active:scale-95 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+         >
+            <XMarkIcon
+               className="size-[18px]"
+               strokeWidth={2}
+            />
+         </button>
+      </div>
    )
 }
 
