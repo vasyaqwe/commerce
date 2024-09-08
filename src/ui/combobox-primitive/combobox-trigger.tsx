@@ -1,9 +1,9 @@
-import { useMergeRefs } from "@/hooks/use-merge-refs"
 import { useFormFieldControl } from "@/ui/form-field"
 import { cn } from "@/ui/utils"
 import { PopoverTrigger } from "@radix-ui/react-popover"
 import { type ComponentPropsWithoutRef, type Ref, forwardRef } from "react"
 import { useComboboxContext } from "./combobox-context"
+import { useMergeRefs } from "./hooks/use-merge-refs"
 import { findElement } from "./utils"
 
 export const Trigger = forwardRef(

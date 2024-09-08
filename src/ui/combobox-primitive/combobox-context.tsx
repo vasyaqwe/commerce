@@ -1,4 +1,3 @@
-import { useCombinedState } from "@/hooks/use-combined-state"
 import { useFormFieldControl } from "@/ui/form-field"
 import { Popover } from "@/ui/popover"
 import { useCombobox, useMultipleSelection } from "downshift"
@@ -13,6 +12,7 @@ import {
    useRef,
    useState,
 } from "react"
+import { useCombinedState } from "./hooks/use-combined-state"
 import type { ComboboxItem, DownshiftState, ItemsMap } from "./types"
 import { getElementByIndex, getItemsFromChildren } from "./utils"
 import { multipleSelectionReducer } from "./utils/multipleSelectionReducer"

@@ -1,5 +1,3 @@
-import { useCombinedState } from "@/hooks/use-combined-state"
-import { useMergeRefs } from "@/hooks/use-merge-refs"
 import { cn } from "@/ui/utils"
 import {
    type ComponentPropsWithoutRef,
@@ -8,6 +6,8 @@ import {
    useEffect,
 } from "react"
 import { useComboboxContext } from "./combobox-context"
+import { useCombinedState } from "./hooks/use-combined-state"
+import { useMergeRefs } from "./hooks/use-merge-refs"
 
 type InputProps = Omit<
    ComponentPropsWithoutRef<"input">,

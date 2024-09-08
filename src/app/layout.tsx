@@ -34,7 +34,7 @@ export default function Layout({ children }: { children: ReactNode }) {
    return (
       <html
          lang="en"
-         className={cn("light font-primary antialiased", GeistSans.variable)}
+         className={cn("font-primary antialiased", GeistSans.variable)}
       >
          <body className="grid min-h-svh grid-rows-[auto_1fr_auto] bg-background text-base text-foreground">
             <ReactQueryProvider>

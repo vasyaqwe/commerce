@@ -1,6 +1,6 @@
-import { useMergeRefs } from "@/hooks/use-merge-refs"
 import { type ComponentProps, type Ref, forwardRef } from "react"
 import { useComboboxContext } from "./combobox-context"
+import { useMergeRefs } from "./hooks/use-merge-refs"
 
 export const Disclosure = forwardRef(
    (

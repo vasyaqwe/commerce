@@ -1,4 +1,4 @@
-import { TAGS } from "@/lib/shopify"
+import { TAGS } from "@/lib/shopify/constants"
 import { revalidateTag } from "next/cache"
 import { headers } from "next/headers"
 import { type NextRequest, NextResponse } from "next/server"

@@ -1,4 +1,3 @@
-import { useMergeRefs } from "@/hooks/use-merge-refs"
 import { useComboboxContext } from "@/ui/combobox-primitive/combobox-context"
 import { PopoverContent as RadixPopoverContent } from "@/ui/popover"
 import { cn } from "@/ui/utils"
@@ -9,6 +8,7 @@ import {
    useLayoutEffect,
    useRef,
 } from "react"
+import { useMergeRefs } from "./hooks/use-merge-refs"
 
 export const Content = forwardRef(
    (

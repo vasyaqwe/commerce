@@ -8,13 +8,13 @@ import type {
    ShopifyUpdateCartOperation,
 } from "@/cart/types"
 import { reshapeCart } from "@/cart/utils"
-import { shopifyFetch } from "@/lib/shopify"
 import {
    addToCartMutation,
    createCartMutation,
    editCartItemsMutation,
    removeFromCartMutation,
 } from "@/lib/shopify/mutations/cart"
+import { shopifyFetch } from "@/lib/shopify/utils"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 

@@ -1,7 +1,8 @@
 import type { ShopifyCartOperation } from "@/cart/types"
 import { reshapeCart } from "@/cart/utils"
-import { TAGS, shopifyFetch } from "@/lib/shopify"
+import { TAGS } from "@/lib/shopify/constants"
 import { getCartQuery } from "@/lib/shopify/queries/cart"
+import { shopifyFetch } from "@/lib/shopify/utils"
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 

@@ -1,4 +1,4 @@
-import { HIDDEN_PRODUCT_TAG } from "@/lib/shopify"
+import { HIDDEN_PRODUCT_TAG, SHOPIFY_BASE_URL } from "@/lib/shopify/constants"
 import type {
    Collection,
    Connection,
@@ -6,6 +6,68 @@ import type {
    ShopifyCollection,
    ShopifyProduct,
 } from "@/lib/shopify/types"
+
+type ExtractVariables<T> = T extends { variables: object }
+   ? T["variables"]
+   : never
+
+export const shopifyFetch = async <T>({
+   // cache = "force-cache",
+   headers,
+   query,
+   tags,
+   variables,
+}: {
+   cache?: RequestCache
+   headers?: HeadersInit
+   query: string
+   tags?: string[]
+   variables?: ExtractVariables<T>
+}): Promise<{ status: number; body: T } | never> => {
+   try {
+      const result = await fetch(
+         `${SHOPIFY_BASE_URL}/api/2024-10/graphql.json`,
+         {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json",
+               "X-Shopify-Storefront-Access-Token":
+                  process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN ?? "",
+               ...headers,
+            },
+            cache: "no-store",
+            body: JSON.stringify({
+               ...(query && { query }),
+               ...(variables && { variables }),
+            }),
+            ...(tags && { next: { tags } }),
+         },
+      )
+
+      const body = await result.json()
+
+      if (body.errors) throw body.errors[0]
+
+      return {
+         status: result.status,
+         body,
+      }
+   } catch (e) {
+      if (isShopifyError(e)) {
+         throw {
+            cause: e.cause?.toString() || "unknown",
+            status: e.status || 500,
+            message: e.message,
+            query,
+         }
+      }
+
+      throw {
+         error: e,
+         query,
+      }
+   }
+}
 
 export const removeEdgesAndNodes = <T>(array: Connection<T>): T[] =>
    array.edges.map((edge) => edge?.node)

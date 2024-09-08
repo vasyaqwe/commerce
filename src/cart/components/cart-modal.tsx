@@ -3,7 +3,7 @@
 import { useRemoveCartItemMutation } from "@/cart/mutations"
 import { cartQueryOptions } from "@/cart/queries"
 import type { CartItem } from "@/cart/types"
-import { DEFAULT_PRODUCT_TITLE } from "@/lib/shopify"
+import { DEFAULT_PRODUCT_TITLE } from "@/lib/shopify/constants"
 import { popModal } from "@/modals"
 import { Button } from "@/ui/button"
 import { Card } from "@/ui/card"

@@ -1,10 +1,11 @@
+import { SHOPIFY_BASE_URL, TAGS } from "@/lib/shopify/constants"
 import {
-   isShopifyError,
    removeEdgesAndNodes,
    reshapeCollection,
    reshapeCollections,
    reshapeProduct,
    reshapeProducts,
+   shopifyFetch,
 } from "@/lib/shopify/utils"
 import {
    getCollectionProductsQuery,
@@ -33,76 +34,6 @@ import type {
    ShopifyProductRecommendationsOperation,
    ShopifyProductsOperation,
 } from "./types"
-
-export const DEFAULT_PRODUCT_TITLE = "Default Title"
-export const HIDDEN_PRODUCT_TAG = "hidden"
-
-export const TAGS = {
-   collections: "collections",
-   products: "products",
-   cart: "cart",
-}
-
-const domain = `https://${process.env.SHOPIFY_STORE_DOMAIN}`
-
-type ExtractVariables<T> = T extends { variables: object }
-   ? T["variables"]
-   : never
-
-export const shopifyFetch = async <T>({
-   // cache = "force-cache",
-   headers,
-   query,
-   tags,
-   variables,
-}: {
-   cache?: RequestCache
-   headers?: HeadersInit
-   query: string
-   tags?: string[]
-   variables?: ExtractVariables<T>
-}): Promise<{ status: number; body: T } | never> => {
-   try {
-      const result = await fetch(`${domain}/api/2024-10/graphql.json`, {
-         method: "POST",
-         headers: {
-            "Content-Type": "application/json",
-            "X-Shopify-Storefront-Access-Token":
-               process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN ?? "",
-            ...headers,
-         },
-         cache: "no-store",
-         body: JSON.stringify({
-            ...(query && { query }),
-            ...(variables && { variables }),
-         }),
-         ...(tags && { next: { tags } }),
-      })
-
-      const body = await result.json()
-
-      if (body.errors) throw body.errors[0]
-
-      return {
-         status: result.status,
-         body,
-      }
-   } catch (e) {
-      if (isShopifyError(e)) {
-         throw {
-            cause: e.cause?.toString() || "unknown",
-            status: e.status || 500,
-            message: e.message,
-            query,
-         }
-      }
-
-      throw {
-         error: e,
-         query,
-      }
-   }
-}
 
 export const getCollection = async (
    handle: string,
@@ -188,7 +119,7 @@ export const getMenu = async (handle: string): Promise<Menu[]> => {
          (item: { title: string; url: string }) => ({
             title: item.title,
             path: item.url
-               .replace(domain, "")
+               .replace(SHOPIFY_BASE_URL, "")
                .replace("/collections", "/search")
                .replace("/pages", ""),
          }),
@@ -257,7 +188,7 @@ export const getProducts = async ({
    query?: string
    reverse?: boolean
    sortKey?: string
-   colors?: string[] // Accept an array of colors
+   colors?: string[]
    sizes?: string[]
    style?: string
 }): Promise<Product[]> => {
