@@ -10,7 +10,7 @@
       "attributePosition": "multiline"
    },
    "files": {
-      "ignore": ["out", ".next"]
+      "ignore": [".out", ".vercel", ".next"]
    },
    "javascript": {
       "formatter": {
