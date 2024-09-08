@@ -2,7 +2,7 @@ import "./styles/app.css"
 import { Footer } from "@/app/_components/footer"
 import { Header } from "@/app/_components/header"
 import { ModalProvider } from "@/components/modals"
-import { TanstackQueryProvider } from "@/components/providers"
+import { ReactQueryProvider } from "@/components/providers"
 import { Toaster } from "@/components/ui/toast"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { env } from "@/config"
@@ -37,7 +37,7 @@ export default function Layout({ children }: { children: ReactNode }) {
          className={cn("light font-primary antialiased", GeistSans.variable)}
       >
          <body className="grid min-h-svh grid-rows-[auto_1fr_auto] bg-background text-base text-foreground">
-            <TanstackQueryProvider>
+            <ReactQueryProvider>
                <TooltipProvider delayDuration={300}>
                   <ModalProvider />
                   <Portal.Root>
@@ -47,7 +47,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                   <main>{children}</main>
                   <Footer />
                </TooltipProvider>
-            </TanstackQueryProvider>
+            </ReactQueryProvider>
          </body>
       </html>
    )
