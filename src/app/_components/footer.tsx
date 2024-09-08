@@ -1,6 +1,6 @@
 "use client"
 
-import { env } from "@/config"
+import { env } from "@/env"
 import { buttonVariants } from "@/ui/button"
 import { Icons } from "@/ui/icons"
 import { cn } from "@/ui/utils"

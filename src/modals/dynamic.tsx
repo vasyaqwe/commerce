@@ -1,4 +1,4 @@
-import { MOBILE_BREAKPOINT } from "@/config"
+import { MOBILE_BREAKPOINT } from "@/ui/constants"
 import { Dialog, DialogContent } from "@/ui/dialog"
 import { Drawer, DrawerContent } from "@/ui/drawer"
 import { createResponsiveWrapper } from "pushmodal"

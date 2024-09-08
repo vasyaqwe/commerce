@@ -1,4 +1,4 @@
-import { Filters } from "@/app/search/_components/filters"
+import { Filters } from "@/app/search/_components/filter"
 import { ChildrenWrapper } from "./_components/children-wrapper"
 
 export default function Layout({ children }: { children: React.ReactNode }) {

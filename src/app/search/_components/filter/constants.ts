@@ -1,9 +1,3 @@
-export const MOBILE_BREAKPOINT = 768
-
-export const env = {
-   SITE_NAME: "Commerce",
-}
-
 export const defaultSortFilter = {
    title: "Релевантне",
    slug: "relevance",

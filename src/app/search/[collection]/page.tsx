@@ -1,5 +1,8 @@
+import {
+   defaultSortFilter,
+   sortFilter,
+} from "@/app/search/_components/filter/constants"
 import { Product } from "@/app/search/_components/product"
-import { defaultSortFilter, sortFilter } from "@/config"
 import { getCollection, getCollectionProducts } from "@/lib/shopify"
 import { Card } from "@/ui/card"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"

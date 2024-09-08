@@ -1,7 +1,7 @@
 import "../styles/app.css"
 import { Footer } from "@/app/_components/footer"
 import { Header } from "@/app/_components/header"
-import { env } from "@/config"
+import { env } from "@/env"
 import { ModalProvider } from "@/modals"
 import { ReactQueryProvider } from "@/providers"
 import { Toaster } from "@/ui/toast"

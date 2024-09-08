@@ -1,10 +1,10 @@
-import { Product } from "@/app/search/_components/product"
 import {
    colorFilter,
    defaultSortFilter,
    sizeFilter,
    sortFilter,
-} from "@/config"
+} from "@/app/search/_components/filter/constants"
+import { Product } from "@/app/search/_components/product"
 import { getProducts } from "@/lib/shopify"
 import { Card } from "@/ui/card"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"

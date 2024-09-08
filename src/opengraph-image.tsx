@@ -1,4 +1,4 @@
-import { env } from "@/config"
+import { env } from "@/env"
 import { Icons } from "@/ui/icons"
 import { ImageResponse } from "next/og"
 

@@ -1,6 +1,5 @@
 "use client"
 
-import { colorFilter, sizeFilter, sortFilter } from "@/config"
 import {
    Combobox,
    ComboboxClearButton,
@@ -14,6 +13,7 @@ import {
 } from "@/ui/combobox"
 import { createUrl } from "@/ui/utils"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { colorFilter, sizeFilter, sortFilter } from "./constants"
 
 export function Filters() {
    const pathname = usePathname()
