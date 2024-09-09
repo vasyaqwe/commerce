@@ -52,7 +52,7 @@ const DrawerContent = React.forwardRef<
          )}
          {...props}
       >
-         <div className="!p-0 mx-auto mt-3.5 min-h-1 w-[37px] rounded-full bg-foreground/80 group-[&[vaul-drawer-direction=right]]:hidden" />
+         <div className="!p-0 mx-auto mt-1.5 min-h-1 w-[37px] rounded-full bg-foreground/80 group-[&[vaul-drawer-direction=right]]:hidden" />
          {children}
       </DrawerPrimitive.Content>
    </DrawerPortal>
@@ -65,7 +65,10 @@ const DrawerHeader = ({
    ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
    <header
-      className={cn("grid gap-1.5 border-border border-b p-4", className)}
+      className={cn(
+         "grid gap-1.5 border-border border-b p-4 max-md:pt-3",
+         className,
+      )}
       {...props}
    >
       {children}
@@ -97,7 +100,7 @@ const DrawerTitle = React.forwardRef<
    <DrawerPrimitive.Title
       ref={ref}
       className={cn(
-         "font-semibold text-lg leading-none tracking-tight",
+         "text-center font-semibold leading-none tracking-tight max-md:text-lg",
          className,
       )}
       {...props}

@@ -35,7 +35,7 @@ export function CartModal() {
    return (
       <DrawerContent>
          <DrawerHeader>
-            <DrawerTitle>Кошик</DrawerTitle>
+            <DrawerTitle className="text-left">Кошик</DrawerTitle>
          </DrawerHeader>
          {!cart || cart.lines.length === 0 ? (
             <div className=" -mt-16 flex h-full w-full flex-col items-center justify-center overflow-hidden">

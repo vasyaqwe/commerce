@@ -37,22 +37,27 @@ export const colorFilter = [
    {
       title: "Червоний",
       slug: "червоний",
+      color: "bg-red-500",
    },
    {
       title: "Синій",
       slug: "синій",
+      color: "bg-blue-500",
    },
    {
       title: "Зелений",
       slug: "зелений",
+      color: "bg-green-500",
    },
    {
       title: "Чорний",
       slug: "чорний",
+      color: "bg-black",
    },
    {
       title: "Білий",
       slug: "білий",
+      color: "bg-white",
    },
 ] as const
 
