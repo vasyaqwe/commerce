@@ -29,7 +29,7 @@ export function Header(props: ComponentProps<"header">) {
 
    return (
       <header
-         className="mb-12 flex items-center border-border border-b py-1.5 md:py-3"
+         className="flex items-center border-border border-b py-1.5 md:py-3"
          {...props}
       >
          <div className="container flex items-center">

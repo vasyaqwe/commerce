@@ -27,7 +27,7 @@ export function CartModal() {
    const { data: cart } = useQuery(cartQueryOptions())
 
    useEffect(() => {
-      if (!cart) {
+      if (cart === null) {
          createCartAndSetCookie()
       }
    }, [cart])

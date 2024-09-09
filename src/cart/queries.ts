@@ -7,6 +7,9 @@ export const cartQueryOptions = () =>
       queryFn: async () => {
          const res = await fetch("/api/cart")
          if (!res.ok) return null
-         return (await res.json()) as Cart
+
+         const cart: Cart | undefined = await res.json()
+
+         return cart ?? null
       },
    })

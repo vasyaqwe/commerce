@@ -76,5 +76,6 @@ export const createCartAndSetCookie = async () => {
 
    const cart = reshapeCart(res.body.data.cartCreate.cart)
    if (!cart.id) return "Error creating cart"
+
    cookies().set("cartId", cart.id)
 }

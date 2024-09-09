@@ -81,7 +81,7 @@ export default async function Page({ params }: { params: { handle: string } }) {
                __html: JSON.stringify(productJsonLd),
             }}
          />
-         <div className="container grid gap-4 lg:grid-cols-2 lg:gap-14 xl:gap-24">
+         <div className="container grid gap-4 lg:mt-12 lg:grid-cols-2 lg:gap-14 xl:gap-24 max-lg:px-0">
             <Suspense
                fallback={
                   <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden" />
@@ -95,7 +95,7 @@ export default async function Page({ params }: { params: { handle: string } }) {
                />
             </Suspense>
             <Suspense fallback={null}>
-               <div className="flex flex-col">
+               <div className="flex flex-col max-lg:px-4">
                   <div className="flex flex-col">
                      <h1 className="mb-2 font-semibold text-2xl lg:text-3xl">
                         {product.title}
