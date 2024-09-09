@@ -1,7 +1,7 @@
 "use client"
 
-import { Button } from "@/ui/button"
-import { Card } from "@/ui/card"
+import { Button } from "@/ui/components/button"
+import { Card } from "@/ui/components/card"
 import { XCircleIcon } from "@heroicons/react/24/outline"
 
 // biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>

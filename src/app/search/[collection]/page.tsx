@@ -4,7 +4,7 @@ import {
 } from "@/app/search/_components/filter/constants"
 import { Product } from "@/app/search/_components/product"
 import { getCollection, getCollectionProducts } from "@/lib/shopify"
-import { Card } from "@/ui/card"
+import { Card } from "@/ui/components/card"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"

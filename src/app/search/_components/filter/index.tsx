@@ -10,7 +10,7 @@ import {
    ComboboxItem,
    ComboboxSelectedItems,
    ComboboxTrigger,
-} from "@/ui/combobox"
+} from "@/ui/components/combobox"
 import { createUrl } from "@/ui/utils"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { colorFilter, sizeFilter, sortFilter } from "./constants"

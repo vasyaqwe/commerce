@@ -2,7 +2,7 @@
 
 import { useUpdateCartItemMutation } from "@/cart/mutations"
 import type { CartItem } from "@/cart/types"
-import { Button } from "@/ui/button"
+import { Button } from "@/ui/components/button"
 import { cn } from "@/ui/utils"
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline"
 

@@ -2,7 +2,7 @@
 
 import { useAddToCartMutation } from "@/cart/mutations"
 import type { Product, ProductVariant } from "@/lib/shopify/types"
-import { Button } from "@/ui/button"
+import { Button } from "@/ui/components/button"
 import { ShoppingBagIcon } from "@heroicons/react/24/outline"
 import { useSearchParams } from "next/navigation"
 

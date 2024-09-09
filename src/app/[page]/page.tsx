@@ -1,5 +1,5 @@
 import { getPage } from "@/lib/shopify"
-import { Prose } from "@/ui/prose"
+import { Prose } from "@/ui/components/prose"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 

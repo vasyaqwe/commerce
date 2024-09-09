@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@/ui/button"
+import { Button } from "@/ui/components/button"
 import { cn } from "@/ui/utils"
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline"
 import useEmblaCarousel, {

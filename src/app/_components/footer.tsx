@@ -1,8 +1,8 @@
 "use client"
 
 import { env } from "@/env"
-import { buttonVariants } from "@/ui/button"
-import { Icons } from "@/ui/icons"
+import { buttonVariants } from "@/ui/components/button"
+import { Icons } from "@/ui/components/icons"
 import { cn } from "@/ui/utils"
 import Link from "next/link"
 

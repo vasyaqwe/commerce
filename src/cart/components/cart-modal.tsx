@@ -5,10 +5,14 @@ import { cartQueryOptions } from "@/cart/queries"
 import type { CartItem } from "@/cart/types"
 import { DEFAULT_PRODUCT_TITLE } from "@/lib/shopify/constants"
 import { popModal } from "@/modals"
-import { Button } from "@/ui/button"
-import { Card } from "@/ui/card"
-import { DrawerContent, DrawerHeader, DrawerTitle } from "@/ui/drawer"
-import { Loading } from "@/ui/loading"
+import { Button } from "@/ui/components/button"
+import { Card } from "@/ui/components/card"
+import {
+   DrawerContent,
+   DrawerHeader,
+   DrawerTitle,
+} from "@/ui/components/drawer"
+import { Loading } from "@/ui/components/loading"
 import { createUrl, formatCurrency } from "@/ui/utils"
 import { ShoppingCartIcon, XMarkIcon } from "@heroicons/react/24/outline"
 import { useQuery } from "@tanstack/react-query"

@@ -1,7 +1,7 @@
 "use client"
 
-import { buttonVariants } from "@/ui/button"
 import { ComboboxPrimitive } from "@/ui/combobox-primitive"
+import { buttonVariants } from "@/ui/components/button"
 import { cn } from "@/ui/utils"
 import {
    CheckIcon,

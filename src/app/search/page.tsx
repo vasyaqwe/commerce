@@ -6,7 +6,7 @@ import {
 } from "@/app/search/_components/filter/constants"
 import { Product } from "@/app/search/_components/product"
 import { getProducts } from "@/lib/shopify"
-import { Card } from "@/ui/card"
+import { Card } from "@/ui/components/card"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
 
 export const metadata = {

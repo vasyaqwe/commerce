@@ -3,9 +3,9 @@
 import { cartQueryOptions } from "@/cart/queries"
 import type { Menu } from "@/lib/shopify/types"
 import { pushModal } from "@/modals"
-import { Button } from "@/ui/button"
-import { Icons } from "@/ui/icons"
-import { Input } from "@/ui/input"
+import { Button } from "@/ui/components/button"
+import { Icons } from "@/ui/components/icons"
+import { Input } from "@/ui/components/input"
 import { cn } from "@/ui/utils"
 import {
    MagnifyingGlassIcon,

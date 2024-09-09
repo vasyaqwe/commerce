@@ -1,7 +1,7 @@
 "use client"
 
 import { CartModal } from "@/cart/components/cart-modal"
-import { Drawer } from "@/ui/drawer"
+import { Drawer } from "@/ui/components/drawer"
 import { createPushModal } from "pushmodal"
 
 export const {

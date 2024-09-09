@@ -1,5 +1,5 @@
-import { useFormFieldControl } from "@/ui/form-field"
-import { Popover } from "@/ui/popover"
+import { useFormFieldControl } from "@/ui/components/form-field"
+import { Popover } from "@/ui/components/popover"
 import { useCombobox, useMultipleSelection } from "downshift"
 import {
    type Dispatch,

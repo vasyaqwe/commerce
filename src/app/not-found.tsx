@@ -1,7 +1,7 @@
 "use client"
 
-import { buttonVariants } from "@/ui/button"
-import { Card } from "@/ui/card"
+import { buttonVariants } from "@/ui/components/button"
+import { Card } from "@/ui/components/card"
 import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 

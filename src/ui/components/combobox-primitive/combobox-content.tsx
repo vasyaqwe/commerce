@@ -1,5 +1,5 @@
 import { useComboboxContext } from "@/ui/combobox-primitive/combobox-context"
-import { PopoverContent as RadixPopoverContent } from "@/ui/popover"
+import { PopoverContent as RadixPopoverContent } from "@/ui/components/popover"
 import { cn } from "@/ui/utils"
 import {
    type ComponentProps,

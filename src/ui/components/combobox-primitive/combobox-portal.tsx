@@ -1,4 +1,4 @@
-import { PopoverPortal as RadixPopoverPortal } from "@/ui/popover"
+import { PopoverPortal as RadixPopoverPortal } from "@/ui/components/popover"
 import type { ReactElement } from "react"
 
 export const Portal: typeof RadixPopoverPortal = ({

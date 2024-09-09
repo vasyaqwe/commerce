@@ -4,7 +4,7 @@ import { VariantSelector } from "@/app/product/[handle]/_components/variant-sele
 import { getProduct } from "@/lib/shopify"
 import { HIDDEN_PRODUCT_TAG } from "@/lib/shopify/constants"
 import type { Image as ShopifyImage } from "@/lib/shopify/types"
-import { Button } from "@/ui/button"
+import { Button } from "@/ui/components/button"
 import { formatCurrency } from "@/ui/utils"
 import { HeartIcon, TruckIcon } from "@heroicons/react/24/outline"
 import type { Metadata } from "next"

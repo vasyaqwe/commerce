@@ -1,6 +1,6 @@
+import { Dialog, DialogContent } from "@/ui/components/dialog"
+import { Drawer, DrawerContent } from "@/ui/components/drawer"
 import { MOBILE_BREAKPOINT } from "@/ui/constants"
-import { Dialog, DialogContent } from "@/ui/dialog"
-import { Drawer, DrawerContent } from "@/ui/drawer"
 import { createResponsiveWrapper } from "pushmodal"
 
 export const { Content, Wrapper: ResponsiveModalWrapper } =

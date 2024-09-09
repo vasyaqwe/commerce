@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@/ui/button"
+import { Button } from "@/ui/components/button"
 import { HeartIcon, TrashIcon } from "@heroicons/react/24/outline"
 
 export default function Page() {

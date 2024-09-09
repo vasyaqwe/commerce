@@ -1,8 +1,8 @@
 "use client"
 
 import type { ProductOption, ProductVariant } from "@/lib/shopify/types"
-import { Chip } from "@/ui/chip"
-import { Tooltip } from "@/ui/tooltip"
+import { Chip } from "@/ui/components/chip"
+import { Tooltip } from "@/ui/components/tooltip"
 import { createUrl } from "@/ui/utils"
 import { usePathname, useSearchParams } from "next/navigation"
 import { useRouter } from "next/navigation"
