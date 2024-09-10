@@ -97,7 +97,7 @@ const DropdownMenuItem = React.forwardRef<
    <DropdownMenuPrimitive.Item
       ref={ref}
       className={cn(
-         "relative flex cursor-pointer select-none items-center gap-2 rounded-[7px] px-2.5 py-1.5 text-accent-foreground outline-none data-[disabled]:pointer-events-none focus:bg-popover-highlight [&>svg]:stroke-[var(--popover-icon)] data-[disabled]:opacity-50 focus:shadow-[0px_1px_1px_1px_black]",
+         "relative flex cursor-pointer select-none items-center gap-2 rounded-[7px] px-2.5 py-1.5 text-accent-foreground outline-none data-[disabled]:pointer-events-none focus:bg-popover-highlight [&>svg]:stroke-[var(--color-popover-icon)] data-[disabled]:opacity-50 focus:shadow-[0px_1px_1px_1px_black]",
          inset && "pl-8",
          destructive
             ? "focus:bg-destructive/95 focus:[--popover-icon:hsl(var(--popover-foreground))]"

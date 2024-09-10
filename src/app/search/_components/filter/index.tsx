@@ -3,13 +3,9 @@
 import { buttonVariants } from "@/ui/components/button"
 import {
    Combobox,
-   ComboboxClearButton,
    ComboboxContent,
-   ComboboxDisclosure,
    ComboboxEmpty,
-   ComboboxInput,
    ComboboxItem,
-   ComboboxSelectedItems,
    ComboboxTrigger,
 } from "@/ui/components/combobox"
 import {
@@ -27,7 +23,7 @@ import { colorFilter, sizeFilter, sortFilter } from "./constants"
 export function Filters() {
    return (
       <>
-         <div className="container">
+         <div className="container md:hidden">
             <Drawer>
                <DrawerTrigger
                   className={cn(
@@ -82,12 +78,9 @@ function FiltersContent() {
             }}
          >
             <ComboboxTrigger className="w-[90vw] lg:w-[230px]">
-               <ComboboxSelectedItems />
-               <ComboboxInput placeholder="Сортувати" />
-               <ComboboxClearButton />
-               <ComboboxDisclosure />
+               Сортувати
             </ComboboxTrigger>
-            <ComboboxContent className="w-[91vw] lg:w-[235px]">
+            <ComboboxContent className="w-[91vw] lg:w-[230px]">
                <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
                {sortFilter.map((item) => {
                   return (
@@ -120,12 +113,9 @@ function FiltersContent() {
             }}
          >
             <ComboboxTrigger className="w-[90vw] lg:w-[180px]">
-               <ComboboxSelectedItems />
-               <ComboboxInput placeholder="Колір" />
-               <ComboboxClearButton />
-               <ComboboxDisclosure />
+               Колір
             </ComboboxTrigger>
-            <ComboboxContent className="w-[91vw] lg:w-[185px] ">
+            <ComboboxContent className="w-[91vw] lg:w-[180px] ">
                <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
                {colorFilter.map((item) => {
                   return (
@@ -169,12 +159,9 @@ function FiltersContent() {
             }}
          >
             <ComboboxTrigger className="w-[90vw] lg:w-[150px]">
-               <ComboboxSelectedItems />
-               <ComboboxInput placeholder="Розмір" />
-               <ComboboxClearButton />
-               <ComboboxDisclosure />
+               Розмір
             </ComboboxTrigger>
-            <ComboboxContent className="w-[91vw] lg:w-[155px] ">
+            <ComboboxContent className="w-[91vw] lg:w-[150px] ">
                <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
                {sizeFilter.map((item) => {
                   return (
