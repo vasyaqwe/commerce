@@ -45,7 +45,9 @@ export function VariantSelector({
    const updateURL = (params: URLSearchParams) => {
       const href = createUrl(pathname, params)
 
-      router.replace(href)
+      router.replace(href, {
+         scroll: false,
+      })
    }
    const hasNoOptionsOrJustOneOption =
       !options.length ||

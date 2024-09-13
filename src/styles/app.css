@@ -178,6 +178,11 @@
   [data-chip]:after {
     transition-timing-function: var(--ease);
   }
+  @media (min-width: 768px) {
+    [data-nav]  {
+      clip-path: unset !important;
+    }
+  }
 }
 
 /* reset */

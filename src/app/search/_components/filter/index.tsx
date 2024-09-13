@@ -74,13 +74,13 @@ function FiltersContent() {
                      ...{ sort: sort ?? "relevance" },
                   }),
                )
-               router.replace(href)
+               router.replace(href, { scroll: false })
             }}
          >
-            <ComboboxTrigger className="w-[90vw] lg:w-[230px]">
+            <ComboboxTrigger className="w-[90vw] md:w-[230px]">
                Сортувати
             </ComboboxTrigger>
-            <ComboboxContent className="w-[91vw] lg:w-[230px]">
+            <ComboboxContent className="w-[91vw] md:w-[230px]">
                <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
                {sortFilter.map((item) => {
                   return (
@@ -109,13 +109,13 @@ function FiltersContent() {
                      }),
                   }),
                )
-               router.replace(href)
+               router.replace(href, { scroll: false })
             }}
          >
-            <ComboboxTrigger className="w-[90vw] lg:w-[180px]">
+            <ComboboxTrigger className="w-[90vw] md:w-[180px]">
                Колір
             </ComboboxTrigger>
-            <ComboboxContent className="w-[91vw] lg:w-[180px] ">
+            <ComboboxContent className="w-[91vw] md:w-[180px] ">
                <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
                {colorFilter.map((item) => {
                   return (
@@ -155,13 +155,13 @@ function FiltersContent() {
                      }),
                   }),
                )
-               router.replace(href)
+               router.replace(href, { scroll: false })
             }}
          >
-            <ComboboxTrigger className="w-[90vw] lg:w-[150px]">
+            <ComboboxTrigger className="w-[90vw] md:w-[150px]">
                Розмір
             </ComboboxTrigger>
-            <ComboboxContent className="w-[91vw] lg:w-[150px] ">
+            <ComboboxContent className="w-[91vw] md:w-[150px] ">
                <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
                {sizeFilter.map((item) => {
                   return (
