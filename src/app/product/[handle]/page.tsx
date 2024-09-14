@@ -100,7 +100,7 @@ export default async function Page({ params }: { params: { handle: string } }) {
                      <h1 className="mb-2 font-semibold text-2xl lg:text-3xl">
                         {product.title}
                      </h1>
-                     <p className="text-foreground/70 lg:mt-2 ">42 відгуки</p>
+                     {/* <p className="text-foreground/70 lg:mt-2 ">42 відгуки</p> */}
                      <p className="mt-4 font-bold text-2xl lg:mt-8 lg:text-[2.25rem]">
                         ₴
                         {formatCurrency(

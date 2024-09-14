@@ -3,13 +3,35 @@
 import { cn } from "@/ui/utils"
 import useEmblaCarousel from "embla-carousel-react"
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export function Gallery({
    images,
 }: { images: { src: string; altText: string }[] }) {
    const [emblaRef, emblaApi] = useEmblaCarousel()
+   const [carouselActive, setCarouselActive] = useState(false)
+   const [emblaRef2] = useEmblaCarousel({
+      dragFree: true,
+      active: carouselActive,
+   })
    const [selectedIndex, setSelectedIndex] = useState(0)
+   const containerRef = useRef<HTMLDivElement>(null)
+
+   useEffect(() => {
+      const check = () => {
+         if (containerRef.current) {
+            const containerWidth = containerRef.current.offsetWidth
+            const imagesWidth = images.length * 80 + images.length
+            console.log(containerWidth, imagesWidth)
+            setCarouselActive(containerWidth < imagesWidth)
+         }
+      }
+
+      check()
+      window.addEventListener("resize", check)
+
+      return () => window.removeEventListener("resize", check)
+   }, [images])
 
    useEffect(() => {
       if (emblaApi) {
@@ -24,7 +46,7 @@ export function Gallery({
    }, [emblaApi])
 
    return (
-      <div>
+      <div className="overflow-hidden">
          <div
             className="relative aspect-square max-h-[60svh] w-full overflow-hidden rounded-2xl max-lg:rounded-t-none"
             ref={emblaRef}
@@ -47,32 +69,43 @@ export function Gallery({
                ))}
             </div>
          </div>
-         {images.length > 1 ? (
-            <div className="no-scrollbar flex items-center gap-1 overflow-x-auto px-1 py-1 lg:gap-2 lg:py-2">
-               {images.map((image, idx) => {
-                  return (
-                     <button
-                        key={image.src}
-                        onClick={() => {
-                           emblaApi?.scrollTo(idx)
-                        }}
-                        aria-label="Select product image"
-                        className={cn(
-                           "size-16 overflow-hidden rounded-xl ring ring-[2px] ring-transparent transition-all duration-200 lg:size-20 hover:ring-accent/40 lg:ring-[3px]",
-                           selectedIndex === idx ? "ring-accent/50" : "",
-                        )}
-                     >
-                        <Image
-                           alt={image.altText}
-                           src={image.src}
-                           width={120}
-                           height={120}
-                        />
-                     </button>
-                  )
-               })}
-            </div>
-         ) : null}
+         <div
+            ref={containerRef}
+            className=""
+         >
+            {images.length > 1 ? (
+               <div
+                  ref={emblaRef2}
+                  className="relative overflow-hidden after:absolute before:absolute after:inset-y-0 before:inset-y-0 after:right-0 before:left-0 after:z-10 before:z-10 after:w-10 before:w-10 after:bg-gradient-to-l before:bg-gradient-to-r after:from-background before:from-background after:to-transparent before:to-transparent"
+               >
+                  <div className="flex items-center gap-1 px-1 py-1 lg:gap-2 lg:py-2">
+                     {images.map((image, idx) => {
+                        return (
+                           <button
+                              key={image.src}
+                              onClick={() => {
+                                 emblaApi?.scrollTo(idx)
+                              }}
+                              aria-label="Select product image"
+                              className={cn(
+                                 "size-20 shrink-0 overflow-hidden rounded-xl ring ring-[2px] ring-transparent transition-all duration-200 hover:ring-accent/40 lg:ring-[3px]",
+                                 selectedIndex === idx ? "ring-accent/50" : "",
+                              )}
+                           >
+                              <Image
+                                 draggable={false}
+                                 alt={image.altText}
+                                 src={image.src}
+                                 width={120}
+                                 height={120}
+                              />
+                           </button>
+                        )
+                     })}
+                  </div>
+               </div>
+            ) : null}
+         </div>
       </div>
    )
 }
