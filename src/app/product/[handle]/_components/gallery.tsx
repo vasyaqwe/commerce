@@ -76,7 +76,7 @@ export function Gallery({
             {images.length > 1 ? (
                <div
                   ref={emblaRef2}
-                  className="relative overflow-hidden after:absolute before:absolute after:inset-y-0 before:inset-y-0 after:right-0 before:left-0 after:z-10 before:z-10 after:w-10 before:w-10 after:bg-gradient-to-l before:bg-gradient-to-r after:from-background before:from-background after:to-transparent before:to-transparent"
+                  className="relative isolate overflow-hidden after:pointer-events-none before:pointer-events-none after:absolute before:absolute after:inset-y-0 before:inset-y-0 after:right-0 before:left-0 after:z-10 before:z-10 after:w-10 before:w-10 after:bg-gradient-to-l before:bg-gradient-to-r after:from-background before:from-background after:to-transparent before:to-transparent"
                >
                   <div className="flex items-center gap-1 px-1 py-1 lg:gap-2 lg:py-2">
                      {images.map((image, idx) => {
@@ -88,8 +88,10 @@ export function Gallery({
                               }}
                               aria-label="Select product image"
                               className={cn(
-                                 "size-20 shrink-0 overflow-hidden rounded-xl ring ring-[2px] ring-transparent transition-all duration-200 hover:ring-accent/40 lg:ring-[3px]",
-                                 selectedIndex === idx ? "ring-accent/50" : "",
+                                 "size-20 shrink-0 overflow-hidden rounded-xl border border-transparent ring ring-[2px] ring-transparent transition-all duration-200 hover:border-accent/90 hover:ring-accent/40 lg:ring-[3px]",
+                                 selectedIndex === idx
+                                    ? "border-accent/90 ring-accent/40"
+                                    : "",
                               )}
                            >
                               <Image
