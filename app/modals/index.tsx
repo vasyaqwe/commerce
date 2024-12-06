@@ -1,5 +1,7 @@
-import { Modal, ModalContent } from "@/modals/dynamic"
+import { CartModal } from "@/cart/components/cart-modal"
+import { ModalContent } from "@/modals/dynamic"
 import { createPushModal } from "@/modals/factory"
+import { Drawer } from "@/ui/components/drawer"
 
 export const {
    pushModal,
@@ -11,9 +13,14 @@ export const {
    ModalProvider,
 } = createPushModal({
    modals: {
-      example: {
-         Wrapper: Modal,
-         Component: ExampleModal,
+      cart: {
+         Wrapper: (props) => (
+            <Drawer
+               {...props}
+               direction="right"
+            />
+         ),
+         Component: CartModal,
       },
    },
 })

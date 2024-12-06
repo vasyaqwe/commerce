@@ -150,7 +150,7 @@ export const formatNumber = (value: number) => {
 }
 
 export const formatCurrency = (
-   price: number,
+   price: number | string,
    options: Intl.NumberFormatOptions = {},
 ) => {
    return new Intl.NumberFormat("en-US", {

@@ -8,19 +8,16 @@ import type {
 } from "@/lib/shopify/types"
 import { getEvent } from "vinxi/http"
 
-type ExtractVariables<T> = T extends { variables: object }
-   ? T["variables"]
-   : never
-
-export const shopifyFetch = async <T>({
+export const shopifyFetch = async ({
    headers,
    query,
    variables,
 }: {
    headers?: HeadersInit
    query: string
-   variables?: ExtractVariables<T>
-}): Promise<{ status: number; body: T } | never> => {
+   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+   variables?: any
+}) => {
    const env = getEvent().context.cloudflare.env
    try {
       const result = await fetch(
@@ -44,10 +41,7 @@ export const shopifyFetch = async <T>({
 
       if (body.errors) throw body.errors[0]
 
-      return {
-         status: result.status,
-         body,
-      }
+      return body.data
    } catch (e) {
       if (isShopifyError(e)) {
          throw {

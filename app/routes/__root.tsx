@@ -1,10 +1,15 @@
 import "@/ui/styles.css"
 import ogImage from "@/assets/og.png"
 import { publicEnv } from "@/env"
+import { ModalProvider } from "@/modals"
+import { Footer } from "@/routes/-components/footer"
+import { Header } from "@/routes/-components/header"
 import { Toaster } from "@/ui/components/toast"
 import toastStyles from "@/ui/components/toast/styles.css?url"
+import { TooltipProvider } from "@/ui/components/tooltip"
 import styles from "@/ui/styles.css?url"
 import { cn } from "@/ui/utils"
+import * as Portal from "@radix-ui/react-portal"
 import type { QueryClient } from "@tanstack/react-query"
 import {
    Outlet,
@@ -94,10 +99,18 @@ function RootDocument({ children }: { children: React.ReactNode }) {
          <body>
             <div
                className={cn(
-                  "bg-background font-medium text-base text-foreground antialiased selection:bg-primary selection:text-background",
+                  "grid min-h-svh grid-rows-[auto_1fr_auto] bg-background text-base text-foreground selection:bg-primary selection:text-background",
                )}
             >
-               {children}
+               <TooltipProvider delayDuration={300}>
+                  <ModalProvider />
+                  <Portal.Root>
+                     <Toaster />
+                  </Portal.Root>
+                  <Header />
+                  <main>{children}</main>
+                  <Footer />
+               </TooltipProvider>
             </div>
             {/* <ReactQueryDevtools buttonPosition="bottom-left" /> */}
             {/* <TanStackRouterDevtools position="bottom-right" /> */}
