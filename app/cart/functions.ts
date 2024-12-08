@@ -1,6 +1,7 @@
 import type { ShopifyCart } from "@/cart/types"
 import { reshapeCart } from "@/cart/utils"
 import { ServerFnError } from "@/error"
+import { shopifyFetch } from "@/lib/shopify"
 import {
    addToCartMutation,
    createCartMutation,
@@ -8,7 +9,6 @@ import {
    removeFromCartMutation,
 } from "@/lib/shopify/mutations/cart"
 import { getCartQuery } from "@/lib/shopify/queries/cart"
-import { shopifyFetch } from "@/lib/shopify/utils"
 import { createMiddleware, createServerFn } from "@tanstack/start"
 import { zodValidator } from "@tanstack/zod-adapter"
 import { getCookie, setCookie } from "vinxi/http"

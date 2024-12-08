@@ -1,3 +1,4 @@
+import { shopifyFetch } from "@/lib/shopify"
 import {
    getCollectionProductsQuery,
    getCollectionQuery,
@@ -22,7 +23,6 @@ import {
    reshapeCollections,
    reshapeProduct,
    reshapeProducts,
-   shopifyFetch,
 } from "@/lib/shopify/utils"
 import { createServerFn } from "@tanstack/start"
 import { zodValidator } from "@tanstack/zod-adapter"

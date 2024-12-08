@@ -1,10 +1,10 @@
+import bottom from "@/assets/bottom1.jpg"
 import { getCartQueryOptions } from "@/cart/queries"
 import { pushModal } from "@/modals"
 import { Button } from "@/ui/components/button"
 import { Icons } from "@/ui/components/icons"
 import { Input } from "@/ui/components/input"
 import { cn } from "@/ui/utils"
-import bottom from "@@/public/bottom1.jpg"
 import {
    ArrowRightIcon,
    MagnifyingGlassIcon,
@@ -37,15 +37,15 @@ export function Header(props: ComponentProps<"header">) {
                <div className="flex items-center gap-8 md:min-w-[300px]">
                   <Link
                      href="/"
-                     className="mb-1 max-md:hidden"
+                     className="max-md:hidden"
                   >
                      <Icons.logo />
                   </Link>
                   <button
                      aria-label="Menu"
-                     className="mr-2 text-foreground/70 md:hidden"
+                     className="mr-2 cursor-pointer text-foreground/70 md:hidden"
                      aria-expanded={open}
-                     onClick={() => setOpen(!open)}
+                     onClick={() => console.log("hello")}
                   >
                      <svg
                         className="-ml-1.5 size-10"
@@ -104,7 +104,7 @@ export function Header(props: ComponentProps<"header">) {
                               <Link
                                  href={item.path}
                                  onClick={() => setOpen(false)}
-                                 className="relative block h-full font-medium text-foreground transition-colors md:hover:text-foreground md:text-foreground/75"
+                                 className="relative block h-full font-semibold text-foreground transition-colors md:hover:text-foreground md:text-foreground/75"
                               >
                                  <img
                                     className={cn(

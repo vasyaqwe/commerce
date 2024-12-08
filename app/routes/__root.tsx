@@ -1,6 +1,4 @@
 import "@/ui/styles.css"
-import ogImage from "@/assets/og.png"
-import { publicEnv } from "@/env"
 import { ModalProvider } from "@/modals"
 import { Footer } from "@/routes/-components/footer"
 import { Header } from "@/routes/-components/header"
@@ -57,10 +55,10 @@ export const Route = createRootRouteWithContext<{
             { name: "og:type", content: "website" },
             { name: "og:title", content: title },
             { name: "og:description", content: description },
-            {
-               name: "og:image",
-               content: `${publicEnv.VITE_BASE_URL}${ogImage}`,
-            },
+            // {
+            //    name: "og:image",
+            //    content: `${publicEnv.VITE_BASE_URL}${ogImage}`,
+            // },
             { name: "twitter:card", content: "summary_large_image" },
          ],
          links: [
@@ -71,9 +69,9 @@ export const Route = createRootRouteWithContext<{
             // { rel: "manifest", href: "/site.webmanifest" },
             {
                rel: "preload",
-               href: "/font/satoshi.woff2",
+               href: "/font/manrope.ttf",
                as: "font",
-               type: "font/woff2",
+               type: "font/ttf",
                crossOrigin: "anonymous",
             },
          ],
@@ -99,7 +97,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
          <body>
             <div
                className={cn(
-                  "grid min-h-svh grid-rows-[auto_1fr_auto] bg-background text-base text-foreground selection:bg-primary selection:text-background",
+                  "grid min-h-svh grid-rows-[auto_1fr_auto] bg-background font-medium text-base text-foreground selection:bg-primary selection:text-background",
                )}
             >
                <TooltipProvider delayDuration={300}>
