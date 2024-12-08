@@ -45,12 +45,17 @@ const DrawerContent = React.forwardRef<
          }}
          ref={ref}
          className={cn(
-            "group fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto max-h-[88svh] flex-col rounded-t-xl border border-border bg-background shadow-[0_-8px_10px_0px_hsl(var(--foreground)/.06)] [&[vaul-drawer-direction=right]]:right-0 [&[vaul-drawer-direction=right]]:left-auto [&[vaul-drawer-direction=right]]:h-screen [&[vaul-drawer-direction=right]]:max-h-full [&[vaul-drawer-direction=right]]:w-[95%] lg:[&[vaul-drawer-direction=right]]:w-[556px] [&[vaul-drawer-direction=right]]:rounded-r-none [&[vaul-drawer-direction=right]]:rounded-bl-xl ",
+            "group fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto max-h-[88svh] flex-col rounded-t-xl border border-border bg-background",
+            "shadow-[0_-8px_10px_0px_hsl(var(--foreground)/.06)] [&[data-vaul-drawer-direction=right]]:right-0 [&[data-vaul-drawer-direction=right]]:left-auto",
+            "[&[data-vaul-drawer-direction=right]]:mt-0 [&[data-vaul-drawer-direction=right]]:h-screen [&[data-vaul-drawer-direction=right]]:max-h-full",
+            "[&[data-vaul-drawer-direction=right]]:top-2 [&[data-vaul-drawer-direction=right]]:right-2 [&[data-vaul-drawer-direction=right]]:h-auto",
+            "[&[data-vaul-drawer-direction=right]]:bottom-2 [&[data-vaul-drawer-direction=right]]:after:hidden",
+            "[&[data-vaul-drawer-direction=right]]:w-[90%] lg:[&[data-vaul-drawer-direction=right]]:w-[475px] [&[data-vaul-drawer-direction=right]]:rounded-2xl",
             className,
          )}
          {...props}
       >
-         <div className="!p-0 mx-auto mt-1.5 min-h-1 w-[37px] rounded-full bg-foreground/80 group-[&[vaul-drawer-direction=right]]:hidden" />
+         <div className="!p-0 mx-auto mt-1.5 min-h-1 w-[37px] rounded-full bg-foreground/80 group-[&[data-vaul-drawer-direction=right]]:hidden" />
          {children}
       </DrawerPrimitive.Content>
    </DrawerPortal>

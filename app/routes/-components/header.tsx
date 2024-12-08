@@ -45,7 +45,7 @@ export function Header(props: ComponentProps<"header">) {
                      aria-label="Menu"
                      className="mr-2 cursor-pointer text-foreground/70 md:hidden"
                      aria-expanded={open}
-                     onClick={() => console.log("hello")}
+                     onClick={() => setOpen(!open)}
                   >
                      <svg
                         className="-ml-1.5 size-10"
