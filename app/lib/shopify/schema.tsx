@@ -5,7 +5,7 @@ import {
 } from "@/lib/shopify/constants"
 import { z } from "zod"
 
-export const sortFilterSlugSchema = z.enum(sortFilterSlugs).default("relevance")
+export const sortFilterSlugSchema = z.enum(sortFilterSlugs)
 
 export const colorFilterSlugSchema = z.enum(colorFilterSlugs)
 

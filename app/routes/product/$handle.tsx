@@ -1,3 +1,4 @@
+import { HIDDEN_PRODUCT_TAG } from "@/lib/shopify/constants"
 import { productByHandle } from "@/lib/shopify/functions"
 import { Button } from "@/ui/components/button"
 import { cn } from "@/ui/utils"
@@ -24,6 +25,49 @@ export const Route = createFileRoute("/product/$handle")({
       )
 
       if (!product) throw notFound()
+
+      return product
+   },
+   head: ({ loaderData: product }) => {
+      const title =
+         product?.seo.title ?? product?.title ?? "Сторінку не знайдено"
+      const description =
+         product?.seo.description ??
+         product?.description ??
+         "Ця сторінка не більше існує — можливо вона переїхала, або її видалили."
+
+      const { url, width, height, altText: alt } = product?.featuredImage || {}
+      const indexable = !product?.tags.includes(HIDDEN_PRODUCT_TAG)
+
+      const robotsContent = indexable ? "index, follow" : "noindex, nofollow"
+
+      const googleBotContent = indexable ? "index, follow" : "noindex, nofollow"
+
+      return {
+         meta: [
+            { title },
+            {
+               name: "description",
+               content: description,
+            },
+            { name: "twitter:title", content: title },
+            { name: "twitter:description", content: description },
+            { name: "og:type", content: "website" },
+            { name: "og:title", content: title },
+            { name: "og:description", content: description },
+            url ? { name: "og:image", content: url } : undefined,
+            url && width
+               ? { name: "og:image:width", content: String(width) }
+               : undefined,
+            url && height
+               ? { name: "og:image:height", content: String(height) }
+               : undefined,
+            url && alt ? { name: "og:image:alt", content: alt } : undefined,
+            { name: "twitter:card", content: "summary_large_image" },
+            { name: "robots", content: robotsContent },
+            { name: "googlebot", content: googleBotContent },
+         ],
+      }
    },
 })
 

@@ -9,7 +9,7 @@ import { z } from "zod"
 
 const searchSchema = z.object({
    q: z.string(),
-   sort: sortFilterSlugSchema.optional(),
+   sort: sortFilterSlugSchema,
    colors: z.array(colorFilterSlugSchema).optional(),
    sizes: z.array(sizeFilterSlugSchema).optional(),
 })

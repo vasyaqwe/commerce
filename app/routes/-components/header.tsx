@@ -140,7 +140,10 @@ export function Header(props: ComponentProps<"header">) {
                      const formData = Object.fromEntries(
                         new FormData(e.target as HTMLFormElement),
                      ) as { q: string }
-                     navigate({ to: "/search", search: { q: formData.q } })
+                     navigate({
+                        to: "/search",
+                        search: { q: formData.q, sort: "relevance" },
+                     })
                   }}
                >
                   <MagnifyingGlassIcon className="-translate-y-1/2 absolute top-1/2 left-3 size-6 text-foreground/30" />
