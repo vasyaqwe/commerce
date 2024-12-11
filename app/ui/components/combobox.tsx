@@ -168,7 +168,7 @@ export function ComboboxInput({
          />
          <CommandInput
             className={cn(
-               "h-9 w-full border-transparent bg-transparent pr-3 pl-9 placeholder:text-popover-foreground/50 focus:outline-none",
+               "h-9 w-full border-transparent bg-transparent pr-3 pl-9 placeholder:text-popover-foreground/50 focus:outline-hidden",
                className,
             )}
             {...props}
@@ -224,7 +224,7 @@ export function ComboboxItem({
          value={propValue}
          onSelect={handleSelect}
          className={cn(
-            "relative flex cursor-pointer select-none items-center gap-2 rounded-[9px] px-2.5 py-1.5 text-accent-foreground outline-none data-[disabled=true]:pointer-events-none aria-[selected=true]:bg-popover-highlight [&>svg]:stroke-[var(--color-popover-icon)] data-[disabled=true]:opacity-50 aria-[selected=true]:shadow-[0px_2px_1px_1px_black]",
+            "relative flex cursor-pointer select-none items-center gap-2 rounded-[9px] px-2.5 py-1.5 text-accent-foreground outline-hidden data-[disabled=true]:pointer-events-none aria-[selected=true]:bg-popover-highlight [&>svg]:stroke-[var(--color-popover-icon)] data-[disabled=true]:opacity-50 aria-[selected=true]:shadow-[0px_2px_1px_1px_black]",
             className,
          )}
          {...props}

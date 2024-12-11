@@ -1,6 +1,7 @@
 import { sortFilterSlugToReverse } from "@/lib/shopify/constants"
-import { listProducts } from "@/lib/shopify/functions"
+import * as shopify from "@/lib/shopify/functions"
 import type { listProductsParams } from "@/lib/shopify/schema"
+import { Product } from "@/routes/search/-components/product"
 import { Card } from "@/ui/components/card"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
@@ -11,13 +12,13 @@ const listProductsQuery = (data: z.infer<typeof listProductsParams>) =>
    queryOptions({
       queryKey: [
          "list_products",
-         data.query,
+         data.q,
          data.sort,
+         data.reverse,
          data.colors,
          data.sizes,
-         data.reverse,
       ],
-      queryFn: () => listProducts({ data }),
+      queryFn: () => shopify.listProducts({ data }),
    })
 
 export const Route = createFileRoute("/search/_layout/")({
@@ -26,11 +27,10 @@ export const Route = createFileRoute("/search/_layout/")({
    loader: async ({ deps: { search }, context }) => {
       await context.queryClient.prefetchQuery(
          listProductsQuery({
-            query: search.q,
-            sort: search.sort,
-            reverse: sortFilterSlugToReverse[search.sort],
-            colors: search.color,
-            sizes: search.size,
+            ...search,
+            reverse: !search.sort
+               ? false
+               : sortFilterSlugToReverse[search.sort],
          }),
       )
    },
@@ -40,11 +40,8 @@ function RouteComponent() {
    const search = useSearch({ from: "/search/_layout" })
    const query = useSuspenseQuery(
       listProductsQuery({
-         query: search.q,
-         sort: search.sort,
-         reverse: sortFilterSlugToReverse[search.sort],
-         colors: search.color,
-         sizes: search.size,
+         ...search,
+         reverse: !search.sort ? false : sortFilterSlugToReverse[search.sort],
       }),
    )
    const products = query.data
@@ -52,7 +49,7 @@ function RouteComponent() {
    return (
       <>
          {products.length === 0 ? (
-            <div className="-mt-8 flex h-full w-full items-center justify-center text-balance px-8 text-center font-medium text-lg">
+            <div className="flex size-full min-h-[60vh] items-center justify-center text-balance px-8 text-center font-medium text-lg">
                <div>
                   <div className="relative mb-8">
                      <Card className="absolute inset-0 mx-auto grid h-28 w-[5.5rem] rotate-6 place-content-center rounded-xl" />
@@ -70,7 +67,10 @@ function RouteComponent() {
          ) : (
             <div className="container grid grid-cols-1 gap-2 lg:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4">
                {products.map((p) => (
-                  <div key={p.handle} />
+                  <Product
+                     product={p}
+                     key={p.handle}
+                  />
                ))}
             </div>
          )}

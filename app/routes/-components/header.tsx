@@ -11,12 +11,16 @@ import {
    ShoppingBagIcon,
 } from "@heroicons/react/24/outline"
 import { useQuery } from "@tanstack/react-query"
-import { Link } from "@tanstack/react-router"
+import { Link, useNavigate, useSearch } from "@tanstack/react-router"
 import { type ComponentProps, useState } from "react"
 
 export function Header(props: ComponentProps<"header">) {
    const [open, setOpen] = useState(false)
    const { data: cart } = useQuery(getCartQueryOptions())
+
+   const navigate = useNavigate()
+   const search = useSearch({ strict: false })
+
    const menu = [
       { title: "Верх", path: `/search/${encodeURI("топи")}`, image: bottom },
       { title: "Низ", path: `/search/${encodeURI("низ")}`, image: bottom },
@@ -32,7 +36,7 @@ export function Header(props: ComponentProps<"header">) {
          className="z-[11] h-[69px] "
          {...props}
       >
-         <div className="fixed top-0 flex h-[69px] w-full items-center border-border/60 border-b bg-background shadow-sm md:py-3">
+         <div className="fixed top-0 flex h-[69px] w-full items-center border-border/60 border-b bg-background shadow-xs md:py-3">
             <div className="container flex items-center">
                <div className="flex items-center gap-8 md:min-w-[300px]">
                   <Link
@@ -129,7 +133,16 @@ export function Header(props: ComponentProps<"header">) {
                      </ul>
                   </nav>
                </div>
-               <form className="relative mx-auto w-full max-w-[340px]">
+               <form
+                  className="relative mx-auto w-full max-w-[340px]"
+                  onSubmit={(e) => {
+                     e.preventDefault()
+                     const formData = Object.fromEntries(
+                        new FormData(e.target as HTMLFormElement),
+                     ) as { q: string }
+                     navigate({ to: "/search", search: { q: formData.q } })
+                  }}
+               >
                   <MagnifyingGlassIcon className="-translate-y-1/2 absolute top-1/2 left-3 size-6 text-foreground/30" />
                   <Input
                      className="pl-11"
@@ -137,7 +150,7 @@ export function Header(props: ComponentProps<"header">) {
                      name="q"
                      placeholder="Шукати"
                      autoComplete="off"
-                     // defaultValue={searchParams?.get("q") || ""}
+                     defaultValue={search.q}
                   />
                </form>
                <div className="max-md:-mr-1.5 ml-2 flex items-center justify-end md:min-w-[300px]">
@@ -159,7 +172,7 @@ export function Header(props: ComponentProps<"header">) {
                            transitionTimingFunction: "var(--ease)",
                         }}
                         className={cn(
-                           "absolute top-1.5 right-1.5 grid size-[18px] scale-0 place-content-center rounded-full bg-accent font-semibold text-xs shadow-sm transition-transform duration-1000",
+                           "absolute top-1.5 right-1.5 grid size-[18px] scale-0 place-content-center rounded-full bg-accent font-semibold text-xs shadow-xs transition-transform duration-1000",
                            cart?.totalQuantity ? "scale-100" : "",
                         )}
                      >

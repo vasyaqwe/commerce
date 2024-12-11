@@ -171,7 +171,7 @@ export const getPages = createServerFn({ method: "GET" }).handler(async () => {
    return removeEdgesAndNodes(res.pages)
 })
 
-export const getProduct = createServerFn({ method: "GET" })
+export const productByHandle = createServerFn({ method: "GET" })
    .validator(
       zodValidator(
          z.object({
@@ -187,10 +187,12 @@ export const getProduct = createServerFn({ method: "GET" })
          },
       })) as { product: ShopifyProduct }
 
-      return reshapeProduct({
-         product: res.product,
-         filterHidden: false,
-      })
+      return (
+         reshapeProduct({
+            product: res.product,
+            filterHidden: false,
+         }) ?? null
+      )
    })
 
 export const getProductRecommendations = createServerFn({ method: "GET" })
@@ -216,34 +218,32 @@ export const getProductRecommendations = createServerFn({ method: "GET" })
 
 export const listProducts = createServerFn({ method: "GET" })
    .validator(zodValidator(listProductsParams))
-   .handler(
-      async ({ data: { query, reverse, sort, colors, sizes, style } }) => {
-         let queryString = query ?? ""
+   .handler(async ({ data: { q, reverse, sort, colors, sizes, style } }) => {
+      let queryString = q ?? ""
 
-         if (colors && colors.length > 0) {
-            const colorQuery = colors.join(" OR ")
-            queryString += ` AND (variants.options:color:(${colorQuery}))`
-         }
+      if (colors && colors.length > 0) {
+         const colorQuery = colors.join(" OR ")
+         queryString += ` AND (variants.options:color:(${colorQuery}))`
+      }
 
-         if (sizes && sizes.length > 0) {
-            const sizeQuery = sizes.join(" OR ")
-            queryString += ` AND (variants.options:size:(${sizeQuery}))`
-         }
+      if (sizes && sizes.length > 0) {
+         const sizeQuery = sizes.join(" OR ")
+         queryString += ` AND (variants.options:size:(${sizeQuery}))`
+      }
 
-         if (style) queryString += ` AND product_type:${style}`
+      if (style) queryString += ` AND product_type:${style}`
 
-         const res = (await shopifyFetch({
-            query: getProductsQuery,
-            variables: {
-               query: queryString,
-               sortKey: sort ? sortFilterSlugToKey[sort] : undefined,
-               reverse,
-               first: 100,
-            },
-         })) as {
-            products: Connection<ShopifyProduct>
-         }
+      const res = (await shopifyFetch({
+         query: getProductsQuery,
+         variables: {
+            query: queryString,
+            sortKey: sort ? sortFilterSlugToKey[sort] : undefined,
+            reverse,
+            first: 100,
+         },
+      })) as {
+         products: Connection<ShopifyProduct>
+      }
 
-         return reshapeProducts(removeEdgesAndNodes(res.products))
-      },
-   )
+      return reshapeProducts(removeEdgesAndNodes(res.products))
+   })

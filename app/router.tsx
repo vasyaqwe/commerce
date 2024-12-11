@@ -88,7 +88,7 @@ function NotFound() {
                </Card>
             </div>
             <h1 className="mb-2 font-semibold text-xl">Тут нічого немає..</h1>
-            <p className="mb-5 text-lg leading-snug opacity-70">
+            <p className="mb-5 leading-snug opacity-70">
                Ця сторінка не більше існує — <br /> можливо вона переїхала, або
                її видалили.
             </p>
@@ -126,7 +126,7 @@ function CatchBoundary({ error }: ErrorComponentProps) {
                </Card>
             </div>
             <h1 className="mb-2 font-semibold text-xl">От-такої..</h1>
-            <p className="mb-5 text-lg leading-snug opacity-70">
+            <p className="mb-5 leading-snug opacity-70">
                Сталася технічна проблема. <br /> Будь ласка, спробуйте ще раз
                пізніше.
             </p>

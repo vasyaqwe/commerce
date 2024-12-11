@@ -95,7 +95,7 @@ const DropdownMenuItem = React.forwardRef<
    <DropdownMenuPrimitive.Item
       ref={ref}
       className={cn(
-         "relative flex cursor-pointer select-none items-center gap-2 rounded-[7px] px-2.5 py-1.5 text-accent-foreground outline-none data-[disabled]:pointer-events-none focus:bg-popover-highlight [&>svg]:stroke-[var(--color-popover-icon)] data-[disabled]:opacity-50 focus:shadow-[0px_1px_1px_1px_black]",
+         "relative flex cursor-pointer select-none items-center gap-2 rounded-[7px] px-2.5 py-1.5 text-accent-foreground outline-hidden data-[disabled]:pointer-events-none focus:bg-popover-highlight [&>svg]:stroke-[var(--color-popover-icon)] data-[disabled]:opacity-50 focus:shadow-[0px_1px_1px_1px_black]",
          inset && "pl-8",
          destructive
             ? "focus:bg-destructive/95 focus:[--popover-icon:hsl(var(--popover-foreground))]"
@@ -114,7 +114,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
    <DropdownMenuPrimitive.CheckboxItem
       ref={ref}
       className={cn(
-         "relative flex select-none items-center rounded-sm py-1 pr-2 pl-8 text-accent-foreground outline-none data-[disabled]:pointer-events-none focus:bg-popover-highlight data-[state=checked]:text-foreground focus:text-foreground data-[disabled]:opacity-50",
+         "relative flex select-none items-center rounded-sm py-1 pr-2 pl-8 text-accent-foreground outline-hidden data-[disabled]:pointer-events-none focus:bg-popover-highlight data-[state=checked]:text-foreground focus:text-foreground data-[disabled]:opacity-50",
          className,
       )}
       checked={checked}
@@ -141,7 +141,7 @@ const DropdownMenuRadioItem = React.forwardRef<
    <DropdownMenuPrimitive.RadioItem
       ref={ref}
       className={cn(
-         "relative flex select-none items-center rounded-sm py-1 pr-2 pl-8 text-accent-foreground outline-none data-[disabled]:pointer-events-none focus:bg-popover-highlight focus:text-foreground data-[disabled]:opacity-50",
+         "relative flex select-none items-center rounded-sm py-1 pr-2 pl-8 text-accent-foreground outline-hidden data-[disabled]:pointer-events-none focus:bg-popover-highlight focus:text-foreground data-[disabled]:opacity-50",
          className,
       )}
       {...props}

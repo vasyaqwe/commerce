@@ -12,7 +12,7 @@ export const colorFilterSlugSchema = z.enum(colorFilterSlugs)
 export const sizeFilterSlugSchema = z.enum(sizeFilterSlugs)
 
 export const listProductsParams = z.object({
-   query: z.string().optional(),
+   q: z.string().optional(),
    reverse: z.boolean().optional(),
    sort: sortFilterSlugSchema.optional(),
    colors: z.array(colorFilterSlugSchema).optional(),

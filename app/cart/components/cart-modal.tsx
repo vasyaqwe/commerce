@@ -121,7 +121,6 @@ export function CartModal() {
                                        </p>
                                     )}
                                     <p className="mt-auto font-semibold text-[1rem]">
-                                       ₴
                                        {formatCurrency(
                                           item.cost.totalAmount.amount,
                                        )}
@@ -151,7 +150,7 @@ export function CartModal() {
                   <div className="flex items-center justify-between px-4 py-3">
                      <p>Податки</p>
                      <p className="text-right">
-                        ${formatCurrency(cart.cost.totalTaxAmount.amount)}
+                        {formatCurrency(cart.cost.totalTaxAmount.amount)}
                      </p>
                   </div>
                   <div className="flex items-center justify-between px-4 py-3">
@@ -161,7 +160,7 @@ export function CartModal() {
                   <div className="flex items-center justify-between px-4 py-3">
                      <p>До сплати</p>
                      <p className="text-right">
-                        ₴{formatCurrency(cart.cost.totalAmount.amount)}
+                        {formatCurrency(cart.cost.totalAmount.amount)}
                      </p>
                   </div>
                </section>
@@ -233,7 +232,7 @@ function DeleteItemButton({
          <button
             onClick={() => removeItem.mutate(item.merchandise.id)}
             aria-label="Remove cart item"
-            className="grid size-7 place-content-center rounded-full border border-foreground/10 bg-border text-foreground/70 ring-offset-background transition-all disabled:pointer-events-none active:scale-95 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+            className="grid size-7 place-content-center rounded-full border border-foreground/10 bg-border text-foreground/70 ring-offset-background transition-all disabled:pointer-events-none active:scale-95 hover:bg-muted focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2"
          >
             <XMarkIcon
                className="size-[18px]"

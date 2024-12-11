@@ -107,7 +107,7 @@ const DialogContent = React.forwardRef<
       >
          {children}
          {(variant === "default" || !variant) && (
-            <DialogPrimitive.Close className="absolute top-3.5 right-3.5 grid size-7 place-content-center rounded-full bg-muted text-foreground/70 ring-offset-background transition-all disabled:pointer-events-none active:scale-95 hover:bg-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2">
+            <DialogPrimitive.Close className="absolute top-3.5 right-3.5 grid size-7 place-content-center rounded-full bg-muted text-foreground/70 ring-offset-background transition-all disabled:pointer-events-none active:scale-95 hover:bg-border focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2">
                <XMarkIcon
                   className="size-4"
                   strokeWidth={3}

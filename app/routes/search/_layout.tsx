@@ -1,4 +1,3 @@
-import {} from "@/lib/shopify/constants"
 import {
    colorFilterSlugSchema,
    sizeFilterSlugSchema,
@@ -10,9 +9,9 @@ import { z } from "zod"
 
 const searchSchema = z.object({
    q: z.string(),
-   sort: sortFilterSlugSchema,
-   color: z.array(colorFilterSlugSchema),
-   size: z.array(sizeFilterSlugSchema),
+   sort: sortFilterSlugSchema.optional(),
+   colors: z.array(colorFilterSlugSchema).optional(),
+   sizes: z.array(sizeFilterSlugSchema).optional(),
 })
 
 export const Route = createFileRoute("/search/_layout")({
@@ -47,8 +46,8 @@ export const Route = createFileRoute("/search/_layout")({
 
 function RouteComponent() {
    return (
-      <div>
+      <>
          <Outlet />
-      </div>
+      </>
    )
 }

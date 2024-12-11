@@ -16,6 +16,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as PageImport } from './routes/$page'
 import { Route as IndexImport } from './routes/index'
 import { Route as SearchLayoutImport } from './routes/search/_layout'
+import { Route as ProductHandleImport } from './routes/product/$handle'
 import { Route as SearchLayoutIndexImport } from './routes/search/_layout/index'
 
 // Create Virtual Routes
@@ -47,6 +48,12 @@ const SearchLayoutRoute = SearchLayoutImport.update({
   getParentRoute: () => SearchRoute,
 } as any)
 
+const ProductHandleRoute = ProductHandleImport.update({
+  id: '/product/$handle',
+  path: '/product/$handle',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const SearchLayoutIndexRoute = SearchLayoutIndexImport.update({
   id: '/',
   path: '/',
@@ -69,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/$page'
       fullPath: '/$page'
       preLoaderRoute: typeof PageImport
+      parentRoute: typeof rootRoute
+    }
+    '/product/$handle': {
+      id: '/product/$handle'
+      path: '/product/$handle'
+      fullPath: '/product/$handle'
+      preLoaderRoute: typeof ProductHandleImport
       parentRoute: typeof rootRoute
     }
     '/search': {
@@ -123,6 +137,7 @@ const SearchRouteWithChildren =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$page': typeof PageRoute
+  '/product/$handle': typeof ProductHandleRoute
   '/search': typeof SearchLayoutRouteWithChildren
   '/search/': typeof SearchLayoutIndexRoute
 }
@@ -130,6 +145,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$page': typeof PageRoute
+  '/product/$handle': typeof ProductHandleRoute
   '/search': typeof SearchLayoutIndexRoute
 }
 
@@ -137,6 +153,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/$page': typeof PageRoute
+  '/product/$handle': typeof ProductHandleRoute
   '/search': typeof SearchRouteWithChildren
   '/search/_layout': typeof SearchLayoutRouteWithChildren
   '/search/_layout/': typeof SearchLayoutIndexRoute
@@ -144,13 +161,14 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$page' | '/search' | '/search/'
+  fullPaths: '/' | '/$page' | '/product/$handle' | '/search' | '/search/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$page' | '/search'
+  to: '/' | '/$page' | '/product/$handle' | '/search'
   id:
     | '__root__'
     | '/'
     | '/$page'
+    | '/product/$handle'
     | '/search'
     | '/search/_layout'
     | '/search/_layout/'
@@ -160,12 +178,14 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PageRoute: typeof PageRoute
+  ProductHandleRoute: typeof ProductHandleRoute
   SearchRoute: typeof SearchRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PageRoute: PageRoute,
+  ProductHandleRoute: ProductHandleRoute,
   SearchRoute: SearchRouteWithChildren,
 }
 
@@ -181,6 +201,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/$page",
+        "/product/$handle",
         "/search"
       ]
     },
@@ -189,6 +210,9 @@ export const routeTree = rootRoute
     },
     "/$page": {
       "filePath": "$page.tsx"
+    },
+    "/product/$handle": {
+      "filePath": "product/$handle.tsx"
     },
     "/search": {
       "filePath": "search",

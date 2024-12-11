@@ -57,7 +57,7 @@ const TableBody = React.forwardRef<
    <tbody
       ref={ref}
       className={cn(
-         `isolate before:absolute before:inset-1 md:before:top-12 before:z-[-1] before:rounded-[calc(14px-2px)] before:border before:bg-background before:shadow-sm`,
+         `isolate before:absolute before:inset-1 md:before:top-12 before:z-[-1] before:rounded-[calc(14px-2px)] before:border before:bg-background before:shadow-xs`,
          className,
       )}
       {...props}

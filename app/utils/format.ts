@@ -153,10 +153,12 @@ export const formatCurrency = (
    price: number | string,
    options: Intl.NumberFormatOptions = {},
 ) => {
-   return new Intl.NumberFormat("en-US", {
+   return new Intl.NumberFormat("ua-UA", {
       style: "currency",
-      currency: options.currency ?? "USD",
+      currency: options.currency ?? "UAH",
       notation: options.notation ?? "compact",
       ...options,
-   }).format(Number(price))
+   })
+      .format(Number(price))
+      .replace("UAH", "₴")
 }

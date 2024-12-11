@@ -5,7 +5,7 @@ import { Link } from "@tanstack/react-router"
 
 export function Footer() {
    return (
-      <footer className="mt-24 bg-border/25 text-sm md:mt-44">
+      <footer className="bg-border/25 text-sm">
          <div className="container flex flex-wrap items-start justify-around gap-8 py-12">
             <Link
                aria-label="Home"
