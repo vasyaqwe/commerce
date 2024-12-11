@@ -1,11 +1,28 @@
+import { useAddCartItem } from "@/cart/hooks/use-add-cart-item"
 import { HIDDEN_PRODUCT_TAG } from "@/lib/shopify/constants"
 import { productByHandle } from "@/lib/shopify/functions"
+import type {
+   Product,
+   ProductOption,
+   ProductVariant,
+} from "@/lib/shopify/types"
 import { Button } from "@/ui/components/button"
+import { Chip } from "@/ui/components/chip"
+import { Tooltip } from "@/ui/components/tooltip"
 import { cn } from "@/ui/utils"
 import { formatCurrency } from "@/utils/format"
-import { HeartIcon, TruckIcon } from "@heroicons/react/24/outline"
+import {
+   HeartIcon,
+   ShoppingBagIcon,
+   TruckIcon,
+} from "@heroicons/react/24/outline"
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
-import { createFileRoute, notFound } from "@tanstack/react-router"
+import {
+   createFileRoute,
+   notFound,
+   useNavigate,
+   useSearch,
+} from "@tanstack/react-router"
 import useEmblaCarousel from "embla-carousel-react"
 import { useEffect, useRef, useState } from "react"
 
@@ -126,13 +143,13 @@ function RouteComponent() {
                </div>
                <hr className="my-5 border-border lg:my-8" />
                <div className="mb-6 lg:mb-8">
-                  {/* <VariantSelector
+                  <VariantSelector
                      options={product.options}
                      variants={product.variants}
-                  /> */}
+                  />
                </div>
                <div className="mt-auto flex w-full items-center gap-2.5 lg:gap-4">
-                  {/* <AddToCart product={product} /> */}
+                  <AddToCartButton product={product} />
                   <Button
                      aria-label="Favorite"
                      className="size-12 shrink-0 lg:size-[3.75rem] lg:rounded-2xl"
@@ -255,5 +272,173 @@ function Gallery({ images }: { images: { src: string; altText: string }[] }) {
             ) : null}
          </div>
       </div>
+   )
+}
+
+type Combination = {
+   id: string
+   availableForSale: boolean
+   [key: string]: string | boolean
+}
+
+function VariantSelector({
+   options,
+   variants,
+}: {
+   options: ProductOption[]
+   variants: ProductVariant[]
+}) {
+   const params = Route.useParams()
+   const search = useSearch({ strict: false })
+   const navigate = useNavigate()
+   const hasNoOptionsOrJustOneOption =
+      !options.length ||
+      (options.length === 1 && options[0]?.values.length === 1)
+
+   if (hasNoOptionsOrJustOneOption) {
+      return null
+   }
+
+   const combinations: Combination[] = variants.map((variant) => ({
+      id: variant.id,
+      availableForSale: variant.availableForSale,
+      ...variant.selectedOptions.reduce(
+         (accumulator, option) => ({
+            // biome-ignore lint/performance/noAccumulatingSpread: <explanation>
+            ...accumulator,
+            [option.name.toLowerCase()]: option.value,
+         }),
+         {},
+      ),
+   }))
+
+   return (
+      <div className="space-y-6">
+         {options.map((option) => (
+            <div key={option.id}>
+               <dl className="">
+                  <dt className="mb-3 font-medium text-sm tracking-wide">
+                     {option.name}
+                  </dt>
+                  <dd className="flex flex-wrap gap-3">
+                     {option.values.map((value) => {
+                        const optionNameLowerCase = option.name.toLowerCase()
+
+                        // Base option params on current selectedOptions so we can preserve any other param state.
+                        const optionParams = {
+                           ...search,
+                           [optionNameLowerCase]: value,
+                        }
+
+                        // Filter out invalid options and check if the option combination is available for sale.
+                        const filtered = Object.entries(optionParams).filter(
+                           ([key, value]) =>
+                              options.find(
+                                 (option) =>
+                                    option.name.toLowerCase() === key &&
+                                    option.values.includes(value as never),
+                              ),
+                        )
+                        const isAvailableForSale = combinations.find(
+                           (combination) =>
+                              filtered.every(
+                                 ([key, value]) =>
+                                    combination[key] === value &&
+                                    combination.availableForSale,
+                              ),
+                        )
+
+                        const isActive =
+                           search[optionNameLowerCase as never] === value
+
+                        const Component = (
+                           <Chip
+                              key={value}
+                              name={option.name}
+                              onChange={() => {
+                                 navigate({
+                                    to: "/product/$handle",
+                                    params: { handle: params.handle },
+                                    search: {
+                                       ...search,
+                                       [optionNameLowerCase]: value,
+                                    },
+                                 })
+                              }}
+                              checked={isActive}
+                              disabled={!isAvailableForSale}
+                           >
+                              {value}
+                           </Chip>
+                        )
+
+                        return !isAvailableForSale ? (
+                           <Tooltip
+                              delayDuration={0}
+                              content={
+                                 <span>
+                                    Немає в наявності{" "}
+                                    {/* <span
+                                       className={cn(
+                                          option.name !== "Розмір"
+                                             ? "lowercase"
+                                             : "",
+                                       )}
+                                    >
+                                       ({value} {option.name})
+                                    </span> */}
+                                 </span>
+                              }
+                              key={value}
+                           >
+                              <span>{Component}</span>
+                           </Tooltip>
+                        ) : (
+                           Component
+                        )
+                     })}
+                  </dd>
+               </dl>
+            </div>
+         ))}
+      </div>
+   )
+}
+
+function AddToCartButton({ product }: { product: Product }) {
+   const { variants, availableForSale } = product
+   const { addItem } = useAddCartItem()
+
+   const search = useSearch({ strict: false })
+
+   const variant = variants.find((variant: ProductVariant) =>
+      variant.selectedOptions.every(
+         (option) =>
+            option.value === search[option.name.toLowerCase() as never],
+      ),
+   )
+   const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined
+   const selectedVariantId = variant?.id || defaultVariantId
+   const finalVariant = variants.find(
+      (variant) => variant.id === selectedVariantId,
+   )
+
+   return (
+      <Button
+         disabled={!availableForSale || !selectedVariantId}
+         className="h-12 w-full flex-1 gap-3 text-[1rem] lg:h-[3.75rem] lg:rounded-2xl lg:text-lg"
+         aria-label="Add to cart"
+         onClick={() => {
+            if (!finalVariant) return
+
+            addItem.mutate({ variant: finalVariant, product })
+         }}
+      >
+         <ShoppingBagIcon
+            className="-mt-0.5 size-5 lg:size-6"
+            strokeWidth={2}
+         />
+         Додати до кошика
+      </Button>
    )
 }

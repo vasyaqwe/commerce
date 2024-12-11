@@ -62,7 +62,7 @@ export function CartModal() {
                            ),
                         )
                         .map((item, i) => {
-                           const merchandiseSearchParams = {} as {
+                           const merchandiseSearch = {} as {
                               [key: string]: string
                            }
 
@@ -70,16 +70,10 @@ export function CartModal() {
                            item.merchandise.selectedOptions.forEach(
                               ({ name, value }) => {
                                  if (value !== DEFAULT_PRODUCT_TITLE) {
-                                    merchandiseSearchParams[
-                                       name.toLowerCase()
-                                    ] = value
+                                    merchandiseSearch[name.toLowerCase()] =
+                                       value
                                  }
                               },
-                           )
-
-                           const merchandiseUrl = createUrl(
-                              `/product/${item.merchandise.product.handle}`,
-                              new URLSearchParams(merchandiseSearchParams),
                            )
 
                            return (
@@ -106,7 +100,12 @@ export function CartModal() {
                                  </div>
                                  <div className="mr-4 ml-2 flex flex-col">
                                     <Link
-                                       href={merchandiseUrl}
+                                       to={"/product/$handle"}
+                                       params={{
+                                          handle:
+                                             item.merchandise.product.handle,
+                                       }}
+                                       search={merchandiseSearch}
                                        onClick={() => popModal("cart")}
                                        className="flex flex-row space-x-4"
                                     >
