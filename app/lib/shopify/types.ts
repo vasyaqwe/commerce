@@ -1,3 +1,5 @@
+import type { colorFilterSlugs, sortFilterSlugs } from "@/lib/shopify/constants"
+
 export type Maybe<T> = T | null
 
 export type Connection<T> = {
@@ -94,3 +96,6 @@ export type ShopifyProduct = {
    tags: string[]
    updatedAt: string
 }
+
+export type SortFilterSlug = (typeof sortFilterSlugs)[number]
+export type ColorFilterSlug = (typeof colorFilterSlugs)[number]

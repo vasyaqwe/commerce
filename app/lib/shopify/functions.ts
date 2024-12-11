@@ -1,4 +1,5 @@
 import { shopifyFetch } from "@/lib/shopify"
+import { sortFilterSlugToKey } from "@/lib/shopify/constants"
 import {
    getCollectionProductsQuery,
    getCollectionQuery,
@@ -11,6 +12,7 @@ import {
    getProductRecommendationsQuery,
    getProductsQuery,
 } from "@/lib/shopify/queries/product"
+import { listProductsParams } from "@/lib/shopify/schema"
 import type {
    Connection,
    Page,
@@ -212,22 +214,11 @@ export const getProductRecommendations = createServerFn({ method: "GET" })
       return reshapeProducts(res.productRecommendations)
    })
 
-export const getProducts = createServerFn({ method: "GET" })
-   .validator(
-      zodValidator(
-         z.object({
-            query: z.string().optional(),
-            reverse: z.boolean().optional(),
-            sortKey: z.string().optional(),
-            colors: z.array(z.string()).optional(),
-            sizes: z.array(z.string()).optional(),
-            style: z.string().optional(),
-         }),
-      ),
-   )
+export const listProducts = createServerFn({ method: "GET" })
+   .validator(zodValidator(listProductsParams))
    .handler(
-      async ({ data: { query, reverse, sortKey, colors, sizes, style } }) => {
-         let queryString = query || ""
+      async ({ data: { query, reverse, sort, colors, sizes, style } }) => {
+         let queryString = query ?? ""
 
          if (colors && colors.length > 0) {
             const colorQuery = colors.join(" OR ")
@@ -241,16 +232,14 @@ export const getProducts = createServerFn({ method: "GET" })
 
          if (style) queryString += ` AND product_type:${style}`
 
-         const variables = {
-            query: queryString,
-            sortKey,
-            reverse,
-            first: 100,
-         }
-
          const res = (await shopifyFetch({
             query: getProductsQuery,
-            variables,
+            variables: {
+               query: queryString,
+               sortKey: sort ? sortFilterSlugToKey[sort] : undefined,
+               reverse,
+               first: 100,
+            },
          })) as {
             products: Connection<ShopifyProduct>
          }

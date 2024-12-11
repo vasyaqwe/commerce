@@ -1,4 +1,4 @@
-import * as shopify from "@/lib/shopify/functions"
+import { getPage } from "@/lib/shopify/functions"
 import { Prose } from "@/ui/components/prose"
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute, notFound } from "@tanstack/react-router"
@@ -6,7 +6,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router"
 const pageQueryOptions = ({ handle }: { handle: string }) =>
    queryOptions({
       queryKey: ["page", handle],
-      queryFn: () => shopify.getPage({ data: { handle } }),
+      queryFn: () => getPage({ data: { handle } }),
    })
 
 export const Route = createFileRoute("/$page")({

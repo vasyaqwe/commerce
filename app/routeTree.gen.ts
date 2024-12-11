@@ -8,13 +8,27 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as PageImport } from './routes/$page'
 import { Route as IndexImport } from './routes/index'
+import { Route as SearchLayoutImport } from './routes/search/_layout'
+import { Route as SearchLayoutIndexImport } from './routes/search/_layout/index'
+
+// Create Virtual Routes
+
+const SearchImport = createFileRoute('/search')()
 
 // Create/Update Routes
+
+const SearchRoute = SearchImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const PageRoute = PageImport.update({
   id: '/$page',
@@ -26,6 +40,17 @@ const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const SearchLayoutRoute = SearchLayoutImport.update({
+  id: '/_layout',
+  getParentRoute: () => SearchRoute,
+} as any)
+
+const SearchLayoutIndexRoute = SearchLayoutIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SearchLayoutRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -46,44 +71,102 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PageImport
       parentRoute: typeof rootRoute
     }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchImport
+      parentRoute: typeof rootRoute
+    }
+    '/search/_layout': {
+      id: '/search/_layout'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchLayoutImport
+      parentRoute: typeof SearchRoute
+    }
+    '/search/_layout/': {
+      id: '/search/_layout/'
+      path: '/'
+      fullPath: '/search/'
+      preLoaderRoute: typeof SearchLayoutIndexImport
+      parentRoute: typeof SearchLayoutImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface SearchLayoutRouteChildren {
+  SearchLayoutIndexRoute: typeof SearchLayoutIndexRoute
+}
+
+const SearchLayoutRouteChildren: SearchLayoutRouteChildren = {
+  SearchLayoutIndexRoute: SearchLayoutIndexRoute,
+}
+
+const SearchLayoutRouteWithChildren = SearchLayoutRoute._addFileChildren(
+  SearchLayoutRouteChildren,
+)
+
+interface SearchRouteChildren {
+  SearchLayoutRoute: typeof SearchLayoutRouteWithChildren
+}
+
+const SearchRouteChildren: SearchRouteChildren = {
+  SearchLayoutRoute: SearchLayoutRouteWithChildren,
+}
+
+const SearchRouteWithChildren =
+  SearchRoute._addFileChildren(SearchRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$page': typeof PageRoute
+  '/search': typeof SearchLayoutRouteWithChildren
+  '/search/': typeof SearchLayoutIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$page': typeof PageRoute
+  '/search': typeof SearchLayoutIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/$page': typeof PageRoute
+  '/search': typeof SearchRouteWithChildren
+  '/search/_layout': typeof SearchLayoutRouteWithChildren
+  '/search/_layout/': typeof SearchLayoutIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$page'
+  fullPaths: '/' | '/$page' | '/search' | '/search/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$page'
-  id: '__root__' | '/' | '/$page'
+  to: '/' | '/$page' | '/search'
+  id:
+    | '__root__'
+    | '/'
+    | '/$page'
+    | '/search'
+    | '/search/_layout'
+    | '/search/_layout/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PageRoute: typeof PageRoute
+  SearchRoute: typeof SearchRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PageRoute: PageRoute,
+  SearchRoute: SearchRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -97,7 +180,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/$page"
+        "/$page",
+        "/search"
       ]
     },
     "/": {
@@ -105,6 +189,23 @@ export const routeTree = rootRoute
     },
     "/$page": {
       "filePath": "$page.tsx"
+    },
+    "/search": {
+      "filePath": "search",
+      "children": [
+        "/search/_layout"
+      ]
+    },
+    "/search/_layout": {
+      "filePath": "search/_layout.tsx",
+      "parent": "/search",
+      "children": [
+        "/search/_layout/"
+      ]
+    },
+    "/search/_layout/": {
+      "filePath": "search/_layout/index.tsx",
+      "parent": "/search/_layout"
     }
   }
 }
