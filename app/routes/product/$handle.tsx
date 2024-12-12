@@ -251,7 +251,7 @@ function Gallery({ images }: { images: { src: string; altText: string }[] }) {
                               }}
                               aria-label="Select product image"
                               className={cn(
-                                 "size-20 shrink-0 overflow-hidden rounded-xl border border-transparent ring-[2px] ring-transparent transition-all duration-200 hover:border-accent/90 hover:ring-accent/40 lg:ring-[3px]",
+                                 "size-20 shrink-0 cursor-pointer overflow-hidden rounded-xl border border-transparent ring-[2px] ring-transparent transition-all duration-200 hover:border-accent/90 hover:ring-accent/40 lg:ring-[3px]",
                                  selectedIndex === idx
                                     ? "border-accent/90 ring-accent/40"
                                     : "",

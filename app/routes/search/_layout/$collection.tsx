@@ -23,9 +23,9 @@ const listCollectionProductsQuery = (
    queryOptions({
       queryKey: [
          "list_collection_products",
-         data.collection,
          data.sort,
          data.reverse,
+         data.collection,
       ],
       queryFn: () => listCollectionProducts({ data }),
    })

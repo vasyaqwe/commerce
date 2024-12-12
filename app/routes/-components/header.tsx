@@ -38,14 +38,13 @@ export function Header(props: ComponentProps<"header">) {
 
    useEffect(() => {
       if (cart === null) {
-         console.log("hlelo")
          createCart.mutate({})
       }
    }, [cart])
 
    return (
       <header
-         className="z-[11] h-[69px] "
+         className="z-[11] h-[69px]"
          {...props}
       >
          <div className="fixed top-0 flex h-[69px] w-full items-center border-border/60 border-b bg-background shadow-xs md:py-3">

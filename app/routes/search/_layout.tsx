@@ -31,6 +31,7 @@ import {
    Outlet,
    createFileRoute,
    useNavigate,
+   useParams,
    useSearch,
 } from "@tanstack/react-router"
 import { z } from "zod"
@@ -84,6 +85,7 @@ function RouteComponent() {
 }
 
 function FiltersContent() {
+   const params = useParams({ strict: false })
    const search = useSearch({ from: "/search/_layout" })
    const navigate = useNavigate({ from: Route.fullPath })
 
@@ -116,66 +118,73 @@ function FiltersContent() {
                })}
             </ComboboxContent>
          </Combobox>
-         <Combobox
-            multiple
-            value={colors}
-            onValueChange={(colors) => {
-               navigate({ search: { ...search, colors: colors as never } })
-            }}
-         >
-            <ComboboxTrigger className="w-[90vw] md:w-[180px]">
-               Колір
-            </ComboboxTrigger>
-            <ComboboxContent className="w-[91vw] md:w-[180px] ">
-               <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
-               {colorFilterSlugs.map((item) => {
-                  return (
-                     <ComboboxItem
-                        value={item}
-                        key={item}
-                        className="capitalize"
-                     >
-                        <span
-                           aria-hidden={true}
-                           className={cn(
-                              "-mb-0.5 mr-2 inline-block size-4 rounded-full shadow-button",
-                              colorFilterSlugToClassName[item],
-                              colorFilterSlugToClassName[item] === "bg-black"
-                                 ? "shadow-none outline outline-popover-icon"
-                                 : "",
-                           )}
-                        />
-                        {item}
-                     </ComboboxItem>
-                  )
-               })}
-            </ComboboxContent>
-         </Combobox>
-         <Combobox
-            multiple
-            value={sizes}
-            onValueChange={(sizes) => {
-               navigate({ search: { ...search, sizes: sizes as never } })
-            }}
-         >
-            <ComboboxTrigger className="w-[90vw] md:w-[150px]">
-               Розмір
-            </ComboboxTrigger>
-            <ComboboxContent className="w-[91vw] md:w-[150px] ">
-               <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
-               {sizeFilterSlugs.map((item) => {
-                  return (
-                     <ComboboxItem
-                        value={item}
-                        key={item}
-                        className="uppercase"
-                     >
-                        {item}
-                     </ComboboxItem>
-                  )
-               })}
-            </ComboboxContent>
-         </Combobox>
+         {params.collection ? null : (
+            <>
+               <Combobox
+                  multiple
+                  value={colors}
+                  onValueChange={(colors) => {
+                     navigate({
+                        search: { ...search, colors: colors as never },
+                     })
+                  }}
+               >
+                  <ComboboxTrigger className="w-[90vw] md:w-[180px]">
+                     Колір
+                  </ComboboxTrigger>
+                  <ComboboxContent className="w-[91vw] md:w-[180px] ">
+                     <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
+                     {colorFilterSlugs.map((item) => {
+                        return (
+                           <ComboboxItem
+                              value={item}
+                              key={item}
+                              className="capitalize"
+                           >
+                              <span
+                                 aria-hidden={true}
+                                 className={cn(
+                                    "-mb-0.5 mr-2 inline-block size-4 rounded-full shadow-button",
+                                    colorFilterSlugToClassName[item],
+                                    colorFilterSlugToClassName[item] ===
+                                       "bg-black"
+                                       ? "shadow-none outline outline-popover-icon"
+                                       : "",
+                                 )}
+                              />
+                              {item}
+                           </ComboboxItem>
+                        )
+                     })}
+                  </ComboboxContent>
+               </Combobox>
+               <Combobox
+                  multiple
+                  value={sizes}
+                  onValueChange={(sizes) => {
+                     navigate({ search: { ...search, sizes: sizes as never } })
+                  }}
+               >
+                  <ComboboxTrigger className="w-[90vw] md:w-[150px]">
+                     Розмір
+                  </ComboboxTrigger>
+                  <ComboboxContent className="w-[91vw] md:w-[150px] ">
+                     <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
+                     {sizeFilterSlugs.map((item) => {
+                        return (
+                           <ComboboxItem
+                              value={item}
+                              key={item}
+                              className="uppercase"
+                           >
+                              {item}
+                           </ComboboxItem>
+                        )
+                     })}
+                  </ComboboxContent>
+               </Combobox>
+            </>
+         )}
       </>
    )
 }
