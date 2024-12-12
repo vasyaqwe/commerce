@@ -84,7 +84,7 @@ export function CartModal() {
                                  <DeleteItemButton item={item} />
                                  <div className="mr-1 shrink-0">
                                     <img
-                                       className="relative size-[4.5rem] overflow-hidden rounded-xl border object-cover"
+                                       className="relative size-[4.5rem] overflow-hidden rounded-xl border border-border object-cover"
                                        width={100}
                                        height={100}
                                        alt={
@@ -231,7 +231,7 @@ function DeleteItemButton({
          <button
             onClick={() => removeItem.mutate(item.merchandise.id)}
             aria-label="Remove cart item"
-            className="grid size-7 place-content-center rounded-full border border-foreground/10 bg-border text-foreground/70 ring-offset-background transition-all disabled:pointer-events-none active:scale-95 hover:bg-muted focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2"
+            className="grid size-7 cursor-pointer place-content-center rounded-full border border-foreground/10 bg-border text-foreground/70 ring-offset-background transition-all disabled:pointer-events-none active:scale-95 hover:bg-muted focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2"
          >
             <XMarkIcon
                className="size-[18px]"

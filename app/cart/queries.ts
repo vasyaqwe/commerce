@@ -5,7 +5,11 @@ import * as cart from "./functions"
 export const cartByIdQuery = () =>
    queryOptions({
       queryKey: ["cart_by_id"],
-      queryFn: () => cart.byId(),
+      queryFn: async () => {
+         const res = await cart.byId()
+         if (!res) return null
+         return res
+      },
    })
 
 export const cartByIdGraphQLQuery = `

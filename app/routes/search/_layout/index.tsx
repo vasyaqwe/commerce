@@ -2,6 +2,7 @@ import { sortFilterSlugToReverse } from "@/lib/shopify/constants"
 import { listProducts } from "@/lib/shopify/functions"
 import type { listProductsParams } from "@/lib/shopify/schema"
 import { Product } from "@/routes/search/-components/product"
+import { ProductsPending } from "@/routes/search/-components/products-pending"
 import { Card } from "@/ui/components/card"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
@@ -34,6 +35,7 @@ export const Route = createFileRoute("/search/_layout/")({
          }),
       )
    },
+   pendingComponent: ProductsPending,
 })
 
 function RouteComponent() {

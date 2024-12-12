@@ -156,7 +156,7 @@ export const formatCurrency = (
    return new Intl.NumberFormat("ua-UA", {
       style: "currency",
       currency: options.currency ?? "UAH",
-      notation: options.notation ?? "compact",
+      notation: options.notation ?? "standard",
       ...options,
    })
       .format(Number(price))

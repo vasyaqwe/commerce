@@ -64,7 +64,7 @@ export function createRouter() {
          context: { queryClient },
          defaultPreload: "intent",
          defaultPendingMs: 150,
-         defaultPendingMinMs: 200,
+         defaultPendingMinMs: 300,
          defaultPreloadStaleTime: 0,
          transformer: superjson,
          defaultErrorComponent: CatchBoundary,

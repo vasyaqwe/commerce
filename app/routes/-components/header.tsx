@@ -1,4 +1,5 @@
 import bottom from "@/assets/bottom1.jpg"
+import * as cartFns from "@/cart/functions"
 import { cartByIdQuery } from "@/cart/queries"
 import { pushModal } from "@/modals"
 import { Button } from "@/ui/components/button"
@@ -10,9 +11,10 @@ import {
    MagnifyingGlassIcon,
    ShoppingBagIcon,
 } from "@heroicons/react/24/outline"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { Link, useNavigate, useSearch } from "@tanstack/react-router"
-import { type ComponentProps, useState } from "react"
+import { useServerFn } from "@tanstack/start"
+import { type ComponentProps, useEffect, useState } from "react"
 
 export function Header(props: ComponentProps<"header">) {
    const [open, setOpen] = useState(false)
@@ -30,6 +32,16 @@ export function Header(props: ComponentProps<"header">) {
          image: bottom,
       },
    ] as const
+
+   const createCartFn = useServerFn(cartFns.create)
+   const createCart = useMutation({ mutationFn: createCartFn })
+
+   useEffect(() => {
+      if (cart === null) {
+         console.log("hlelo")
+         createCart.mutate({})
+      }
+   }, [cart])
 
    return (
       <header
