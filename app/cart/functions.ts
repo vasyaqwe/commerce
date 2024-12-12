@@ -1,3 +1,4 @@
+import { cartByIdGraphQLQuery } from "@/cart/queries"
 import type { ShopifyCart } from "@/cart/types"
 import { reshapeCart } from "@/cart/utils"
 import { ServerFnError } from "@/error"
@@ -8,14 +9,13 @@ import {
    editCartItemsMutation,
    removeFromCartMutation,
 } from "@/lib/shopify/mutations/cart"
-import { getCartQuery } from "@/lib/shopify/queries/cart"
 import { createMiddleware, createServerFn } from "@tanstack/start"
 import { zodValidator } from "@tanstack/zod-adapter"
 import { getCookie, setCookie } from "vinxi/http"
 import { z } from "zod"
 
 export const cartMiddleware = createMiddleware().server(({ next }) => {
-   const cartId = getCookie("cartId")
+   const cartId = getCookie("cart_id")
    if (!cartId)
       throw new ServerFnError({
          code: "BAD_REQUEST",
@@ -29,12 +29,12 @@ export const cartMiddleware = createMiddleware().server(({ next }) => {
    })
 })
 
-export const get = createServerFn({ method: "GET" }).handler(async () => {
-   const cartId = getCookie("cartId")
+export const byId = createServerFn({ method: "GET" }).handler(async () => {
+   const cartId = getCookie("cart_id")
    if (!cartId) return null
 
    const res = (await shopifyFetch({
-      query: getCartQuery,
+      query: cartByIdGraphQLQuery,
       variables: { cartId },
    })) as {
       cart: ShopifyCart
@@ -58,7 +58,7 @@ export const create = createServerFn({ method: "GET" }).handler(async () => {
          message: "Failed to create cart",
       })
 
-   setCookie("cartId", cart.id)
+   setCookie("cart_id", cart.id)
 })
 
 export const addItem = createServerFn({ method: "POST" })

@@ -1,6 +1,6 @@
 import seoFragment from "../fragments/seo"
 
-const pageFragment = /* GraphQL */ `
+const pageFragment = `
   fragment page on Page {
     ... on Page {
       id
@@ -18,7 +18,7 @@ const pageFragment = /* GraphQL */ `
   ${seoFragment}
 `
 
-export const getPageQuery = /* GraphQL */ `
+export const pageByHandleGraphQLQuery = `
   query getPage($handle: String!) {
     pageByHandle(handle: $handle) {
       ...page
@@ -27,7 +27,7 @@ export const getPageQuery = /* GraphQL */ `
   ${pageFragment}
 `
 
-export const getPagesQuery = /* GraphQL */ `
+export const listPagesGraphQLQuery = `
   query getPages {
     pages(first: 100) {
       edges {

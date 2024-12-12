@@ -1,18 +1,24 @@
 import { shopifyFetch } from "@/lib/shopify"
 import { sortFilterSlugToKey } from "@/lib/shopify/constants"
 import {
-   getCollectionProductsQuery,
-   getCollectionQuery,
-   getCollectionsQuery,
+   collectionByHandleGraphQLQuery,
+   listCollectionProductsGraphQLQuery,
+   listCollectionsGraphQLQuery,
 } from "@/lib/shopify/queries/collection"
-import { getMenuQuery } from "@/lib/shopify/queries/menu"
-import { getPageQuery, getPagesQuery } from "@/lib/shopify/queries/page"
+import { menuByHandleGraphQLQuery } from "@/lib/shopify/queries/menu"
 import {
-   getProductQuery,
-   getProductRecommendationsQuery,
-   getProductsQuery,
+   listPagesGraphQLQuery,
+   pageByHandleGraphQLQuery,
+} from "@/lib/shopify/queries/page"
+import {
+   listProductRecommendationsGraphQLQuery,
+   listProductsGraphQLQuery,
+   productByHandleGraphQLQuery,
 } from "@/lib/shopify/queries/product"
-import { listProductsParams } from "@/lib/shopify/schema"
+import {
+   listCollectionProductsParams,
+   listProductsParams,
+} from "@/lib/shopify/schema"
 import type {
    Connection,
    Page,
@@ -31,11 +37,11 @@ import { zodValidator } from "@tanstack/zod-adapter"
 import { getEvent } from "vinxi/http"
 import { z } from "zod"
 
-export const getCollection = createServerFn({ method: "GET" })
+export const collectionByHandle = createServerFn({ method: "GET" })
    .validator(zodValidator(z.object({ handle: z.string() })))
    .handler(async ({ data }) => {
       const res = (await shopifyFetch({
-         query: getCollectionQuery,
+         query: collectionByHandleGraphQLQuery,
          variables: {
             handle: data.handle,
          },
@@ -46,10 +52,10 @@ export const getCollection = createServerFn({ method: "GET" })
       return reshapeCollection(res.collection)
    })
 
-export const getCollections = createServerFn({ method: "GET" }).handler(
+export const listCollections = createServerFn({ method: "GET" }).handler(
    async () => {
       const res = (await shopifyFetch({
-         query: getCollectionsQuery,
+         query: listCollectionsGraphQLQuery,
       })) as {
          collections: Connection<ShopifyCollection>
       }
@@ -79,23 +85,16 @@ export const getCollections = createServerFn({ method: "GET" }).handler(
    },
 )
 
-export const getCollectionProducts = createServerFn({ method: "GET" })
-   .validator(
-      zodValidator(
-         z.object({
-            collection: z.string(),
-            reverse: z.boolean().optional(),
-            sortKey: z.string().optional(),
-         }),
-      ),
-   )
+export const listCollectionProducts = createServerFn({ method: "GET" })
+   .validator(zodValidator(listCollectionProductsParams))
    .handler(async ({ data }) => {
+      const sort = data.sort ? sortFilterSlugToKey[data.sort] : undefined
       const res = (await shopifyFetch({
-         query: getCollectionProductsQuery,
+         query: listCollectionProductsGraphQLQuery,
          variables: {
             handle: data.collection,
             reverse: data.reverse,
-            sortKey: data.sortKey === "CREATED_AT" ? "CREATED" : data.sortKey,
+            sortKey: sort === "CREATED_AT" ? "CREATED" : sort,
          },
       })) as {
          collection: {
@@ -108,7 +107,7 @@ export const getCollectionProducts = createServerFn({ method: "GET" })
       return reshapeProducts(removeEdgesAndNodes(res.collection.products))
    })
 
-export const getMenu = createServerFn({ method: "GET" })
+export const menuByHandle = createServerFn({ method: "GET" })
    .validator(
       zodValidator(
          z.object({
@@ -118,7 +117,7 @@ export const getMenu = createServerFn({ method: "GET" })
    )
    .handler(async ({ data }) => {
       const res = (await shopifyFetch({
-         query: getMenuQuery,
+         query: menuByHandleGraphQLQuery,
          variables: {
             handle: data.handle,
          },
@@ -144,7 +143,7 @@ export const getMenu = createServerFn({ method: "GET" })
       )
    })
 
-export const getPage = createServerFn({ method: "GET" })
+export const pageByHandle = createServerFn({ method: "GET" })
    .validator(
       zodValidator(
          z.object({
@@ -154,16 +153,16 @@ export const getPage = createServerFn({ method: "GET" })
    )
    .handler(async ({ data }) => {
       const res = (await shopifyFetch({
-         query: getPageQuery,
+         query: pageByHandleGraphQLQuery,
          variables: { handle: data.handle },
       })) as { pageByHandle: Page }
 
       return res.pageByHandle
    })
 
-export const getPages = createServerFn({ method: "GET" }).handler(async () => {
+export const listPages = createServerFn({ method: "GET" }).handler(async () => {
    const res = (await shopifyFetch({
-      query: getPagesQuery,
+      query: listPagesGraphQLQuery,
    })) as {
       pages: Connection<Page>
    }
@@ -181,7 +180,7 @@ export const productByHandle = createServerFn({ method: "GET" })
    )
    .handler(async ({ data }) => {
       const res = (await shopifyFetch({
-         query: getProductQuery,
+         query: productByHandleGraphQLQuery,
          variables: {
             handle: data.handle,
          },
@@ -195,7 +194,7 @@ export const productByHandle = createServerFn({ method: "GET" })
       )
    })
 
-export const getProductRecommendations = createServerFn({ method: "GET" })
+export const listProductRecommendations = createServerFn({ method: "GET" })
    .validator(
       zodValidator(
          z.object({
@@ -205,7 +204,7 @@ export const getProductRecommendations = createServerFn({ method: "GET" })
    )
    .handler(async ({ data }) => {
       const res = (await shopifyFetch({
-         query: getProductRecommendationsQuery,
+         query: listProductRecommendationsGraphQLQuery,
          variables: {
             productId: data.productId,
          },
@@ -234,7 +233,7 @@ export const listProducts = createServerFn({ method: "GET" })
       if (style) queryString += ` AND product_type:${style}`
 
       const res = (await shopifyFetch({
-         query: getProductsQuery,
+         query: listProductsGraphQLQuery,
          variables: {
             query: queryString,
             sortKey: sort ? sortFilterSlugToKey[sort] : undefined,

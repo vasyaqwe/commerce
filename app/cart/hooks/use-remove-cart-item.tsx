@@ -1,4 +1,4 @@
-import { getCartQueryOptions } from "@/cart/queries"
+import { cartByIdQuery } from "@/cart/queries"
 import { updateCartTotals } from "@/cart/utils"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useServerFn } from "@tanstack/start"
@@ -6,7 +6,7 @@ import * as cartFns from "../functions"
 
 export function useRemoveCartItem() {
    const queryClient = useQueryClient()
-   const { data: cart } = useQuery(getCartQueryOptions())
+   const { data: cart } = useQuery(cartByIdQuery())
 
    const removeItemFn = useServerFn(cartFns.removeItem)
    const removeItem = useMutation({
@@ -21,11 +21,9 @@ export function useRemoveCartItem() {
          await removeItemFn({ data: { lineIds: [lineItem.id] } })
       },
       onMutate: async (merchandiseId) => {
-         await queryClient.cancelQueries(getCartQueryOptions())
+         await queryClient.cancelQueries(cartByIdQuery())
 
-         const previousCart = queryClient.getQueryData(
-            getCartQueryOptions().queryKey,
-         )
+         const previousCart = queryClient.getQueryData(cartByIdQuery().queryKey)
 
          if (previousCart) {
             const updatedLines = previousCart.lines.filter(
@@ -44,10 +42,7 @@ export function useRemoveCartItem() {
                totalQuantity,
             }
 
-            queryClient.setQueryData(
-               getCartQueryOptions().queryKey,
-               updatedCart,
-            )
+            queryClient.setQueryData(cartByIdQuery().queryKey, updatedCart)
          }
 
          return { previousCart }
@@ -55,7 +50,7 @@ export function useRemoveCartItem() {
       onError: (_, __, context) => {
          if (context?.previousCart) {
             queryClient.setQueryData(
-               getCartQueryOptions().queryKey,
+               cartByIdQuery().queryKey,
                context.previousCart,
             )
          }
@@ -66,7 +61,7 @@ export function useRemoveCartItem() {
          )
             return
 
-         return queryClient.invalidateQueries(getCartQueryOptions())
+         return queryClient.invalidateQueries(cartByIdQuery())
       },
    })
 

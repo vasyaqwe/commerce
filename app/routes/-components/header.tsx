@@ -1,5 +1,5 @@
 import bottom from "@/assets/bottom1.jpg"
-import { getCartQueryOptions } from "@/cart/queries"
+import { cartByIdQuery } from "@/cart/queries"
 import { pushModal } from "@/modals"
 import { Button } from "@/ui/components/button"
 import { Icons } from "@/ui/components/icons"
@@ -16,20 +16,20 @@ import { type ComponentProps, useState } from "react"
 
 export function Header(props: ComponentProps<"header">) {
    const [open, setOpen] = useState(false)
-   const { data: cart } = useQuery(getCartQueryOptions())
+   const { data: cart } = useQuery(cartByIdQuery())
 
    const navigate = useNavigate()
    const search = useSearch({ strict: false })
 
    const menu = [
-      { title: "Верх", path: `/search/${encodeURI("топи")}`, image: bottom },
-      { title: "Низ", path: `/search/${encodeURI("низ")}`, image: bottom },
+      { title: "Верх", path: `топи`, image: bottom },
+      { title: "Низ", path: `низ`, image: bottom },
       {
          title: "Аксесуари",
-         path: `/search/${encodeURI("аксесуари")}`,
+         path: `аксесуари`,
          image: bottom,
       },
-   ]
+   ] as const
 
    return (
       <header
@@ -106,7 +106,9 @@ export function Header(props: ComponentProps<"header">) {
                               className="h-[33.3333%] w-full grow rounded-xl sm:h-full max-md:overflow-hidden"
                            >
                               <Link
-                                 href={item.path}
+                                 to={"/search/$collection"}
+                                 params={{ collection: item.path }}
+                                 search={{ q: "", sort: "relevance" }}
                                  onClick={() => setOpen(false)}
                                  className="relative block h-full font-semibold text-foreground transition-colors md:hover:text-foreground md:text-foreground/75"
                               >

@@ -1,6 +1,6 @@
 import { useRemoveCartItem } from "@/cart/hooks/use-remove-cart-item"
 import { useUpdateCartItem } from "@/cart/hooks/use-update-cart-item"
-import { getCartQueryOptions } from "@/cart/queries"
+import { cartByIdQuery } from "@/cart/queries"
 import type { CartItem } from "@/cart/types"
 import { DEFAULT_PRODUCT_TITLE } from "@/lib/shopify/constants"
 import { popModal } from "@/modals"
@@ -23,7 +23,7 @@ import { useQuery } from "@tanstack/react-query"
 import { Link } from "@tanstack/react-router"
 
 export function CartModal() {
-   const { data: cart } = useQuery(getCartQueryOptions())
+   const { data: cart } = useQuery(cartByIdQuery())
 
    // useEffect(() => {
    //    if (cart === null) {

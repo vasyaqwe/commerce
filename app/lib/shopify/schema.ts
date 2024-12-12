@@ -19,3 +19,9 @@ export const listProductsParams = z.object({
    sizes: z.array(sizeFilterSlugSchema).optional(),
    style: z.string().optional(),
 })
+
+export const listCollectionProductsParams = z.object({
+   collection: z.string(),
+   reverse: z.boolean().optional(),
+   sort: sortFilterSlugSchema.optional(),
+})

@@ -1,19 +1,19 @@
-import { getPage } from "@/lib/shopify/functions"
+import { pageByHandle } from "@/lib/shopify/functions"
 import { Prose } from "@/ui/components/prose"
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute, notFound } from "@tanstack/react-router"
 
-const pageQueryOptions = ({ handle }: { handle: string }) =>
+const pageByHandleQuery = ({ handle }: { handle: string }) =>
    queryOptions({
-      queryKey: ["page", handle],
-      queryFn: () => getPage({ data: { handle } }),
+      queryKey: ["page_by_handle", handle],
+      queryFn: () => pageByHandle({ data: { handle } }),
    })
 
 export const Route = createFileRoute("/$page")({
    component: RouteComponent,
    loader: async ({ params, context }) => {
       const page = await context.queryClient.ensureQueryData(
-         pageQueryOptions({ handle: params.page }),
+         pageByHandleQuery({ handle: params.page }),
       )
       if (!page?.id) throw notFound()
 
@@ -41,7 +41,9 @@ export const Route = createFileRoute("/$page")({
 
 function RouteComponent() {
    const params = Route.useParams()
-   const pageQuery = useSuspenseQuery(pageQueryOptions({ handle: params.page }))
+   const pageQuery = useSuspenseQuery(
+      pageByHandleQuery({ handle: params.page }),
+   )
    const page = pageQuery.data
    if (!page) return null
 

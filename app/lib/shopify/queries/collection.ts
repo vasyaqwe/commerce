@@ -1,7 +1,7 @@
 import productFragment from "../fragments/product"
 import seoFragment from "../fragments/seo"
 
-const collectionFragment = /* GraphQL */ `
+const collectionFragment = `
   fragment collection on Collection {
     handle
     title
@@ -14,7 +14,7 @@ const collectionFragment = /* GraphQL */ `
   ${seoFragment}
 `
 
-export const getCollectionQuery = /* GraphQL */ `
+export const collectionByHandleGraphQLQuery = `
   query getCollection($handle: String!) {
     collection(handle: $handle) {
       ...collection
@@ -23,7 +23,7 @@ export const getCollectionQuery = /* GraphQL */ `
   ${collectionFragment}
 `
 
-export const getCollectionsQuery = /* GraphQL */ `
+export const listCollectionsGraphQLQuery = `
   query getCollections {
     collections(first: 100, sortKey: TITLE) {
       edges {
@@ -36,7 +36,7 @@ export const getCollectionsQuery = /* GraphQL */ `
   ${collectionFragment}
 `
 
-export const getCollectionProductsQuery = /* GraphQL */ `
+export const listCollectionProductsGraphQLQuery = `
   query getCollectionProducts(
     $handle: String!
     $sortKey: ProductCollectionSortKeys

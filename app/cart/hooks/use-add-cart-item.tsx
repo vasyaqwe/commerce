@@ -1,4 +1,4 @@
-import { getCartQueryOptions } from "@/cart/queries"
+import { cartByIdQuery } from "@/cart/queries"
 import { createOrUpdateCartItem, updateCartTotals } from "@/cart/utils"
 import type { Product, ProductVariant } from "@/lib/shopify/types"
 import { pushModal } from "@/modals"
@@ -20,11 +20,9 @@ export function useAddCartItem() {
          })
       },
       onMutate: async ({ variant, product }) => {
-         await queryClient.cancelQueries(getCartQueryOptions())
+         await queryClient.cancelQueries(cartByIdQuery())
 
-         const previousCart = queryClient.getQueryData(
-            getCartQueryOptions().queryKey,
-         )
+         const previousCart = queryClient.getQueryData(cartByIdQuery().queryKey)
 
          if (previousCart) {
             const existingItem = previousCart.lines.find(
@@ -54,10 +52,7 @@ export function useAddCartItem() {
                totalQuantity,
             }
 
-            queryClient.setQueryData(
-               getCartQueryOptions().queryKey,
-               updatedCart,
-            )
+            queryClient.setQueryData(cartByIdQuery().queryKey, updatedCart)
          }
 
          pushModal("cart")
@@ -67,7 +62,7 @@ export function useAddCartItem() {
       onError: (_, __, context) => {
          if (context?.previousCart) {
             queryClient.setQueryData(
-               getCartQueryOptions().queryKey,
+               cartByIdQuery().queryKey,
                context.previousCart,
             )
          }
@@ -76,7 +71,7 @@ export function useAddCartItem() {
          if (queryClient.isMutating({ mutationKey: ["cart_add_item"] }) !== 1)
             return
 
-         return queryClient.invalidateQueries(getCartQueryOptions())
+         return queryClient.invalidateQueries(cartByIdQuery())
       },
    })
 
