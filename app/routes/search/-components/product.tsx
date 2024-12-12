@@ -7,7 +7,7 @@ export function Product({ product }: { product: ProductType }) {
    return (
       <Link
          className={cn(
-            "relative inline-block h-full w-full overflow-hidden rounded-2xl p-0",
+            "relative inline-block size-full overflow-hidden rounded-2xl p-0",
          )}
          to={"/product/$handle"}
          params={{ handle: product.handle }}

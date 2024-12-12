@@ -122,12 +122,12 @@ export function ComboboxTrigger({
       >
          {multiple ? (
             <span
-               data-active={(value as string[]).length - 1 > 0}
+               data-active={(value as string[]).length > 0}
                className={
                   "flex size-7 items-center justify-center rounded-lg border-2 border-muted border-dashed bg-border/25 font-medium text-[0.965rem] opacity-60 transition-opacity data-[active=true]:opacity-100"
                }
             >
-               {(value as string[]).length - 1}
+               {(value as string[]).length}
             </span>
          ) : null}
          {children}

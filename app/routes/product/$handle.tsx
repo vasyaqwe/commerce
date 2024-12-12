@@ -290,7 +290,7 @@ function VariantSelector({
 }) {
    const params = Route.useParams()
    const search = useSearch({ strict: false })
-   const navigate = useNavigate()
+   const navigate = useNavigate({ from: Route.fullPath })
    const hasNoOptionsOrJustOneOption =
       !options.length ||
       (options.length === 1 && options[0]?.values.length === 1)
@@ -357,8 +357,9 @@ function VariantSelector({
                               name={option.name}
                               onChange={() => {
                                  navigate({
-                                    to: "/product/$handle",
                                     params: { handle: params.handle },
+                                    resetScroll: false,
+                                    replace: true,
                                     search: {
                                        ...search,
                                        [optionNameLowerCase]: value,

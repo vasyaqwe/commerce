@@ -37,7 +37,7 @@ export function CartModal() {
             <DrawerTitle className="text-left">Кошик</DrawerTitle>
          </DrawerHeader>
          {!cart || cart.lines.length === 0 ? (
-            <div className=" -mt-16 flex h-full w-full flex-col items-center justify-center overflow-hidden">
+            <div className=" -mt-16 flex size-full flex-col items-center justify-center overflow-hidden">
                <div className="relative mb-6">
                   <Card className="absolute inset-0 mx-auto grid h-28 w-[5.5rem] rotate-6 place-content-center rounded-xl" />
                   <Card className="-rotate-6 mx-auto grid h-28 w-[5.5rem] place-content-center rounded-xl">

@@ -17,10 +17,10 @@ const buttonVariants = cva(
             link: "!h-auto !rounded-none !p-0 text-foreground/70 underline transition-none hover:enabled:text-foreground",
          },
          size: {
-            default: "h-[42px] rounded-xl px-4 text-[0.975rem]",
+            default: "h-[42px] rounded-xl px-4",
             sm: "h-[36px] rounded-lg px-3 text-sm",
-            lg: "h-[38px] gap-2 rounded-lg px-4 text-[0.9325rem]",
-            xl: "h-[48px] gap-3 rounded-xl px-4 text-[1.025rem]",
+            lg: "h-[38px] gap-2 rounded-lg px-4 text-[0.975rem]",
+            xl: "h-[48px] gap-3 rounded-xl px-4 text-[1rem]",
             icon: "size-[42px] gap-0 rounded-xl",
             "with-icon":
                "h-[51px] flex-col gap-[3px] rounded-lg px-3 py-1.5 text-[0.785rem] leading-[1.25]",

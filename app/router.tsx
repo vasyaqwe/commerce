@@ -3,10 +3,7 @@ import { routeTree } from "@/routeTree.gen"
 import { Button, buttonVariants } from "@/ui/components/button"
 import { Card } from "@/ui/components/card"
 import { toast } from "@/ui/components/toast"
-import {
-   MagnifyingGlassCircleIcon,
-   XCircleIcon,
-} from "@heroicons/react/24/outline"
+import { MagnifyingGlassIcon, XCircleIcon } from "@heroicons/react/24/outline"
 import { QueryClient } from "@tanstack/react-query"
 import {
    ErrorComponent,
@@ -84,11 +81,11 @@ function NotFound() {
             <div className="relative mb-6">
                <Card className="absolute inset-0 mx-auto grid h-28 w-[5.5rem] rotate-6 place-content-center rounded-xl" />
                <Card className="-rotate-6 mx-auto grid h-28 w-[5.5rem] place-content-center rounded-xl">
-                  <MagnifyingGlassCircleIcon className="size-9" />
+                  <MagnifyingGlassIcon className="size-9 text-foreground/75" />
                </Card>
             </div>
             <h1 className="mb-2 font-semibold text-xl">Тут нічого немає..</h1>
-            <p className="mb-5 leading-snug opacity-70">
+            <p className="mb-5 text-foreground/70 text-lg leading-snug">
                Ця сторінка не більше існує — <br /> можливо вона переїхала, або
                її видалили.
             </p>
@@ -126,7 +123,7 @@ function CatchBoundary({ error }: ErrorComponentProps) {
                </Card>
             </div>
             <h1 className="mb-2 font-semibold text-xl">От-такої..</h1>
-            <p className="mb-5 leading-snug opacity-70">
+            <p className="mb-5 text-foreground/70 text-lg leading-snug">
                Сталася технічна проблема. <br /> Будь ласка, спробуйте ще раз
                пізніше.
             </p>

@@ -49,7 +49,7 @@ function RouteComponent() {
    return (
       <>
          {products.length === 0 ? (
-            <div className="flex size-full min-h-[60vh] items-center justify-center text-balance px-8 text-center font-medium text-lg">
+            <div className="flex size-full items-center justify-center text-balance px-8 text-center font-medium text-lg">
                <div>
                   <div className="relative mb-8">
                      <Card className="absolute inset-0 mx-auto grid h-28 w-[5.5rem] rotate-6 place-content-center rounded-xl" />

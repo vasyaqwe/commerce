@@ -17,6 +17,7 @@ const config = defineConfig({
    vite: {
       define: await proxyCloudflareEnv(),
       plugins: [
+         // @ts-expect-error ...
          tsConfigPaths({
             projects: ["./tsconfig.json"],
          }),

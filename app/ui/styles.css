@@ -54,8 +54,8 @@
    --animate-fade-in: fade-in 0.5s var(--animation-delay) ease forwards;
    --animate-slide-up: slide-up 0.5s var(--ease-vaul);
 
-   --text-base: 0.925rem;
-   --text-lg: 1.125rem;
+   --text-base: 0.935rem;
+   --text-lg: 1.05rem;
 
    --shadow-button: 0px 3px 3px -1px rgba(0, 0, 0, 0.15), 0px 0px 0px 2px
       rgba(0, 0, 0, 0.09);
