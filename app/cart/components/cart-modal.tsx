@@ -25,12 +25,6 @@ import { Link } from "@tanstack/react-router"
 export function CartModal() {
    const { data: cart } = useQuery(cartByIdQuery())
 
-   // useEffect(() => {
-   //    if (cart === null) {
-   //       createCartAndSetCookie()
-   //    }
-   // }, [cart])
-
    return (
       <DrawerContent>
          <DrawerHeader>
@@ -44,7 +38,7 @@ export function CartModal() {
                      <ShoppingCartIcon className="size-9" />
                   </Card>
                </div>
-               <p className="mb-5 font-medium text-lg opacity-70">
+               <p className="mb-5 font-medium text-foreground/70 text-lg">
                   Тут нічого немає.
                </p>
                <Button onClick={() => popModal("cart")}>

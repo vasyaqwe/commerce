@@ -96,7 +96,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                      <Toaster />
                   </Portal.Root>
                   <Header />
-                  <main className="pb-20 md:pb-44">{children}</main>
+                  <main className="min-w-0 pb-20 md:pb-44">{children}</main>
                   <Footer />
                </TooltipProvider>
             </div>

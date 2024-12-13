@@ -155,7 +155,9 @@ export function Header(props: ComponentProps<"header">) {
                      ) as { q: string }
                      navigate({
                         to: "/search",
-                        search: { q: formData.q, sort: "relevance" },
+                        search: {
+                           q: formData.q,
+                        },
                      })
                   }}
                >

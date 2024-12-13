@@ -50,7 +50,7 @@ const DrawerContent = React.forwardRef<
             "[&[data-vaul-drawer-direction=right]]:mt-0 [&[data-vaul-drawer-direction=right]]:h-screen [&[data-vaul-drawer-direction=right]]:max-h-full",
             "[&[data-vaul-drawer-direction=right]]:top-2 [&[data-vaul-drawer-direction=right]]:right-2 [&[data-vaul-drawer-direction=right]]:h-auto",
             "[&[data-vaul-drawer-direction=right]]:bottom-2 [&[data-vaul-drawer-direction=right]]:after:hidden",
-            "[&[data-vaul-drawer-direction=right]]:w-[90%] lg:[&[data-vaul-drawer-direction=right]]:w-[475px] [&[data-vaul-drawer-direction=right]]:rounded-2xl",
+            "[&[data-vaul-drawer-direction=right]]:w-[90%] sm:[&[data-vaul-drawer-direction=right]]:w-[475px] [&[data-vaul-drawer-direction=right]]:rounded-2xl",
             className,
          )}
          {...props}

@@ -8,18 +8,17 @@ const buttonVariants = cva(
       variants: {
          variant: {
             default: `bg-primary/90 shadow-xs hover:enabled:shadow-lg border border-transparent focus-visible:ring-accent text-primary-foreground/95 hover:enabled:bg-primary disabled:bg-border disabled:text-foreground disabled:border-foreground/[0.12] active:enabled:shadow-md hover:enabled:text-primary-foreground`,
-            secondary: `bg-muted/70 font-medium text-muted-foreground hover:enabled:bg-muted data-[state=open]:bg-muted hover:enabled:text-foreground/95 data-[state=open]:text-foreground/85`,
-            "secondary-primary": `bg-muted font-medium text-muted-foreground hover:enabled:bg-primary/10 hover:enabled:text-primary`,
-            "secondary-destructive": `bg-destructive/20 font-medium hover:enabled:bg-destructive/15 text-destructive hover:enabled:text-destructive/90`,
+            secondary: `bg-muted/70 font-medium text-muted-foreground hover:enabled:bg-muted data-[state=open]:bg-muted`,
+            tertiary: `bg-[#3d4046] border border-transparent font-medium text-[#fff] hover:enabled:bg-[#4a4d55] data-[state=open]:bg-[#4a4d55]`,
             outline: `bg-background border border-transparent shadow-button text-foreground data-[state=open]:border-border hover:enabled:border-border`,
             destructive: `bg-destructive/90 hover:enabled:bg-destructive text-destructive-foreground/90 hover:enabled:text-destructive-foreground`,
             ghost: "border border-transparent aria-[current=page]:bg-muted hover:enabled:bg-muted/70",
             link: "!h-auto !rounded-none !p-0 text-foreground/70 underline transition-none hover:enabled:text-foreground",
          },
          size: {
-            default: "h-[42px] rounded-xl px-4",
-            sm: "h-[36px] rounded-lg px-3 text-sm",
-            lg: "h-[38px] gap-2 rounded-lg px-4 text-[0.975rem]",
+            default: "h-[42px] rounded-xl px-3",
+            sm: "h-[36px] rounded-lg px-2.5 text-sm",
+            lg: "h-[38px] gap-2 rounded-2xl px-4 text-[0.975rem]",
             xl: "h-[48px] gap-3 rounded-xl px-4 text-[1rem]",
             icon: "size-[42px] gap-0 rounded-xl",
             "with-icon":

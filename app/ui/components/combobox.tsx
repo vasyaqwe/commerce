@@ -114,8 +114,8 @@ export function ComboboxTrigger({
       <PopoverTrigger
          className={cn(
             buttonVariants({ variant: "outline" }),
-            "justify-start pr-3 pl-1.5 data-[disabled=true]:hover:border-transparent",
-            !multiple ? "pl-3.5" : "",
+            "justify-start data-[disabled=true]:hover:border-transparent",
+            !multiple ? "pl-3.5" : "pl-1.5 ",
             className,
          )}
          {...props}
@@ -133,7 +133,7 @@ export function ComboboxTrigger({
          {children}
          <ChevronUpDownIcon
             strokeWidth={2.5}
-            className="ml-auto size-5 shrink-0 opacity-50"
+            className="-mr-1 ml-auto size-5 shrink-0 text-foreground/50"
          />
       </PopoverTrigger>
    )

@@ -1,3 +1,4 @@
+import { useEventListener } from "@/interactions/use-event-listener"
 import {
    colorFilterSlugToClassName,
    colorFilterSlugs,
@@ -10,7 +11,7 @@ import {
    sizeFilterSlugSchema,
    sortFilterSlugSchema,
 } from "@/lib/shopify/schema"
-import { buttonVariants } from "@/ui/components/button"
+import { Button, buttonVariants } from "@/ui/components/button"
 import {
    Combobox,
    ComboboxContent,
@@ -25,9 +26,15 @@ import {
    DrawerTitle,
    DrawerTrigger,
 } from "@/ui/components/drawer"
+import {
+   Popover,
+   PopoverContent,
+   PopoverTrigger,
+} from "@/ui/components/popover"
+import { Slider } from "@/ui/components/slider"
 import { cn } from "@/ui/utils"
 import { seo } from "@/utils/seo"
-import { FunnelIcon } from "@heroicons/react/24/outline"
+import { ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/outline"
 import {
    Outlet,
    createFileRoute,
@@ -35,18 +42,33 @@ import {
    useParams,
    useSearch,
 } from "@tanstack/react-router"
+import { zodValidator } from "@tanstack/zod-adapter"
+import { useRef, useState } from "react"
 import { z } from "zod"
+
+const MIN_PRICE = 50
+const MAX_PRICE = 5000
 
 const searchSchema = z.object({
    q: z.string(),
-   sort: sortFilterSlugSchema,
-   colors: z.array(colorFilterSlugSchema).optional(),
-   sizes: z.array(sizeFilterSlugSchema).optional(),
+   sort: sortFilterSlugSchema.catch("relevance"),
+   colors: z.array(colorFilterSlugSchema).catch([]),
+   sizes: z.array(sizeFilterSlugSchema).catch([]),
+   min_price: z
+      .number()
+      .min(MIN_PRICE)
+      .max(MAX_PRICE - MIN_PRICE)
+      .catch(MIN_PRICE),
+   max_price: z
+      .number()
+      .min(MIN_PRICE + MIN_PRICE)
+      .max(MAX_PRICE)
+      .catch(MAX_PRICE),
 })
 
 export const Route = createFileRoute("/search/_layout")({
    component: RouteComponent,
-   validateSearch: searchSchema.parse,
+   validateSearch: zodValidator(searchSchema),
    head: () => {
       return {
          meta: [
@@ -61,7 +83,7 @@ export const Route = createFileRoute("/search/_layout")({
 function RouteComponent() {
    return (
       <>
-         <div className="mb-8 flex items-center bg-border/25 py-5">
+         <div className="mb-3 flex items-center bg-border/25 py-2 md:mb-8 md:py-4">
             <div className="container md:hidden">
                <Drawer>
                   <DrawerTrigger
@@ -83,7 +105,7 @@ function RouteComponent() {
                   </DrawerContent>
                </Drawer>
             </div>
-            <div className="container flex items-center gap-4 max-md:hidden">
+            <div className="scrollbar-hidden container flex items-center gap-4 overflow-x-auto py-1 max-md:hidden">
                <FiltersContent />
             </div>
          </div>
@@ -102,6 +124,24 @@ function FiltersContent() {
    const sort = search.sort
    const colors = search.colors
    const sizes = search.sizes
+   const minPrice = search.min_price
+   const maxPrice = search.max_price
+
+   const [priceRangeOpen, setPriceRangeOpen] = useState(false)
+   const [priceRange, setPriceRange] = useState([minPrice, maxPrice])
+   const isDragging = useRef(false)
+
+   useEventListener(
+      "click",
+      (e) => {
+         if (isDragging.current) {
+            e.preventDefault()
+            e.stopPropagation()
+         }
+      },
+      undefined,
+      true,
+   )
 
    return (
       <>
@@ -111,10 +151,10 @@ function FiltersContent() {
                navigate({ search: { ...search, sort: sort as never } })
             }}
          >
-            <ComboboxTrigger className="w-[90vw] md:w-[230px]">
+            <ComboboxTrigger className="w-[90vw] md:w-[210px]">
                Сортувати
             </ComboboxTrigger>
-            <ComboboxContent className="w-[91vw] md:w-[230px]">
+            <ComboboxContent className="w-[91vw] md:w-[210px]">
                <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
                {sortFilterSlugs.map((item) => {
                   return (
@@ -139,10 +179,10 @@ function FiltersContent() {
                      })
                   }}
                >
-                  <ComboboxTrigger className="w-[90vw] md:w-[180px]">
+                  <ComboboxTrigger className="w-[90vw] md:w-[170px]">
                      Колір
                   </ComboboxTrigger>
-                  <ComboboxContent className="w-[91vw] md:w-[180px] ">
+                  <ComboboxContent className="w-[91vw] md:w-[170px] ">
                      <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
                      {colorFilterSlugs.map((item) => {
                         return (
@@ -195,6 +235,84 @@ function FiltersContent() {
                </Combobox>
             </>
          )}
+         <Popover
+            open={priceRangeOpen}
+            onOpenChange={setPriceRangeOpen}
+         >
+            <PopoverTrigger
+               className={cn(
+                  buttonVariants({ variant: "outline" }),
+                  "w-[90vw] justify-start md:w-[230px]",
+               )}
+            >
+               Ціна
+               <ChevronUpDownIcon
+                  strokeWidth={2.5}
+                  className="-mr-1 ml-auto size-5 shrink-0 text-foreground/50"
+               />
+            </PopoverTrigger>
+            <PopoverContent className="w-[91vw] md:w-[230px]">
+               <div className="-mt-1 mb-4 flex items-center justify-between font-semibold">
+                  <span>
+                     <span className="sr-only">Від</span> ₴{priceRange[0]}
+                  </span>
+                  <span>
+                     <span className="sr-only">До</span>₴{priceRange[1]}{" "}
+                  </span>
+               </div>
+               <Slider
+                  value={priceRange}
+                  onValueChange={setPriceRange}
+                  min={MIN_PRICE}
+                  max={MAX_PRICE}
+                  step={10}
+                  minStepsBetweenThumbs={10}
+                  onPointerDown={() => {
+                     isDragging.current = true
+                  }}
+                  onPointerUp={() =>
+                     setTimeout(() => {
+                        isDragging.current = false
+                     }, 0)
+                  }
+               />
+               <div className="mt-5 grid items-center gap-2">
+                  <Button
+                     variant={"tertiary"}
+                     size={"sm"}
+                     onClick={() => {
+                        navigate({
+                           search: {
+                              ...search,
+                              min_price: priceRange[0],
+                              max_price: priceRange[1],
+                           },
+                        })
+                     }}
+                  >
+                     Застосувати
+                  </Button>
+                  <Button
+                     disabled={minPrice === MIN_PRICE && maxPrice === MAX_PRICE}
+                     size={"sm"}
+                     variant={"ghost"}
+                     className="hover:enabled:bg-[#3d4046]"
+                     onClick={() => {
+                        navigate({
+                           search: {
+                              ...search,
+                              min_price: MIN_PRICE,
+                              max_price: MAX_PRICE,
+                           },
+                        })
+                        setPriceRange([MIN_PRICE, MAX_PRICE])
+                     }}
+                  >
+                     Скинути
+                  </Button>
+               </div>
+            </PopoverContent>
+         </Popover>
       </>
    )
 }
