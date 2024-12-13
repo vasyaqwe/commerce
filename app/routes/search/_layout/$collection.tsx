@@ -11,6 +11,7 @@ import { seo } from "@/utils/seo"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute, notFound, useSearch } from "@tanstack/react-router"
+import { useDeferredValue } from "react"
 import type { z } from "zod"
 
 const collectionByHandleQuery = ({ handle }: { handle: string }) =>
@@ -33,6 +34,7 @@ const listCollectionProductsQuery = (
 
 export const Route = createFileRoute("/search/_layout/$collection")({
    component: RouteComponent,
+   pendingComponent: ProductsPending,
    loaderDeps: ({ search }) => ({ search }),
    loader: async ({ deps: { search }, params, context }) => {
       const collection = await context.queryClient.ensureQueryData(
@@ -42,7 +44,7 @@ export const Route = createFileRoute("/search/_layout/$collection")({
       )
       if (!collection) throw notFound()
 
-      await context.queryClient.prefetchQuery(
+      context.queryClient.prefetchQuery(
          listCollectionProductsQuery({
             ...search,
             reverse: !search.sort
@@ -68,12 +70,12 @@ export const Route = createFileRoute("/search/_layout/$collection")({
          ],
       }
    },
-   pendingComponent: ProductsPending,
 })
 
 function RouteComponent() {
    const params = Route.useParams()
-   const search = useSearch({ from: "/search/_layout" })
+   // defer to avoid showing pendingComponent when search changes
+   const search = useDeferredValue(useSearch({ from: "/search/_layout" }))
    const query = useSuspenseQuery(
       listCollectionProductsQuery({
          ...search,

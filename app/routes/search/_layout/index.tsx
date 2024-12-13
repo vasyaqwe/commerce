@@ -7,6 +7,7 @@ import { Card } from "@/ui/components/card"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute, useSearch } from "@tanstack/react-router"
+import { useDeferredValue } from "react"
 import type { z } from "zod"
 
 const listProductsQuery = (data: z.infer<typeof listProductsParams>) =>
@@ -24,9 +25,10 @@ const listProductsQuery = (data: z.infer<typeof listProductsParams>) =>
 
 export const Route = createFileRoute("/search/_layout/")({
    component: RouteComponent,
+   pendingComponent: ProductsPending,
    loaderDeps: ({ search }) => ({ search }),
    loader: async ({ deps: { search }, context }) => {
-      await context.queryClient.prefetchQuery(
+      context.queryClient.prefetchQuery(
          listProductsQuery({
             ...search,
             reverse: !search.sort
@@ -35,11 +37,11 @@ export const Route = createFileRoute("/search/_layout/")({
          }),
       )
    },
-   pendingComponent: ProductsPending,
 })
 
 function RouteComponent() {
-   const search = useSearch({ from: "/search/_layout" })
+   // defer to avoid showing pendingComponent when search changes
+   const search = useDeferredValue(useSearch({ from: "/search/_layout" }))
    const query = useSuspenseQuery(
       listProductsQuery({
          ...search,

@@ -17,7 +17,7 @@ export function Product({ product }: { product: ProductType }) {
             style={{ aspectRatio: "5/6" }}
          >
             <img
-               className="object-cover"
+               className="size-full object-cover"
                alt={product.title}
                src={product.featuredImage?.url}
             />
