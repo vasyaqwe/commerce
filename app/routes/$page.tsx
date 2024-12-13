@@ -1,5 +1,6 @@
 import { pageByHandle } from "@/lib/shopify/functions"
 import { Prose } from "@/ui/components/prose"
+import { seo } from "@/utils/seo"
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute, notFound } from "@tanstack/react-router"
 
@@ -20,20 +21,15 @@ export const Route = createFileRoute("/$page")({
       return page
    },
    head: ({ loaderData: page }) => {
-      const title = page?.seo?.title ?? page?.title ?? "Not found"
+      const title = page?.seo?.title ?? page?.title
       const description = page?.seo?.description ?? page?.bodySummary
+
       return {
          meta: [
-            {
+            ...seo({
                title,
-            },
-            {
-               name: "description",
-               content: description,
-            },
-            { name: "og:title", content: title },
-            { name: "og:description", content: description },
-            { name: "og:type", content: "article" },
+               description,
+            }),
          ],
       }
    },

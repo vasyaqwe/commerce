@@ -7,6 +7,7 @@ import type { listCollectionProductsParams } from "@/lib/shopify/schema"
 import { Product } from "@/routes/search/-components/product"
 import { ProductsPending } from "@/routes/search/-components/products-pending"
 import { Card } from "@/ui/components/card"
+import { seo } from "@/utils/seo"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute, notFound, useSearch } from "@tanstack/react-router"
@@ -50,6 +51,22 @@ export const Route = createFileRoute("/search/_layout/$collection")({
             collection: params.collection,
          }),
       )
+
+      return collection
+   },
+   head: ({ loaderData: collection }) => {
+      const title = collection?.seo?.title ?? collection?.title
+      const description =
+         collection?.seo?.description ?? collection?.description
+
+      return {
+         meta: [
+            ...seo({
+               title,
+               description,
+            }),
+         ],
+      }
    },
    pendingComponent: ProductsPending,
 })

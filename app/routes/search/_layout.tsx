@@ -26,6 +26,7 @@ import {
    DrawerTrigger,
 } from "@/ui/components/drawer"
 import { cn } from "@/ui/utils"
+import { seo } from "@/utils/seo"
 import { FunnelIcon } from "@heroicons/react/24/outline"
 import {
    Outlet,
@@ -46,6 +47,15 @@ const searchSchema = z.object({
 export const Route = createFileRoute("/search/_layout")({
    component: RouteComponent,
    validateSearch: searchSchema.parse,
+   head: () => {
+      return {
+         meta: [
+            ...seo({
+               title: "Пошук",
+            }),
+         ],
+      }
+   },
 })
 
 function RouteComponent() {

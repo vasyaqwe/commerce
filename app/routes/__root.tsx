@@ -7,6 +7,7 @@ import toastStyles from "@/ui/components/toast/styles.css?url"
 import { TooltipProvider } from "@/ui/components/tooltip"
 import styles from "@/ui/styles.css?url"
 import { cn } from "@/ui/utils"
+import { seo } from "@/utils/seo"
 import * as Portal from "@radix-ui/react-portal"
 import type { QueryClient } from "@tanstack/react-query"
 import {
@@ -45,21 +46,10 @@ export const Route = createRootRouteWithContext<{
                   "viewport-fit=cover, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
             },
             { name: "theme-color", content: "#fff" },
-            { title },
-            {
-               name: "description",
-               content: description,
-            },
-            { name: "twitter:title", content: title },
-            { name: "twitter:description", content: description },
-            { name: "og:type", content: "website" },
-            { name: "og:title", content: title },
-            { name: "og:description", content: description },
-            // {
-            //    name: "og:image",
-            //    content: `${publicEnv.VITE_BASE_URL}${ogImage}`,
-            // },
-            { name: "twitter:card", content: "summary_large_image" },
+            ...seo({
+               title,
+               description,
+            }),
          ],
          links: [
             { rel: "stylesheet", href: styles },

@@ -47,7 +47,7 @@ function RouteComponent() {
       }),
    )
    const products = query.data
-
+   return <ProductsPending />
    return (
       <>
          {products.length === 0 ? (

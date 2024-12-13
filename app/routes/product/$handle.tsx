@@ -11,6 +11,7 @@ import { Chip } from "@/ui/components/chip"
 import { Tooltip } from "@/ui/components/tooltip"
 import { cn } from "@/ui/utils"
 import { formatCurrency } from "@/utils/format"
+import { seo } from "@/utils/seo"
 import {
    HeartIcon,
    ShoppingBagIcon,
@@ -46,33 +47,22 @@ export const Route = createFileRoute("/product/$handle")({
       return product
    },
    head: ({ loaderData: product }) => {
-      const title =
-         product?.seo.title ?? product?.title ?? "Сторінку не знайдено"
-      const description =
-         product?.seo.description ??
-         product?.description ??
-         "Ця сторінка не більше існує — можливо вона переїхала, або її видалили."
+      const title = product?.seo.title ?? product?.title
+      const description = product?.seo.description ?? product?.description
 
       const { url, width, height, altText: alt } = product?.featuredImage || {}
       const indexable = !product?.tags.includes(HIDDEN_PRODUCT_TAG)
 
       const robotsContent = indexable ? "index, follow" : "noindex, nofollow"
-
       const googleBotContent = indexable ? "index, follow" : "noindex, nofollow"
 
       return {
          meta: [
-            { title },
-            {
-               name: "description",
-               content: description,
-            },
-            { name: "twitter:title", content: title },
-            { name: "twitter:description", content: description },
-            { name: "og:type", content: "website" },
-            { name: "og:title", content: title },
-            { name: "og:description", content: description },
-            url ? { name: "og:image", content: url } : undefined,
+            ...seo({
+               title,
+               description,
+               image: url,
+            }),
             url && width
                ? { name: "og:image:width", content: String(width) }
                : undefined,
@@ -80,7 +70,6 @@ export const Route = createFileRoute("/product/$handle")({
                ? { name: "og:image:height", content: String(height) }
                : undefined,
             url && alt ? { name: "og:image:alt", content: alt } : undefined,
-            { name: "twitter:card", content: "summary_large_image" },
             { name: "robots", content: robotsContent },
             { name: "googlebot", content: googleBotContent },
          ],
