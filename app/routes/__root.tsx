@@ -1,4 +1,5 @@
 import "@/ui/styles.css"
+import { menuByHandleQuery } from "@/lib/shopify/queries/menu"
 import { ModalProvider } from "@/modals"
 import { Footer } from "@/routes/-components/footer"
 import { Header } from "@/routes/-components/header"
@@ -68,6 +69,9 @@ export const Route = createRootRouteWithContext<{
       }
    },
    component: RootComponent,
+   loader: ({ context }) => {
+      context.queryClient.prefetchQuery(menuByHandleQuery({ handle: "footer" }))
+   },
 })
 
 function RootComponent() {

@@ -45,19 +45,11 @@ function RouteComponent() {
 
    // <div className="mx-8 max-w-2xl pt-8 sm:mx-auto">{children}</div>
    return (
-      <>
-         <h1 className="mb-8 font-bold text-5xl">{page.title}</h1>
+      <div className="mx-auto max-w-prose pt-8 md:pt-16 ">
          <Prose
-            className="mb-8"
+            className="mb-8 prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl"
             html={page.body as string}
          />
-         <p className="text-sm italic">
-            {`Редагували ввостаннє ${new Intl.DateTimeFormat("uk-UA", {
-               year: "numeric",
-               month: "long",
-               day: "numeric",
-            }).format(new Date(page.updatedAt))}.`}
-         </p>
-      </>
+      </div>
    )
 }

@@ -1,7 +1,10 @@
+import { menuByHandleQuery } from "@/lib/shopify/queries/menu"
 import { buttonVariants } from "@/ui/components/button"
 import { Icons } from "@/ui/components/icons"
 import { cn } from "@/ui/utils"
-import { Link } from "@tanstack/react-router"
+import { useSuspenseQuery } from "@tanstack/react-query"
+import { CatchBoundary, Link } from "@tanstack/react-router"
+import { Suspense } from "react"
 
 export function Footer() {
    return (
@@ -73,19 +76,35 @@ export function Footer() {
          <div className="bg-foreground py-6 text-background">
             <div className="container flex items-center justify-between gap-6 font-medium md:text-[1rem]">
                <p>&copy; {new Date().getFullYear()} Commerce</p>
-
-               <ul className="flex items-center gap-2">
-                  <li>
-                     <Link
-                        href="/terms"
-                        className="hover:underline"
-                     >
-                        Умови використання
-                     </Link>
-                  </li>
-               </ul>
+               <CatchBoundary
+                  getResetKey={() => "reset"}
+                  errorComponent={() => null}
+               >
+                  <Suspense fallback={null}>
+                     <Menu />
+                  </Suspense>
+               </CatchBoundary>
             </div>
          </div>
       </footer>
+   )
+}
+
+function Menu() {
+   const menu = useSuspenseQuery(menuByHandleQuery({ handle: "footer" }))
+
+   return (
+      <ul className="flex items-center gap-2">
+         {menu.data.map((item) => (
+            <li key={item.path}>
+               <Link
+                  href={item.path}
+                  className="hover:underline"
+               >
+                  {item.title}
+               </Link>
+            </li>
+         ))}
+      </ul>
    )
 }

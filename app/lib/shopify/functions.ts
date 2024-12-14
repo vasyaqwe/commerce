@@ -131,7 +131,6 @@ export const menuByHandle = createServerFn({ method: "GET" })
             }[]
          }
       }
-
       const env = getEvent().context.cloudflare.env
 
       return (
@@ -140,8 +139,9 @@ export const menuByHandle = createServerFn({ method: "GET" })
             path: item.url
                .replace(`https://${env.SHOPIFY_STORE_DOMAIN}`, "")
                .replace("/collections", "/search")
+               .replace("/policies", "")
                .replace("/pages", ""),
-         })) || []
+         })) ?? []
       )
    })
 
