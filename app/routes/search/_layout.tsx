@@ -1,12 +1,14 @@
 import {
    colorFilterSlugToClassName,
    colorFilterSlugs,
+   productTypeFilterSlugs,
    sizeFilterSlugs,
    sortFilterSlugToTitle,
    sortFilterSlugs,
 } from "@/filter/constants"
 import {
    colorFilterSlugSchema,
+   productTypeFilterSlugSchema,
    sizeFilterSlugSchema,
    sortFilterSlugSchema,
 } from "@/filter/schema"
@@ -16,7 +18,6 @@ import { Button, buttonVariants } from "@/ui/components/button"
 import {
    Combobox,
    ComboboxContent,
-   ComboboxEmpty,
    ComboboxItem,
    ComboboxTrigger,
 } from "@/ui/components/combobox"
@@ -52,6 +53,7 @@ const MAX_PRICE = 5000
 const searchSchema = z.object({
    q: z.string(),
    sort: sortFilterSlugSchema.catch("relevance"),
+   product_types: z.array(productTypeFilterSlugSchema).catch([]),
    colors: z.array(colorFilterSlugSchema).catch([]),
    sizes: z.array(sizeFilterSlugSchema).catch([]),
    min_price: z
@@ -118,13 +120,14 @@ function RouteComponent() {
 
 function FiltersContent() {
    const params = useParams({ strict: false })
-   const search = useSearch({ from: "/search/_layout" })
+   const search = useSearch({ from: Route.id })
    const navigate = useNavigate({ from: Route.fullPath })
 
    const {
       sort,
       colors,
       sizes,
+      product_types: productTypes,
       min_price: minPrice,
       max_price: maxPrice,
    } = search
@@ -150,14 +153,13 @@ function FiltersContent() {
          <Combobox
             value={sort}
             onValueChange={(sort) => {
-               navigate({ search: { ...search, sort: sort as never } })
+               navigate({ search: (prev) => ({ ...prev, sort }) })
             }}
          >
             <ComboboxTrigger className="w-[90vw] md:w-[210px]">
                Сортувати
             </ComboboxTrigger>
             <ComboboxContent className="w-[91vw] md:w-[210px]">
-               <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
                {sortFilterSlugs.map((item) => {
                   return (
                      <ComboboxItem
@@ -170,6 +172,41 @@ function FiltersContent() {
                })}
             </ComboboxContent>
          </Combobox>
+         {params.collection ? (
+            <Combobox
+               canBeEmpty
+               value={productTypes[0]}
+               onValueChange={(productType) => {
+                  navigate({
+                     search: (prev) => ({
+                        ...prev,
+                        product_types: prev.product_types.includes(
+                           productType as never,
+                        )
+                           ? []
+                           : [productType],
+                     }),
+                  })
+               }}
+            >
+               <ProductTypeComboboxContent />
+            </Combobox>
+         ) : (
+            <Combobox
+               multiple
+               value={productTypes}
+               onValueChange={(productTypes) => {
+                  navigate({
+                     search: (prev) => ({
+                        ...prev,
+                        product_types: productTypes,
+                     }),
+                  })
+               }}
+            >
+               <ProductTypeComboboxContent />
+            </Combobox>
+         )}
          {params.collection ? null : (
             <>
                <Combobox
@@ -177,7 +214,7 @@ function FiltersContent() {
                   value={colors}
                   onValueChange={(colors) => {
                      navigate({
-                        search: { ...search, colors: colors as never },
+                        search: (prev) => ({ ...prev, colors }),
                      })
                   }}
                >
@@ -185,7 +222,6 @@ function FiltersContent() {
                      Колір
                   </ComboboxTrigger>
                   <ComboboxContent className="w-[91vw] md:w-[170px] ">
-                     <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
                      {colorFilterSlugs.map((item) => {
                         return (
                            <ComboboxItem
@@ -214,14 +250,13 @@ function FiltersContent() {
                   multiple
                   value={sizes}
                   onValueChange={(sizes) => {
-                     navigate({ search: { ...search, sizes: sizes as never } })
+                     navigate({ search: (prev) => ({ ...prev, sizes }) })
                   }}
                >
                   <ComboboxTrigger className="w-[90vw] md:w-[150px]">
                      Розмір
                   </ComboboxTrigger>
                   <ComboboxContent className="w-[91vw] md:w-[150px] ">
-                     <ComboboxEmpty>Нічого не знайдено</ComboboxEmpty>
                      {sizeFilterSlugs.map((item) => {
                         return (
                            <ComboboxItem
@@ -284,11 +319,11 @@ function FiltersContent() {
                      size={"sm"}
                      onClick={() => {
                         navigate({
-                           search: {
-                              ...search,
+                           search: (prev) => ({
+                              ...prev,
                               min_price: priceRange[0],
                               max_price: priceRange[1],
-                           },
+                           }),
                         })
                      }}
                   >
@@ -304,11 +339,11 @@ function FiltersContent() {
                      className="hover:enabled:bg-[#3d4046]"
                      onClick={() => {
                         navigate({
-                           search: {
-                              ...search,
+                           search: (prev) => ({
+                              ...prev,
                               min_price: MIN_PRICE,
                               max_price: MAX_PRICE,
-                           },
+                           }),
                         })
                         setPriceRange([MIN_PRICE, MAX_PRICE])
                      }}
@@ -318,6 +353,28 @@ function FiltersContent() {
                </div>
             </PopoverContent>
          </Popover>
+      </>
+   )
+}
+
+function ProductTypeComboboxContent() {
+   return (
+      <>
+         <ComboboxTrigger className="w-[90vw] md:w-[170px]">
+            Стиль
+         </ComboboxTrigger>
+         <ComboboxContent className="w-[91vw] md:w-[170px] ">
+            {productTypeFilterSlugs.map((item) => {
+               return (
+                  <ComboboxItem
+                     value={item}
+                     key={item}
+                  >
+                     {item}
+                  </ComboboxItem>
+               )
+            })}
+         </ComboboxContent>
       </>
    )
 }

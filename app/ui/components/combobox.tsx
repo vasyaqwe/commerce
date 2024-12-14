@@ -32,12 +32,14 @@ type ComboboxSingleProps = {
    multiple?: false
    value?: string
    onValueChange?: (value: string) => void
+   canBeEmpty?: boolean
 }
 
 type ComboboxMultipleProps = {
    multiple: true
    value?: string[]
    onValueChange?: (value: string[]) => void
+   canBeEmpty?: boolean
 }
 
 type ComboboxProps = {
@@ -56,7 +58,13 @@ const ComboboxContext = createContext<ComboboxContextType | undefined>(
 )
 
 export function Combobox(props: ComboboxProps) {
-   const { children, multiple, value: externalValue, onValueChange } = props
+   const {
+      children,
+      multiple,
+      value: externalValue,
+      onValueChange,
+      canBeEmpty,
+   } = props
    const [isOpen, setIsOpen] = useState(false)
    const [internalValue, setInternalValue] = useState<string | string[]>(
       multiple ? [] : "",
@@ -69,7 +77,13 @@ export function Combobox(props: ComboboxProps) {
    }, [externalValue])
 
    const handleValueChange = (newValue: string | string[]) => {
-      setInternalValue(newValue)
+      if (canBeEmpty) {
+         internalValue === newValue
+            ? setInternalValue("")
+            : setInternalValue(newValue)
+      } else {
+         setInternalValue(newValue)
+      }
       // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       onValueChange?.(newValue as any)
    }
@@ -114,7 +128,7 @@ export function ComboboxTrigger({
       <PopoverTrigger
          className={cn(
             buttonVariants({ variant: "outline" }),
-            "justify-start data-[disabled=true]:hover:border-transparent",
+            "justify-start transition-[border-color,scale] data-[disabled=true]:hover:border-transparent",
             !multiple ? "pl-3.5" : "pl-1.5 ",
             className,
          )}

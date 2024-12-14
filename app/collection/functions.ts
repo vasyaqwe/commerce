@@ -73,6 +73,7 @@ export const listCollectionProducts = createServerFn({ method: "GET" })
          variables: {
             handle: data.collection,
             sortKey: sort === "CREATED_AT" ? "CREATED" : sort,
+            productType: data.productTypes[0],
             reverse: data.reverse,
             minPrice: data.minPrice,
             maxPrice: data.maxPrice,

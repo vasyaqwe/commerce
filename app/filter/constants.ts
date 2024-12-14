@@ -32,6 +32,8 @@ export const sortFilterSlugToTitle: Record<SortFilterSlug, string> = {
    price_desc: "Спочатку дорожче",
 }
 
+export const productTypeFilterSlugs = ["Футболка", "Аксесуар", "Штани"] as const
+
 export const colorFilterSlugs = [
    "червоний",
    "синій",
@@ -49,15 +51,3 @@ export const colorFilterSlugToClassName: Record<ColorFilterSlug, string> = {
 }
 
 export const sizeFilterSlugs = ["xs", "s", "m", "l", "xl", "2xl"] as const
-
-// export const styleFilter = {
-//    title: "Стиль",
-//    slug: "style",
-//    values: ["Казуальний", "Офіційний", "Спортивний", "Вінтажний"],
-// }
-
-// export const materialFilter = {
-//    title: "Material",
-//    slug: "material",
-//    values: ["Бавовна", "Полієстер", "Шовк", "Джинс"],
-// }

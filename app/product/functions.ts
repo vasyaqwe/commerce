@@ -63,7 +63,16 @@ export const listProducts = createServerFn({ method: "GET" })
    .validator(zodValidator(listProductsParams))
    .handler(
       async ({
-         data: { q, reverse, sort, colors, sizes, minPrice, maxPrice },
+         data: {
+            q,
+            reverse,
+            sort,
+            productTypes,
+            colors,
+            sizes,
+            minPrice,
+            maxPrice,
+         },
       }) => {
          let queryString = q ?? ""
 
@@ -77,7 +86,13 @@ export const listProducts = createServerFn({ method: "GET" })
             queryString += ` AND (variants.options:size:(${sizeQuery}))`
          }
 
-         // if (style) queryString += ` AND product_type:${style}`
+         if (productTypes.length > 0) {
+            const styleQuery = productTypes
+               .map((style) => `product_type:${style}`)
+               .join(" OR ")
+            queryString += ` AND (${styleQuery})`
+         }
+
          queryString += ` AND variants.price:>=${minPrice}`
          queryString += ` AND variants.price:<=${maxPrice}`
 
