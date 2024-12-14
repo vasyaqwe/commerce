@@ -15,7 +15,7 @@ const collectionFragment = `
 `
 
 export const collectionByHandleGraphQLQuery = `
-  query getCollection($handle: String!) {
+  query collectionByHandleGraphQLQuery($handle: String!) {
     collection(handle: $handle) {
       ...collection
     }
@@ -24,7 +24,7 @@ export const collectionByHandleGraphQLQuery = `
 `
 
 export const listCollectionsGraphQLQuery = `
-  query getCollections {
+  query listCollectionsGraphQLQuery {
     collections(first: 100, sortKey: TITLE) {
       edges {
         node {
@@ -37,7 +37,7 @@ export const listCollectionsGraphQLQuery = `
 `
 
 export const listCollectionProductsGraphQLQuery = `
-  query getCollectionProducts(
+  query listCollectionProductsGraphQLQuery(
     $handle: String!
     $sortKey: ProductCollectionSortKeys
     $reverse: Boolean

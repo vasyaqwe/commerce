@@ -1,7 +1,7 @@
 import { productFragment } from "./constants"
 
 export const productByHandleGraphQLQuery = `
-  query getProduct($handle: String!) {
+  query productByHandleGraphQLQuery($handle: String!) {
     product(handle: $handle) {
       ...product
     }
@@ -10,7 +10,7 @@ export const productByHandleGraphQLQuery = `
 `
 
 export const listProductsGraphQLQuery = `
-  query getProducts($sortKey: ProductSortKeys, $reverse: Boolean, $query: String) {
+  query listProductsGraphQLQuery($sortKey: ProductSortKeys, $reverse: Boolean, $query: String) {
     products(sortKey: $sortKey, reverse: $reverse, query: $query, first: 100) {
       edges {
         node {
@@ -23,7 +23,7 @@ export const listProductsGraphQLQuery = `
 `
 
 export const listProductRecommendationsGraphQLQuery = `
-  query getProductRecommendations($productId: ID!) {
+  query listProductRecommendationsGraphQLQuery($productId: ID!) {
     productRecommendations(productId: $productId) {
       ...product
     }

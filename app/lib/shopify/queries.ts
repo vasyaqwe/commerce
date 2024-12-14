@@ -1,8 +1,9 @@
 import { menuByHandle } from "@/lib/shopify/functions"
+import { seoFragment } from "@/seo/constants"
 import { queryOptions } from "@tanstack/react-query"
 
 export const menuByHandleGraphQLQuery = `
-  query getMenu($handle: String!) {
+  query menuByHandleGraphQLQuery($handle: String!) {
     menu(handle: $handle) {
       items {
         title
@@ -17,8 +18,6 @@ export const menuByHandleQuery = (data: { handle: string }) =>
       queryKey: ["menu_by_handle", data.handle],
       queryFn: () => menuByHandle({ data }),
    })
-
-import { seoFragment } from "@/seo/constants"
 
 const pageFragment = `
   fragment page on Page {
@@ -39,7 +38,7 @@ const pageFragment = `
 `
 
 export const pageByHandleGraphQLQuery = `
-  query getPage($handle: String!) {
+  query pageByHandleGraphQLQuery($handle: String!) {
     pageByHandle(handle: $handle) {
       ...page
     }
@@ -48,7 +47,7 @@ export const pageByHandleGraphQLQuery = `
 `
 
 export const listPagesGraphQLQuery = `
-  query getPages {
+  query listPagesGraphQLQuery {
     pages(first: 100) {
       edges {
         node {

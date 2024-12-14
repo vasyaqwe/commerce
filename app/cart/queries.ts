@@ -13,7 +13,7 @@ export const cartByIdQuery = () =>
    })
 
 export const cartByIdGraphQLQuery = `
-     query getCart($cartId: ID!) {
+     query cartByIdGraphQLQuery($cartId: ID!) {
        cart(id: $cartId) {
          ...cart
        }

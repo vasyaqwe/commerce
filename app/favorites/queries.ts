@@ -3,7 +3,7 @@ import { productFragment } from "@/product/constants"
 import { queryOptions } from "@tanstack/react-query"
 
 export const listFavoriteProductsGraphQLQuery = `
-  query getFavoriteProducts($ids: [ID!]!) {
+  query listFavoriteProductsGraphQLQuery($ids: [ID!]!) {
     nodes(ids: $ids) {
       ... on Product {
         ...product
