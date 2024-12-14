@@ -1,6 +1,6 @@
 import type { Cart, CartItem, ShopifyCart } from "@/cart/types"
-import type { Product, ProductVariant } from "@/lib/shopify/types"
 import { removeEdgesAndNodes } from "@/lib/shopify/utils"
+import type { Product, ProductVariant } from "@/product/types"
 
 export const reshapeCart = (cart: ShopifyCart): Cart => {
    if (!cart.cost?.totalTaxAmount) {

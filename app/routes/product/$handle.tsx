@@ -3,18 +3,14 @@ import { useDeleteFavorite } from "@/favorites/hooks/use-delete-favorite"
 import { useInsertFavorite } from "@/favorites/hooks/use-insert-favorite"
 import { listFavoriteIdsQuery } from "@/favorites/queries"
 import { HIDDEN_PRODUCT_TAG } from "@/lib/shopify/constants"
-import { productByHandle } from "@/lib/shopify/functions"
-import type {
-   Product,
-   ProductOption,
-   ProductVariant,
-} from "@/lib/shopify/types"
+import { productByHandle } from "@/product/functions"
+import type { Product, ProductOption, ProductVariant } from "@/product/types"
+import { seo } from "@/seo/utils"
 import { Button } from "@/ui/components/button"
 import { Chip } from "@/ui/components/chip"
 import { Tooltip } from "@/ui/components/tooltip"
 import { cn } from "@/ui/utils"
 import { formatCurrency } from "@/utils/format"
-import { seo } from "@/utils/seo"
 import {
    HeartIcon as HeartIconOutline,
    ShoppingBagIcon,

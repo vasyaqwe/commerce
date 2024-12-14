@@ -1,7 +1,7 @@
 import { cartByIdQuery } from "@/cart/queries"
 import { createOrUpdateCartItem, updateCartTotals } from "@/cart/utils"
-import type { Product, ProductVariant } from "@/lib/shopify/types"
 import { pushModal } from "@/modals"
+import type { Product, ProductVariant } from "@/product/types"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useServerFn } from "@tanstack/start"
 import * as cartFns from "../functions"

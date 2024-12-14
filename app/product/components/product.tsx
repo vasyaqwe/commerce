@@ -1,4 +1,4 @@
-import type { Product as ProductType } from "@/lib/shopify/types"
+import type { Product as ProductType } from "@/product/types"
 import { cn } from "@/ui/utils"
 import { formatCurrency } from "@/utils/format"
 import { Link } from "@tanstack/react-router"

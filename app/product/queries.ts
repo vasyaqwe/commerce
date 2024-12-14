@@ -1,4 +1,4 @@
-import productFragment from "../fragments/product"
+import { productFragment } from "./constants"
 
 export const productByHandleGraphQLQuery = `
   query getProduct($handle: String!) {
@@ -26,17 +26,6 @@ export const listProductRecommendationsGraphQLQuery = `
   query getProductRecommendations($productId: ID!) {
     productRecommendations(productId: $productId) {
       ...product
-    }
-  }
-  ${productFragment}
-`
-
-export const listFavoriteProductsGraphQLQuery = `
-  query getFavoriteProducts($ids: [ID!]!) {
-    nodes(ids: $ids) {
-      ... on Product {
-        ...product
-      }
     }
   }
   ${productFragment}

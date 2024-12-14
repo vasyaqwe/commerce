@@ -1,14 +1,14 @@
+import {
+   addCartItemMutation,
+   createCartMutation,
+   removeCartItemMutation,
+   updateCartItemMutation,
+} from "@/cart/mutations"
 import { cartByIdGraphQLQuery } from "@/cart/queries"
 import type { ShopifyCart } from "@/cart/types"
 import { reshapeCart } from "@/cart/utils"
 import { ServerFnError } from "@/error"
 import { shopifyFetch } from "@/lib/shopify"
-import {
-   addToCartMutation,
-   createCartMutation,
-   editCartItemsMutation,
-   removeFromCartMutation,
-} from "@/lib/shopify/mutations/cart"
 import { createMiddleware, createServerFn } from "@tanstack/start"
 import { zodValidator } from "@tanstack/zod-adapter"
 import { getCookie, setCookie } from "vinxi/http"
@@ -77,7 +77,7 @@ export const addItem = createServerFn({ method: "POST" })
    )
    .handler(async ({ data, context }) => {
       const res = (await shopifyFetch({
-         query: addToCartMutation,
+         query: addCartItemMutation,
          variables: {
             cartId: context.cartId,
             lines: data.lines,
@@ -102,7 +102,7 @@ export const removeItem = createServerFn({ method: "POST" })
    )
    .handler(async ({ data, context }) => {
       const res = (await shopifyFetch({
-         query: removeFromCartMutation,
+         query: removeCartItemMutation,
          variables: {
             cartId: context.cartId,
             lineIds: data.lineIds,
@@ -133,7 +133,7 @@ export const updateItem = createServerFn({ method: "POST" })
    )
    .handler(async ({ data, context }) => {
       const res = (await shopifyFetch({
-         query: editCartItemsMutation,
+         query: updateCartItemMutation,
          variables: {
             cartId: context.cartId,
             lines: data.lines,

@@ -1,6 +1,6 @@
 import { pageByHandle } from "@/lib/shopify/functions"
+import { seo } from "@/seo/utils"
 import { Prose } from "@/ui/components/prose"
-import { seo } from "@/utils/seo"
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute, notFound } from "@tanstack/react-router"
 

@@ -1,7 +1,15 @@
-import imageFragment from "./image"
-import seoFragment from "./seo"
+import { seoFragment } from "@/seo/constants"
 
-const productFragment = /* GraphQL */ `
+const imageFragment = `
+  fragment image on Image {
+    url
+    altText
+    width
+    height
+  }
+`
+
+export const productFragment = `
   fragment product on Product {
     id
     handle
@@ -60,5 +68,3 @@ const productFragment = /* GraphQL */ `
   ${imageFragment}
   ${seoFragment}
 `
-
-export default productFragment

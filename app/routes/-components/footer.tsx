@@ -1,4 +1,4 @@
-import { menuByHandleQuery } from "@/lib/shopify/queries/menu"
+import { menuByHandleQuery } from "@/lib/shopify/queries"
 import { buttonVariants } from "@/ui/components/button"
 import { Icons } from "@/ui/components/icons"
 import { cn } from "@/ui/utils"

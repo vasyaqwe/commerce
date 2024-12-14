@@ -1,16 +1,17 @@
-import { useEventListener } from "@/interactions/use-event-listener"
 import {
    colorFilterSlugToClassName,
    colorFilterSlugs,
    sizeFilterSlugs,
    sortFilterSlugToTitle,
    sortFilterSlugs,
-} from "@/lib/shopify/constants"
+} from "@/filter/constants"
 import {
    colorFilterSlugSchema,
    sizeFilterSlugSchema,
    sortFilterSlugSchema,
-} from "@/lib/shopify/schema"
+} from "@/filter/schema"
+import { useEventListener } from "@/interactions/use-event-listener"
+import { seo } from "@/seo/utils"
 import { Button, buttonVariants } from "@/ui/components/button"
 import {
    Combobox,
@@ -33,7 +34,6 @@ import {
 } from "@/ui/components/popover"
 import { Slider } from "@/ui/components/slider"
 import { cn } from "@/ui/utils"
-import { seo } from "@/utils/seo"
 import { ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/outline"
 import {
    Outlet,

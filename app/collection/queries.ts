@@ -1,5 +1,5 @@
-import productFragment from "../fragments/product"
-import seoFragment from "../fragments/seo"
+import { productFragment } from "@/product/constants"
+import { seoFragment } from "@/seo/constants"
 
 const collectionFragment = `
   fragment collection on Collection {

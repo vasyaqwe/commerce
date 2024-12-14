@@ -1,4 +1,4 @@
-import cartFragment from "@/lib/shopify/fragments/cart"
+import { cartFragment } from "@/cart/constants"
 import { queryOptions } from "@tanstack/react-query"
 import * as cart from "./functions"
 

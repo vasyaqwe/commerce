@@ -1,13 +1,14 @@
-import { sortFilterSlugToReverse } from "@/lib/shopify/constants"
 import {
    collectionByHandle,
    listCollectionProducts,
-} from "@/lib/shopify/functions"
-import type { listCollectionProductsParams } from "@/lib/shopify/schema"
-import { Product } from "@/routes/search/-components/product"
-import { ProductsPending } from "@/routes/search/-components/products-pending"
+} from "@/collection/functions"
+import type { listCollectionProductsParams } from "@/collection/schema"
+import { sortFilterSlugToReverse } from "@/filter/constants"
+import { Product } from "@/product/components/product"
+import { ProductsGrid } from "@/product/components/products-grid"
+import { ProductsPending } from "@/product/components/products-pending"
+import { seo } from "@/seo/utils"
 import { Card } from "@/ui/components/card"
-import { seo } from "@/utils/seo"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute, notFound, useSearch } from "@tanstack/react-router"
@@ -106,14 +107,14 @@ function RouteComponent() {
                </div>
             </div>
          ) : (
-            <div className="container grid grid-cols-2 gap-2 lg:grid-cols-4 md:grid-cols-3">
+            <ProductsGrid>
                {products.map((p) => (
                   <Product
                      product={p}
                      key={p.handle}
                   />
                ))}
-            </div>
+            </ProductsGrid>
          )}
       </>
    )
