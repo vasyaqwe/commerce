@@ -121,11 +121,13 @@ function FiltersContent() {
    const search = useSearch({ from: "/search/_layout" })
    const navigate = useNavigate({ from: Route.fullPath })
 
-   const sort = search.sort
-   const colors = search.colors
-   const sizes = search.sizes
-   const minPrice = search.min_price
-   const maxPrice = search.max_price
+   const {
+      sort,
+      colors,
+      sizes,
+      min_price: minPrice,
+      max_price: maxPrice,
+   } = search
 
    const [priceRangeOpen, setPriceRangeOpen] = useState(false)
    const [priceRange, setPriceRange] = useState([minPrice, maxPrice])
@@ -293,7 +295,10 @@ function FiltersContent() {
                      Застосувати
                   </Button>
                   <Button
-                     disabled={minPrice === MIN_PRICE && maxPrice === MAX_PRICE}
+                     disabled={
+                        priceRange[0] === MIN_PRICE &&
+                        priceRange[1] === MAX_PRICE
+                     }
                      size={"sm"}
                      variant={"ghost"}
                      className="hover:enabled:bg-[#3d4046]"

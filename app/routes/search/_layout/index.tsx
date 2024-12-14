@@ -19,6 +19,8 @@ const listProductsQuery = (data: z.infer<typeof listProductsParams>) =>
          data.reverse,
          data.colors,
          data.sizes,
+         data.minPrice,
+         data.maxPrice,
       ],
       queryFn: () => listProducts({ data }),
    })
@@ -31,9 +33,9 @@ export const Route = createFileRoute("/search/_layout/")({
       context.queryClient.prefetchQuery(
          listProductsQuery({
             ...search,
-            reverse: !search.sort
-               ? false
-               : sortFilterSlugToReverse[search.sort],
+            minPrice: search.min_price,
+            maxPrice: search.max_price,
+            reverse: sortFilterSlugToReverse[search.sort],
          }),
       )
    },
@@ -45,7 +47,9 @@ function RouteComponent() {
    const query = useSuspenseQuery(
       listProductsQuery({
          ...search,
-         reverse: !search.sort ? false : sortFilterSlugToReverse[search.sort],
+         minPrice: search.min_price,
+         maxPrice: search.max_price,
+         reverse: sortFilterSlugToReverse[search.sort],
       }),
    )
    const products = query.data

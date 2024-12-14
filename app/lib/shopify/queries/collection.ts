@@ -41,9 +41,11 @@ export const listCollectionProductsGraphQLQuery = `
     $handle: String!
     $sortKey: ProductCollectionSortKeys
     $reverse: Boolean
+    $minPrice: Float
+    $maxPrice: Float
   ) {
     collection(handle: $handle) {
-      products(sortKey: $sortKey, reverse: $reverse, first: 100) {
+      products(sortKey: $sortKey, reverse: $reverse, first: 100, filters: { price: { min: $minPrice, max: $maxPrice } }) {
         edges {
           node {
             ...product

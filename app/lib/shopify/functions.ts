@@ -93,8 +93,10 @@ export const listCollectionProducts = createServerFn({ method: "GET" })
          query: listCollectionProductsGraphQLQuery,
          variables: {
             handle: data.collection,
-            reverse: data.reverse,
             sortKey: sort === "CREATED_AT" ? "CREATED" : sort,
+            reverse: data.reverse,
+            minPrice: data.minPrice,
+            maxPrice: data.maxPrice,
          },
       })) as {
          collection: {
@@ -217,32 +219,38 @@ export const listProductRecommendations = createServerFn({ method: "GET" })
 
 export const listProducts = createServerFn({ method: "GET" })
    .validator(zodValidator(listProductsParams))
-   .handler(async ({ data: { q, reverse, sort, colors, sizes, style } }) => {
-      let queryString = q ?? ""
+   .handler(
+      async ({
+         data: { q, reverse, sort, colors, sizes, minPrice, maxPrice },
+      }) => {
+         let queryString = q ?? ""
 
-      if (colors && colors.length > 0) {
-         const colorQuery = colors.join(" OR ")
-         queryString += ` AND (variants.options:color:(${colorQuery}))`
-      }
+         if (colors.length > 0) {
+            const colorQuery = colors.join(" OR ")
+            queryString += ` AND (variants.options:color:(${colorQuery}))`
+         }
 
-      if (sizes && sizes.length > 0) {
-         const sizeQuery = sizes.join(" OR ")
-         queryString += ` AND (variants.options:size:(${sizeQuery}))`
-      }
+         if (sizes.length > 0) {
+            const sizeQuery = sizes.join(" OR ")
+            queryString += ` AND (variants.options:size:(${sizeQuery}))`
+         }
 
-      if (style) queryString += ` AND product_type:${style}`
+         // if (style) queryString += ` AND product_type:${style}`
+         queryString += ` AND variants.price:>=${minPrice}`
+         queryString += ` AND variants.price:<=${maxPrice}`
 
-      const res = (await shopifyFetch({
-         query: listProductsGraphQLQuery,
-         variables: {
-            query: queryString,
-            sortKey: sort ? sortFilterSlugToKey[sort] : undefined,
-            reverse,
-            first: 100,
-         },
-      })) as {
-         products: Connection<ShopifyProduct>
-      }
+         const res = (await shopifyFetch({
+            query: listProductsGraphQLQuery,
+            variables: {
+               query: queryString,
+               sortKey: sortFilterSlugToKey[sort],
+               reverse,
+               first: 100,
+            },
+         })) as {
+            products: Connection<ShopifyProduct>
+         }
 
-      return reshapeProducts(removeEdgesAndNodes(res.products))
-   })
+         return reshapeProducts(removeEdgesAndNodes(res.products))
+      },
+   )

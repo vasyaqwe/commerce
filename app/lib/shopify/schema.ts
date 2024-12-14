@@ -12,16 +12,19 @@ export const colorFilterSlugSchema = z.enum(colorFilterSlugs)
 export const sizeFilterSlugSchema = z.enum(sizeFilterSlugs)
 
 export const listProductsParams = z.object({
-   q: z.string().optional(),
-   reverse: z.boolean().optional(),
-   sort: sortFilterSlugSchema.optional(),
-   colors: z.array(colorFilterSlugSchema).optional(),
-   sizes: z.array(sizeFilterSlugSchema).optional(),
-   style: z.string().optional(),
+   q: z.string(),
+   reverse: z.boolean(),
+   sort: sortFilterSlugSchema,
+   colors: z.array(colorFilterSlugSchema),
+   sizes: z.array(sizeFilterSlugSchema),
+   minPrice: z.number(),
+   maxPrice: z.number(),
 })
 
 export const listCollectionProductsParams = z.object({
    collection: z.string(),
-   reverse: z.boolean().optional(),
-   sort: sortFilterSlugSchema.optional(),
+   reverse: z.boolean(),
+   sort: sortFilterSlugSchema,
+   minPrice: z.number(),
+   maxPrice: z.number(),
 })
