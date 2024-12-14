@@ -1,4 +1,7 @@
 import { useAddCartItem } from "@/cart/hooks/use-add-cart-item"
+import { useDeleteFavorite } from "@/favorites/hooks/use-delete-favorite"
+import { useInsertFavorite } from "@/favorites/hooks/use-insert-favorite"
+import { listFavoriteIdsQuery } from "@/favorites/queries"
 import { HIDDEN_PRODUCT_TAG } from "@/lib/shopify/constants"
 import { productByHandle } from "@/lib/shopify/functions"
 import type {
@@ -13,11 +16,12 @@ import { cn } from "@/ui/utils"
 import { formatCurrency } from "@/utils/format"
 import { seo } from "@/utils/seo"
 import {
-   HeartIcon,
+   HeartIcon as HeartIconOutline,
    ShoppingBagIcon,
    TruckIcon,
 } from "@heroicons/react/24/outline"
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
+import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid"
+import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query"
 import {
    createFileRoute,
    notFound,
@@ -86,31 +90,34 @@ function RouteComponent() {
    )
    const product = query.data
 
-   if (!product) return null
+   const { insertFavorite } = useInsertFavorite()
+   const { deleteFavorite } = useDeleteFavorite()
+   const favoriteIds = useQuery(listFavoriteIdsQuery())
 
-   const productJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      name: product.title,
-      description: product.description,
-      image: product.featuredImage.url,
-      offers: {
-         "@type": "AggregateOffer",
-         availability: product.availableForSale
-            ? "https://schema.org/InStock"
-            : "https://schema.org/OutOfStock",
-         priceCurrency: product.priceRange.minVariantPrice.currencyCode,
-         highPrice: product.priceRange.maxVariantPrice.amount,
-         lowPrice: product.priceRange.minVariantPrice.amount,
-      },
-   }
+   if (!product) return null
 
    return (
       <>
          <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
-               __html: JSON.stringify(productJsonLd),
+               __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "Product",
+                  name: product.title,
+                  description: product.description,
+                  image: product.featuredImage.url,
+                  offers: {
+                     "@type": "AggregateOffer",
+                     availability: product.availableForSale
+                        ? "https://schema.org/InStock"
+                        : "https://schema.org/OutOfStock",
+                     priceCurrency:
+                        product.priceRange.minVariantPrice.currencyCode,
+                     highPrice: product.priceRange.maxVariantPrice.amount,
+                     lowPrice: product.priceRange.minVariantPrice.amount,
+                  },
+               }),
             }}
          />
          <div className="container grid gap-4 lg:mt-12 lg:grid-cols-2 lg:gap-14 xl:gap-24 max-lg:px-0">
@@ -140,15 +147,29 @@ function RouteComponent() {
                <div className="mt-auto flex w-full items-center gap-2.5 lg:gap-4">
                   <AddToCartButton product={product} />
                   <Button
-                     aria-label="Favorite"
+                     aria-label={
+                        favoriteIds.data?.includes(product.id)
+                           ? "Видалити із збережених"
+                           : "Зберегти"
+                     }
                      className="size-12 shrink-0 lg:size-[3.75rem] lg:rounded-2xl"
                      variant={"secondary"}
                      size={"icon"}
+                     onClick={() => {
+                        if (favoriteIds.data?.includes(product.id))
+                           return deleteFavorite.mutate(product.id)
+
+                        insertFavorite.mutate(product.id)
+                     }}
                   >
-                     <HeartIcon
-                        className="size-6"
-                        strokeWidth={2}
-                     />
+                     {favoriteIds.data?.includes(product.id) ? (
+                        <HeartIconSolid className="size-6" />
+                     ) : (
+                        <HeartIconOutline
+                           className="size-6"
+                           strokeWidth={2}
+                        />
+                     )}
                   </Button>
                </div>
                <p className="mt-5 flex items-center gap-2 font-medium text-sm lg:mt-8">
@@ -176,7 +197,6 @@ function Gallery({ images }: { images: { src: string; altText: string }[] }) {
          if (containerRef.current) {
             const containerWidth = containerRef.current.offsetWidth
             const imagesWidth = images.length * 80 + images.length
-            console.log(containerWidth, imagesWidth)
             setCarouselActive(containerWidth < imagesWidth)
          }
       }

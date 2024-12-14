@@ -83,7 +83,7 @@ export const Route = createFileRoute("/search/_layout")({
 function RouteComponent() {
    return (
       <>
-         <div className="mb-3 flex items-center bg-border/25 py-2 md:mb-8 md:py-4">
+         <div className="mb-4 flex items-center bg-border/25 py-4 md:mb-8">
             <div className="container md:hidden">
                <Drawer>
                   <DrawerTrigger
@@ -196,7 +196,7 @@ function FiltersContent() {
                               <span
                                  aria-hidden={true}
                                  className={cn(
-                                    "-mb-0.5 mr-2 inline-block size-4 rounded-full shadow-button",
+                                    "-mb-0.5 mr-2 inline-block size-4 rounded-full shadow-1",
                                     colorFilterSlugToClassName[item],
                                     colorFilterSlugToClassName[item] ===
                                        "bg-black"

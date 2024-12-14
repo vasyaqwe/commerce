@@ -73,7 +73,7 @@ function RouteComponent() {
                </div>
             </div>
          ) : (
-            <div className="container grid grid-cols-1 gap-2 lg:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="container grid grid-cols-2 gap-2 lg:grid-cols-4 md:grid-cols-3">
                {products.map((p) => (
                   <Product
                      product={p}

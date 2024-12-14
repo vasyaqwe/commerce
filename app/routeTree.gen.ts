@@ -15,6 +15,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as PageImport } from './routes/$page'
 import { Route as IndexImport } from './routes/index'
+import { Route as FavoritesIndexImport } from './routes/favorites/index'
 import { Route as SearchLayoutImport } from './routes/search/_layout'
 import { Route as ProductHandleImport } from './routes/product/$handle'
 import { Route as SearchLayoutIndexImport } from './routes/search/_layout/index'
@@ -41,6 +42,12 @@ const PageRoute = PageImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const FavoritesIndexRoute = FavoritesIndexImport.update({
+  id: '/favorites/',
+  path: '/favorites/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -106,6 +113,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SearchLayoutImport
       parentRoute: typeof SearchRoute
     }
+    '/favorites/': {
+      id: '/favorites/'
+      path: '/favorites'
+      fullPath: '/favorites'
+      preLoaderRoute: typeof FavoritesIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/search/_layout/$collection': {
       id: '/search/_layout/$collection'
       path: '/$collection'
@@ -155,6 +169,7 @@ export interface FileRoutesByFullPath {
   '/$page': typeof PageRoute
   '/product/$handle': typeof ProductHandleRoute
   '/search': typeof SearchLayoutRouteWithChildren
+  '/favorites': typeof FavoritesIndexRoute
   '/search/$collection': typeof SearchLayoutCollectionRoute
   '/search/': typeof SearchLayoutIndexRoute
 }
@@ -164,6 +179,7 @@ export interface FileRoutesByTo {
   '/$page': typeof PageRoute
   '/product/$handle': typeof ProductHandleRoute
   '/search': typeof SearchLayoutIndexRoute
+  '/favorites': typeof FavoritesIndexRoute
   '/search/$collection': typeof SearchLayoutCollectionRoute
 }
 
@@ -174,6 +190,7 @@ export interface FileRoutesById {
   '/product/$handle': typeof ProductHandleRoute
   '/search': typeof SearchRouteWithChildren
   '/search/_layout': typeof SearchLayoutRouteWithChildren
+  '/favorites/': typeof FavoritesIndexRoute
   '/search/_layout/$collection': typeof SearchLayoutCollectionRoute
   '/search/_layout/': typeof SearchLayoutIndexRoute
 }
@@ -185,10 +202,17 @@ export interface FileRouteTypes {
     | '/$page'
     | '/product/$handle'
     | '/search'
+    | '/favorites'
     | '/search/$collection'
     | '/search/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$page' | '/product/$handle' | '/search' | '/search/$collection'
+  to:
+    | '/'
+    | '/$page'
+    | '/product/$handle'
+    | '/search'
+    | '/favorites'
+    | '/search/$collection'
   id:
     | '__root__'
     | '/'
@@ -196,6 +220,7 @@ export interface FileRouteTypes {
     | '/product/$handle'
     | '/search'
     | '/search/_layout'
+    | '/favorites/'
     | '/search/_layout/$collection'
     | '/search/_layout/'
   fileRoutesById: FileRoutesById
@@ -206,6 +231,7 @@ export interface RootRouteChildren {
   PageRoute: typeof PageRoute
   ProductHandleRoute: typeof ProductHandleRoute
   SearchRoute: typeof SearchRouteWithChildren
+  FavoritesIndexRoute: typeof FavoritesIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -213,6 +239,7 @@ const rootRouteChildren: RootRouteChildren = {
   PageRoute: PageRoute,
   ProductHandleRoute: ProductHandleRoute,
   SearchRoute: SearchRouteWithChildren,
+  FavoritesIndexRoute: FavoritesIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -228,7 +255,8 @@ export const routeTree = rootRoute
         "/",
         "/$page",
         "/product/$handle",
-        "/search"
+        "/search",
+        "/favorites/"
       ]
     },
     "/": {
@@ -253,6 +281,9 @@ export const routeTree = rootRoute
         "/search/_layout/$collection",
         "/search/_layout/"
       ]
+    },
+    "/favorites/": {
+      "filePath": "favorites/index.tsx"
     },
     "/search/_layout/$collection": {
       "filePath": "search/_layout/$collection.tsx",

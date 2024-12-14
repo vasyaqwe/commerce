@@ -30,3 +30,14 @@ export const listProductRecommendationsGraphQLQuery = `
   }
   ${productFragment}
 `
+
+export const listFavoriteProductsGraphQLQuery = `
+  query getFavoriteProducts($ids: [ID!]!) {
+    nodes(ids: $ids) {
+      ... on Product {
+        ...product
+      }
+    }
+  }
+  ${productFragment}
+`

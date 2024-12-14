@@ -2,12 +2,13 @@ import bottom from "@/assets/bottom1.jpg"
 import * as cartFns from "@/cart/functions"
 import { cartByIdQuery } from "@/cart/queries"
 import { pushModal } from "@/modals"
-import { Button } from "@/ui/components/button"
+import { Button, buttonVariants } from "@/ui/components/button"
 import { Icons } from "@/ui/components/icons"
 import { Input } from "@/ui/components/input"
 import { cn } from "@/ui/utils"
 import {
    ArrowRightIcon,
+   HeartIcon,
    MagnifyingGlassIcon,
    ShoppingBagIcon,
 } from "@heroicons/react/24/outline"
@@ -171,26 +172,38 @@ export function Header(props: ComponentProps<"header">) {
                      defaultValue={search.q}
                   />
                </form>
-               <div className="max-md:-mr-1.5 ml-2 flex items-center justify-end md:min-w-[300px]">
+               <div className=" ml-2 flex items-center justify-end gap-1 md:min-w-[300px]">
+                  <Link
+                     to="/favorites"
+                     aria-label="Збережені"
+                     className={buttonVariants({
+                        variant: "ghost",
+                        size: "icon",
+                     })}
+                  >
+                     <HeartIcon
+                        className="size-6"
+                        strokeWidth={2}
+                     />
+                  </Link>
                   <Button
+                     aria-label="Кошик"
                      variant={"ghost"}
                      size={"icon"}
-                     aria-label="Open cart"
                      onClick={() => pushModal("cart")}
-                     className="size-14 flex-col gap-1 overflow-visible font-semibold text-[13px] leading-none"
+                     className="overflow-visible font-semibold"
                   >
                      <ShoppingBagIcon
                         className="size-6"
                         strokeWidth={2}
                      />
-                     Кошик
                      <span
                         aria-hidden={!!cart?.totalQuantity}
                         style={{
                            transitionTimingFunction: "var(--ease)",
                         }}
                         className={cn(
-                           "absolute top-1.5 right-1.5 grid size-[18px] scale-0 place-content-center rounded-full bg-accent font-semibold text-xs shadow-xs transition-transform duration-1000",
+                           "absolute top-0.5 right-0.5 grid size-[18px] scale-0 place-content-center rounded-full bg-accent font-semibold text-xs shadow-xs transition-transform duration-1000",
                            cart?.totalQuantity ? "scale-100" : "",
                         )}
                      >
