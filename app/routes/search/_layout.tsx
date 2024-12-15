@@ -13,6 +13,14 @@ import {
    sortFilterSlugSchema,
 } from "@/filter/schema"
 import { useEventListener } from "@/interactions/use-event-listener"
+import {
+   Header,
+   HeaderBackButton,
+   HeaderButtons,
+   HeaderTitle,
+} from "@/routes/-components/header"
+import { Main } from "@/routes/-components/main"
+import { PageDescription } from "@/routes/-components/page-description"
 import { seo } from "@/seo/utils"
 import { Button, buttonVariants } from "@/ui/components/button"
 import {
@@ -44,7 +52,7 @@ import {
    useSearch,
 } from "@tanstack/react-router"
 import { zodValidator } from "@tanstack/zod-adapter"
-import { useRef, useState } from "react"
+import { useDeferredValue, useRef, useState } from "react"
 import { z } from "zod"
 
 const MIN_PRICE = 50
@@ -83,37 +91,55 @@ export const Route = createFileRoute("/search/_layout")({
 })
 
 function RouteComponent() {
+   const search = useDeferredValue(useSearch({ from: "/search/_layout" }))
+   const params = useParams({ strict: false })
+
    return (
       <>
-         <div className="mb-4 flex items-center bg-border/25 py-4 md:mb-8">
-            <div className="container md:hidden">
-               <Drawer>
-                  <DrawerTrigger
-                     className={cn(
-                        buttonVariants({ variant: "outline", size: "sm" }),
-                        "md:hidden",
-                     )}
-                  >
-                     <FunnelIcon className="size-5" />
-                     Фільтри
-                  </DrawerTrigger>
-                  <DrawerContent>
-                     <DrawerHeader>
-                        <DrawerTitle>Фільтри</DrawerTitle>
-                     </DrawerHeader>
-                     <div className="flex flex-col items-center justify-center gap-5 py-6">
-                        <FiltersContent />
-                     </div>
-                  </DrawerContent>
-               </Drawer>
+         <Header>
+            <HeaderBackButton />
+            <HeaderTitle>
+               {params.collection ? (
+                  <span className="capitalize">{params.collection}</span>
+               ) : search.q && search.q.trim().length > 0 ? (
+                  `Пошук "${search.q}"`
+               ) : (
+                  "Пошук"
+               )}
+            </HeaderTitle>
+            <HeaderButtons />
+         </Header>
+         <Main>
+            <PageDescription>
+               <div className="container md:hidden">
+                  <Drawer>
+                     <DrawerTrigger
+                        className={cn(
+                           buttonVariants({ variant: "outline", size: "sm" }),
+                           "md:hidden",
+                        )}
+                     >
+                        <FunnelIcon className="size-5" />
+                        Фільтри
+                     </DrawerTrigger>
+                     <DrawerContent>
+                        <DrawerHeader>
+                           <DrawerTitle>Фільтри</DrawerTitle>
+                        </DrawerHeader>
+                        <div className="flex flex-col items-center justify-center gap-5 py-6">
+                           <FiltersContent />
+                        </div>
+                     </DrawerContent>
+                  </Drawer>
+               </div>
+               <div className="scrollbar-hidden container flex items-center gap-4 overflow-x-auto py-1 max-md:hidden">
+                  <FiltersContent />
+               </div>
+            </PageDescription>
+            <div className="h-full min-h-[55vh]">
+               <Outlet />
             </div>
-            <div className="scrollbar-hidden container flex items-center gap-4 overflow-x-auto py-1 max-md:hidden">
-               <FiltersContent />
-            </div>
-         </div>
-         <div className="h-full min-h-[55vh]">
-            <Outlet />
-         </div>
+         </Main>
       </>
    )
 }

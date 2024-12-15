@@ -5,6 +5,13 @@ import { listFavoriteIdsQuery } from "@/favorites/queries"
 import { HIDDEN_PRODUCT_TAG } from "@/lib/shopify/constants"
 import { productByHandle } from "@/product/functions"
 import type { Product, ProductOption, ProductVariant } from "@/product/types"
+import {
+   Header,
+   HeaderBackButton,
+   HeaderButtons,
+   HeaderTitle,
+} from "@/routes/-components/header"
+import { Main } from "@/routes/-components/main"
 import { seo } from "@/seo/utils"
 import { Button } from "@/ui/components/button"
 import { Chip } from "@/ui/components/chip"
@@ -116,7 +123,12 @@ function RouteComponent() {
                }),
             }}
          />
-         <div className="container grid gap-4 lg:mt-12 lg:grid-cols-2 lg:gap-14 xl:gap-24 max-lg:px-0">
+         <Header>
+            <HeaderBackButton />
+            <HeaderTitle>{product.title}</HeaderTitle>
+            <HeaderButtons />
+         </Header>
+         <Main className="container grid gap-4 lg:mt-12 lg:grid-cols-2 lg:gap-14 xl:gap-24 max-lg:px-0">
             <Gallery
                images={product.images.map((image) => ({
                   src: image.url,
@@ -173,7 +185,7 @@ function RouteComponent() {
                   від суми більше ніж ₴1000
                </p>
             </div>
-         </div>
+         </Main>
       </>
    )
 }

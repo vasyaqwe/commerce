@@ -1,4 +1,11 @@
 import { pageByHandle } from "@/lib/shopify/functions"
+import {
+   Header,
+   HeaderBackButton,
+   HeaderButtons,
+   HeaderTitle,
+} from "@/routes/-components/header"
+import { Main } from "@/routes/-components/main"
 import { seo } from "@/seo/utils"
 import { Prose } from "@/ui/components/prose"
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
@@ -45,11 +52,20 @@ function RouteComponent() {
 
    // <div className="mx-8 max-w-2xl pt-8 sm:mx-auto">{children}</div>
    return (
-      <div className="mx-auto max-w-prose pt-8 md:pt-16 ">
-         <Prose
-            className="mb-8 prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl"
-            html={page.body as string}
-         />
-      </div>
+      <>
+         <Header>
+            <HeaderBackButton />
+            <HeaderTitle>Політика конфіденційності</HeaderTitle>
+            <HeaderButtons />
+         </Header>
+         <Main>
+            <div className="mx-auto max-w-prose pt-8 md:pt-16 ">
+               <Prose
+                  className="mb-8 prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl"
+                  html={page.body as string}
+               />
+            </div>
+         </Main>
+      </>
    )
 }

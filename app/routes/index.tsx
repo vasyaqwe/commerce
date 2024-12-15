@@ -1,3 +1,10 @@
+import {
+   Header,
+   HeaderButtons,
+   HeaderNavigation,
+   HeaderSearch,
+} from "@/routes/-components/header"
+import { Main } from "@/routes/-components/main"
 import { createFileRoute } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/")({
@@ -5,5 +12,14 @@ export const Route = createFileRoute("/")({
 })
 
 function RouteComponent() {
-   return <div>Hello "/"!</div>
+   return (
+      <>
+         <Header>
+            <HeaderNavigation />
+            <HeaderSearch />
+            <HeaderButtons />
+         </Header>
+         <Main>Hello homepage!</Main>
+      </>
+   )
 }

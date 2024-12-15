@@ -1,8 +1,9 @@
 import "@/ui/styles.css"
+import * as cartFns from "@/cart/functions"
+import { cartByIdQuery } from "@/cart/queries"
 import { menuByHandleQuery } from "@/lib/shopify/queries"
 import { ModalProvider } from "@/modals"
 import { Footer } from "@/routes/-components/footer"
-import { Header } from "@/routes/-components/header"
 import { seo } from "@/seo/utils"
 import { Toaster } from "@/ui/components/toast"
 import toastStyles from "@/ui/components/toast/styles.css?url"
@@ -10,14 +11,14 @@ import { TooltipProvider } from "@/ui/components/tooltip"
 import styles from "@/ui/styles.css?url"
 import { cn } from "@/ui/utils"
 import * as Portal from "@radix-ui/react-portal"
-import type { QueryClient } from "@tanstack/react-query"
+import { type QueryClient, useMutation, useQuery } from "@tanstack/react-query"
 import {
    Outlet,
    ScrollRestoration,
    createRootRouteWithContext,
 } from "@tanstack/react-router"
-import { Meta, Scripts } from "@tanstack/start"
-import { lazy } from "react"
+import { Meta, Scripts, useServerFn } from "@tanstack/start"
+import { lazy, useEffect } from "react"
 
 const _TanStackRouterDevtools = import.meta.env.PROD
    ? () => null
@@ -83,6 +84,15 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+   const { data: cart } = useQuery(cartByIdQuery())
+   const createCartFn = useServerFn(cartFns.create)
+   const createCart = useMutation({ mutationFn: createCartFn })
+   useEffect(() => {
+      if (cart === null) {
+         createCart.mutate({})
+      }
+   }, [cart])
+
    return (
       <html lang="en">
          <head>
@@ -99,8 +109,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                   <Portal.Root>
                      <Toaster />
                   </Portal.Root>
-                  <Header />
-                  <main className="min-w-0 pb-20 md:pb-44">{children}</main>
+                  {children}
                   <Footer />
                </TooltipProvider>
             </div>
