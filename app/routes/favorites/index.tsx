@@ -33,7 +33,9 @@ export const Route = createFileRoute("/favorites/")({
             <PageDescription className="max-md:hidden">
                <PageDescriptionHeading>Збережені</PageDescriptionHeading>
             </PageDescription>
-            <ProductsPending />
+            <div className="max-md:mt-4">
+               <ProductsPending />
+            </div>
          </Main>
       </>
    ),
@@ -53,7 +55,7 @@ function RouteComponent() {
             <PageDescription className="max-md:hidden">
                <PageDescriptionHeading>Збережені</PageDescriptionHeading>
             </PageDescription>
-            <div className="h-full min-h-[55vh] max-md:mt-4">
+            <div className="max-md:mt-4">
                {favorites.data.length === 0 ? (
                   <div className="lg:-mt-20 -mt-16 grid h-full place-items-center text-center">
                      <div className="mx-auto flex flex-col gap-4">

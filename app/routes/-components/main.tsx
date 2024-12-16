@@ -8,7 +8,7 @@ export function Main({
 }: ComponentProps<"main">) {
    return (
       <main
-         className={cn("min-w-0 pb-20 md:pb-44", className)}
+         className={cn("min-w-0 pb-20 md:min-h-[90vh] md:pb-44", className)}
          {...props}
       >
          {children}

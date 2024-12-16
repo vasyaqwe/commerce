@@ -3,6 +3,7 @@ import * as cartFns from "@/cart/functions"
 import { cartByIdQuery } from "@/cart/queries"
 import { menuByHandleQuery } from "@/lib/shopify/queries"
 import { ModalProvider } from "@/modals"
+import { BottomMenu } from "@/routes/-components/bottom-menu"
 import { Footer } from "@/routes/-components/footer"
 import { seo } from "@/seo/utils"
 import { Toaster } from "@/ui/components/toast"
@@ -101,7 +102,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
          <body>
             <div
                className={cn(
-                  "grid min-h-svh grid-rows-[auto_1fr_auto] bg-background font-medium text-base text-foreground selection:bg-primary selection:text-background",
+                  "grid min-h-svh grid-rows-[auto_1fr_auto] bg-background font-medium text-base text-foreground selection:bg-primary max-md:pb-[50px] selection:text-background",
                )}
             >
                <TooltipProvider delayDuration={300}>
@@ -110,6 +111,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                      <Toaster />
                   </Portal.Root>
                   {children}
+                  <BottomMenu />
                   <Footer />
                </TooltipProvider>
             </div>

@@ -7,9 +7,9 @@ import { productByHandle } from "@/product/functions"
 import type { Product, ProductOption, ProductVariant } from "@/product/types"
 import {
    Header,
-   HeaderBackButton,
    HeaderButtons,
-   HeaderTitle,
+   HeaderNavigation,
+   HeaderSearch,
 } from "@/routes/-components/header"
 import { Main } from "@/routes/-components/main"
 import { seo } from "@/seo/utils"
@@ -19,6 +19,7 @@ import { Tooltip } from "@/ui/components/tooltip"
 import { cn } from "@/ui/utils"
 import { formatCurrency } from "@/utils/format"
 import {
+   ArrowLeftIcon,
    HeartIcon as HeartIconOutline,
    ShoppingBagIcon,
    TruckIcon,
@@ -29,6 +30,7 @@ import {
    createFileRoute,
    notFound,
    useNavigate,
+   useRouter,
    useSearch,
 } from "@tanstack/react-router"
 import useEmblaCarousel from "embla-carousel-react"
@@ -85,6 +87,7 @@ export const Route = createFileRoute("/product/$handle")({
 })
 
 function RouteComponent() {
+   const router = useRouter()
    const params = Route.useParams()
    const query = useSuspenseQuery(
       productByHandleQuery({
@@ -123,9 +126,23 @@ function RouteComponent() {
                }),
             }}
          />
-         <Header>
-            <HeaderBackButton />
-            <HeaderTitle>{product.title}</HeaderTitle>
+         <Button
+            onClick={() => router.history.back()}
+            variant={"ghost"}
+            size="icon"
+            className={cn(
+               "absolute top-[3px] left-2 z-[2] shrink-0 text-foreground/80 md:hidden",
+            )}
+            aria-label="Повернутись назад"
+         >
+            <ArrowLeftIcon
+               className="size-[22px]"
+               strokeWidth={2}
+            />
+         </Button>
+         <Header className="max-md:hidden">
+            <HeaderNavigation />
+            <HeaderSearch />
             <HeaderButtons />
          </Header>
          <Main className="container grid gap-4 lg:mt-12 lg:grid-cols-2 lg:gap-14 xl:gap-24 max-lg:px-0">

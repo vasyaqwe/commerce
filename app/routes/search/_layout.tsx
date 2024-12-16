@@ -59,7 +59,7 @@ const MIN_PRICE = 50
 const MAX_PRICE = 5000
 
 const searchSchema = z.object({
-   q: z.string(),
+   q: z.string().catch(""),
    sort: sortFilterSlugSchema.catch("relevance"),
    product_types: z.array(productTypeFilterSlugSchema).catch([]),
    colors: z.array(colorFilterSlugSchema).catch([]),
@@ -136,9 +136,7 @@ function RouteComponent() {
                   <FiltersContent />
                </div>
             </PageDescription>
-            <div className="h-full min-h-[55vh]">
-               <Outlet />
-            </div>
+            <Outlet />
          </Main>
       </>
    )

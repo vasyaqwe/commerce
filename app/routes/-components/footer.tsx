@@ -3,12 +3,18 @@ import { buttonVariants } from "@/ui/components/button"
 import { Icons } from "@/ui/components/icons"
 import { cn } from "@/ui/utils"
 import { useSuspenseQuery } from "@tanstack/react-query"
-import { CatchBoundary, Link } from "@tanstack/react-router"
+import { CatchBoundary, Link, useLocation } from "@tanstack/react-router"
 import { Suspense } from "react"
 
 export function Footer() {
+   const { pathname } = useLocation()
    return (
-      <footer className="bg-border/25 text-sm">
+      <footer
+         className={cn(
+            "bg-border/25 text-sm",
+            pathname !== "/" ? "max-md:hidden" : "",
+         )}
+      >
          <div className="container flex flex-wrap items-start justify-around gap-8 py-12">
             <Link
                aria-label="Home"
