@@ -1,11 +1,11 @@
 import { cn } from "@/ui/utils"
-import type { ComponentProps } from "react"
+import type * as React from "react"
 
 export function Prose({
    html,
    className,
    ...props
-}: ComponentProps<"div"> & { html: string }) {
+}: React.ComponentProps<"div"> & { html: string }) {
    return (
       <div
          className={cn(

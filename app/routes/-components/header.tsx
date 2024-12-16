@@ -12,13 +12,13 @@ import {
    ShoppingBagIcon,
 } from "@heroicons/react/24/outline"
 import { Link, useNavigate, useRouter, useSearch } from "@tanstack/react-router"
-import { type ComponentProps, useState } from "react"
+import type * as React from "react"
 
 export function Header({
    className,
    children,
    ...props
-}: ComponentProps<"header">) {
+}: React.ComponentProps<"header">) {
    return (
       <header
          className={cn("relative z-[11] h-[48px] md:h-[69px]", className)}
@@ -36,9 +36,7 @@ export function Header({
 export function HeaderNavigation({
    className,
    ...props
-}: ComponentProps<"div">) {
-   const [_open, setOpen] = useState(false)
-
+}: React.ComponentProps<"div">) {
    const menu = [
       { title: "Верх", path: `топи`, image: bottom },
       { title: "Низ", path: `низ`, image: bottom },
@@ -62,7 +60,7 @@ export function HeaderNavigation({
          </Link>
          <nav className="max-md:hidden">
             <ul className="flex h-full items-center gap-7">
-               {menu.map((item, _idx) => (
+               {menu.map((item) => (
                   <li
                      key={item.title}
                      className="h-full w-full grow rounded-xl"
@@ -70,7 +68,6 @@ export function HeaderNavigation({
                      <Link
                         to={"/search/$collection"}
                         params={{ collection: item.path }}
-                        onClick={() => setOpen(false)}
                         className="relative block h-full font-semibold text-foreground/75 transition-colors hover:text-foreground"
                      >
                         <span className="z-[2] flex items-center justify-between">
@@ -85,7 +82,10 @@ export function HeaderNavigation({
    )
 }
 
-export function HeaderSearch({ className, ...props }: ComponentProps<"form">) {
+export function HeaderSearch({
+   className,
+   ...props
+}: React.ComponentProps<"form">) {
    const navigate = useNavigate()
    const search = useSearch({ strict: false })
 
@@ -126,7 +126,7 @@ export function HeaderSearch({ className, ...props }: ComponentProps<"form">) {
 export function HeaderBackButton({
    className,
    ...props
-}: ComponentProps<typeof Button>) {
+}: React.ComponentProps<typeof Button>) {
    const router = useRouter()
 
    return (
@@ -149,7 +149,10 @@ export function HeaderBackButton({
    )
 }
 
-export function HeaderButtons({ className, ...props }: ComponentProps<"div">) {
+export function HeaderButtons({
+   className,
+   ...props
+}: React.ComponentProps<"div">) {
    return (
       <div
          className={cn(
@@ -190,7 +193,10 @@ export function HeaderButtons({ className, ...props }: ComponentProps<"div">) {
    )
 }
 
-export function HeaderTitle({ className, ...props }: ComponentProps<"h1">) {
+export function HeaderTitle({
+   className,
+   ...props
+}: React.ComponentProps<"h1">) {
    return (
       <>
          <p

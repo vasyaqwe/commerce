@@ -4,7 +4,7 @@ import { Icons } from "@/ui/components/icons"
 import { cn } from "@/ui/utils"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { CatchBoundary, Link, useLocation } from "@tanstack/react-router"
-import { Suspense } from "react"
+import * as React from "react"
 
 export function Footer() {
    const { pathname } = useLocation()
@@ -86,9 +86,9 @@ export function Footer() {
                   getResetKey={() => "reset"}
                   errorComponent={() => null}
                >
-                  <Suspense fallback={null}>
+                  <React.Suspense fallback={null}>
                      <Menu />
-                  </Suspense>
+                  </React.Suspense>
                </CatchBoundary>
             </div>
          </div>

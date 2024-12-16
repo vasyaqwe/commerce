@@ -1,11 +1,11 @@
 import { cn } from "@/ui/utils"
-import type { ComponentProps } from "react"
+import type * as React from "react"
 
 export function PageDescription({
    className,
    children,
    ...props
-}: ComponentProps<"div">) {
+}: React.ComponentProps<"div">) {
    return (
       <div
          className={cn(
@@ -23,7 +23,7 @@ export function PageDescriptionHeading({
    children,
    className,
    ...props
-}: ComponentProps<"h1">) {
+}: React.ComponentProps<"h1">) {
    return (
       <h1
          className={cn("font-semibold text-xl", className)}

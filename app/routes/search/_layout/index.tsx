@@ -8,7 +8,7 @@ import { Card } from "@/ui/components/card"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute, useSearch } from "@tanstack/react-router"
-import { useDeferredValue } from "react"
+import * as React from "react"
 import type { z } from "zod"
 
 const listProductsQuery = (data: z.infer<typeof listProductsParams>) =>
@@ -36,7 +36,7 @@ export const Route = createFileRoute("/search/_layout/")({
 
 function RouteComponent() {
    // defer to avoid showing pendingComponent when search changes
-   const search = useDeferredValue(useSearch({ from: "/search/_layout" }))
+   const search = React.useDeferredValue(useSearch({ from: "/search/_layout" }))
    const query = useSuspenseQuery(
       listProductsQuery({
          ...search,

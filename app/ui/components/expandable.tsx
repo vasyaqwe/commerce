@@ -1,27 +1,19 @@
 import { cn } from "@/ui/utils"
-import {
-   type CSSProperties,
-   type ComponentProps,
-   forwardRef,
-   useEffect,
-   useId,
-   useRef,
-   useState,
-} from "react"
+import * as React from "react"
 
 function Expandable({
    className,
    lineHeight = 1.5,
    numberOfLines,
    ...props
-}: ComponentProps<"div"> & {
+}: React.ComponentProps<"div"> & {
    lineHeight?: number
    numberOfLines: number
 }) {
-   const contentRef = useRef<HTMLDivElement>(null)
-   const [isExpandable, setIsExpandable] = useState(false)
+   const contentRef = React.useRef<HTMLDivElement>(null)
+   const [isExpandable, setIsExpandable] = React.useState(false)
 
-   useEffect(() => {
+   React.useEffect(() => {
       const content = contentRef.current
       if (content) {
          const calculatedHeight = lineHeight * numberOfLines * 16 // Assuming 1em = 16px
@@ -37,7 +29,7 @@ function Expandable({
                "--line-height": `${lineHeight}`,
                "--number-of-lines": `${numberOfLines}`,
                ...props.style,
-            } as CSSProperties
+            } as React.CSSProperties
          }
          className={cn(
             isExpandable
@@ -53,54 +45,56 @@ function Expandable({
    )
 }
 
-const ExpandableContent = forwardRef<HTMLDivElement, ComponentProps<"p">>(
-   ({ className, ...props }, ref) => (
-      <p
-         ref={ref}
+const ExpandableContent = React.forwardRef<
+   HTMLDivElement,
+   React.ComponentProps<"p">
+>(({ className, ...props }, ref) => (
+   <p
+      ref={ref}
+      className={cn(
+         "h-[var(--expandable-content-height)] overflow-hidden",
+         className,
+      )}
+      {...props}
+   />
+))
+
+const ExpandableButton = React.forwardRef<
+   HTMLLabelElement,
+   React.ComponentProps<"label">
+>(({ className, children, ...props }, ref) => {
+   const id = React.useId()
+
+   return (
+      <label
+         htmlFor={`expandable-content-${id}`}
          className={cn(
-            "h-[var(--expandable-content-height)] overflow-hidden",
+            "group mt-1 inline-block cursor-pointer text-brand hover:underline",
             className,
          )}
+         ref={ref}
          {...props}
-      />
-   ),
-)
-
-const ExpandableButton = forwardRef<HTMLLabelElement, ComponentProps<"label">>(
-   ({ className, children, ...props }, ref) => {
-      const id = useId()
-
-      return (
-         <label
-            htmlFor={`expandable-content-${id}`}
-            className={cn(
-               "group mt-1 inline-block cursor-pointer text-brand hover:underline",
-               className,
-            )}
-            ref={ref}
-            {...props}
+      >
+         <input
+            id={props.htmlFor ? props.htmlFor : `expandable-content-${id}`}
+            type="checkbox"
+            className="peer sr-only"
+         />
+         {children}
+         <span
+            data-show-more
+            className="peer-checked:hidden"
          >
-            <input
-               id={props.htmlFor ? props.htmlFor : `expandable-content-${id}`}
-               type="checkbox"
-               className="peer sr-only"
-            />
-            {children}
-            <span
-               data-show-more
-               className="peer-checked:hidden"
-            >
-               Show more
-            </span>
-            <span
-               data-show-less
-               className="hidden peer-checked:inline"
-            >
-               Show less
-            </span>
-         </label>
-      )
-   },
-)
+            Show more
+         </span>
+         <span
+            data-show-less
+            className="hidden peer-checked:inline"
+         >
+            Show less
+         </span>
+      </label>
+   )
+})
 
 export { Expandable, ExpandableButton, ExpandableContent }

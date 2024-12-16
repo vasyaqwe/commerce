@@ -1,6 +1,6 @@
-import type { ComponentProps } from "react"
+import type * as React from "react"
 
-export function Loading({ className, ...props }: ComponentProps<"svg">) {
+export function Loading({ className, ...props }: React.ComponentProps<"svg">) {
    return (
       <svg
          className="size-[18px] animate-spin"

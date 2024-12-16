@@ -1,7 +1,10 @@
 import { cn } from "@/ui/utils"
-import type { ComponentProps } from "react"
+import type * as React from "react"
 
-export function ProductsGrid({ className, ...props }: ComponentProps<"div">) {
+export function ProductsGrid({
+   className,
+   ...props
+}: React.ComponentProps<"div">) {
    return (
       <div
          className={cn(

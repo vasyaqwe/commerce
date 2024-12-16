@@ -33,7 +33,7 @@ import {
    useSearch,
 } from "@tanstack/react-router"
 import useEmblaCarousel from "embla-carousel-react"
-import { useEffect, useRef, useState } from "react"
+import * as React from "react"
 
 const productByHandleQuery = ({ handle }: { handle: string }) =>
    queryOptions({
@@ -205,15 +205,15 @@ function RouteComponent() {
 
 function Gallery({ images }: { images: { src: string; altText: string }[] }) {
    const [emblaRef, emblaApi] = useEmblaCarousel()
-   const [carouselActive, setCarouselActive] = useState(false)
+   const [carouselActive, setCarouselActive] = React.useState(false)
    const [emblaRef2] = useEmblaCarousel({
       dragFree: true,
       active: carouselActive,
    })
-   const [selectedIndex, setSelectedIndex] = useState(0)
-   const containerRef = useRef<HTMLDivElement>(null)
+   const [selectedIndex, setSelectedIndex] = React.useState(0)
+   const containerRef = React.useRef<HTMLDivElement>(null)
 
-   useEffect(() => {
+   React.useEffect(() => {
       const check = () => {
          if (containerRef.current) {
             const containerWidth = containerRef.current.offsetWidth
@@ -228,7 +228,7 @@ function Gallery({ images }: { images: { src: string; altText: string }[] }) {
       return () => window.removeEventListener("resize", check)
    }, [images])
 
-   useEffect(() => {
+   React.useEffect(() => {
       if (emblaApi) {
          const handleSelect = () => {
             setSelectedIndex(emblaApi.selectedScrollSnap())

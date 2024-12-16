@@ -52,7 +52,7 @@ import {
    useSearch,
 } from "@tanstack/react-router"
 import { zodValidator } from "@tanstack/zod-adapter"
-import { useDeferredValue, useRef, useState } from "react"
+import * as React from "react"
 import { z } from "zod"
 
 const MIN_PRICE = 50
@@ -91,7 +91,7 @@ export const Route = createFileRoute("/search/_layout")({
 })
 
 function RouteComponent() {
-   const search = useDeferredValue(useSearch({ from: "/search/_layout" }))
+   const search = React.useDeferredValue(useSearch({ from: "/search/_layout" }))
    const params = useParams({ strict: false })
 
    return (
@@ -156,9 +156,9 @@ function FiltersContent() {
       max_price: maxPrice,
    } = search
 
-   const [priceRangeOpen, setPriceRangeOpen] = useState(false)
-   const [priceRange, setPriceRange] = useState([minPrice, maxPrice])
-   const isDragging = useRef(false)
+   const [priceRangeOpen, setPriceRangeOpen] = React.useState(false)
+   const [priceRange, setPriceRange] = React.useState([minPrice, maxPrice])
+   const isDragging = React.useRef(false)
 
    useEventListener(
       "click",

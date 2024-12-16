@@ -17,14 +17,7 @@ import {
    CommandList,
    CommandSeparator,
 } from "cmdk"
-import type React from "react"
-import {
-   type ComponentProps,
-   createContext,
-   useContext,
-   useEffect,
-   useState,
-} from "react"
+import * as React from "react"
 import { buttonVariants } from "./button"
 import { Popover, PopoverContent, PopoverTrigger } from "./popover"
 
@@ -53,7 +46,7 @@ type ComboboxContextType = {
    setInternalValue: React.Dispatch<React.SetStateAction<string | string[]>>
 } & (ComboboxSingleProps | ComboboxMultipleProps)
 
-const ComboboxContext = createContext<ComboboxContextType | undefined>(
+const ComboboxContext = React.createContext<ComboboxContextType | undefined>(
    undefined,
 )
 
@@ -65,12 +58,12 @@ export function Combobox(props: ComboboxProps) {
       onValueChange,
       canBeEmpty,
    } = props
-   const [isOpen, setIsOpen] = useState(false)
-   const [internalValue, setInternalValue] = useState<string | string[]>(
+   const [isOpen, setIsOpen] = React.useState(false)
+   const [internalValue, setInternalValue] = React.useState<string | string[]>(
       multiple ? [] : "",
    )
 
-   useEffect(() => {
+   React.useEffect(() => {
       if (externalValue !== undefined) {
          setInternalValue(externalValue)
       }
@@ -118,7 +111,7 @@ export function ComboboxTrigger({
    children,
    ...props
 }: PopoverTriggerProps) {
-   const context = useContext(ComboboxContext)
+   const context = React.useContext(ComboboxContext)
    if (!context)
       throw new Error("ComboboxTrigger must be used within a Combobox")
 
@@ -195,7 +188,7 @@ export function ComboboxInput({
 export function ComboboxSeparator({
    className,
    ...props
-}: ComponentProps<typeof SelectSeparator>) {
+}: React.ComponentProps<typeof SelectSeparator>) {
    return (
       <CommandSeparator
          className={cn(
@@ -212,8 +205,8 @@ export function ComboboxItem({
    value: propValue,
    className,
    ...props
-}: { value: string } & ComponentProps<typeof CommandItem>) {
-   const context = useContext(ComboboxContext)
+}: { value: string } & React.ComponentProps<typeof CommandItem>) {
+   const context = React.useContext(ComboboxContext)
    if (!context) throw new Error("ComboboxItem must be used within a Combobox")
 
    const { multiple, internalValue, onValueChange } = context
@@ -256,7 +249,7 @@ export function ComboboxEmpty({
    className,
    children,
    ...props
-}: ComponentProps<"div">) {
+}: React.ComponentProps<"div">) {
    return (
       <CommandEmpty
          className={cn("py-6 text-center text-sm", className)}

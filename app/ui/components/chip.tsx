@@ -1,11 +1,11 @@
 import { cn } from "@/ui/utils"
-import type { CSSProperties, ComponentProps } from "react"
+import type * as React from "react"
 
 export function Chip({
    className,
    children,
    ...props
-}: { className?: string; name: string } & ComponentProps<"input">) {
+}: { className?: string; name: string } & React.ComponentProps<"input">) {
    return (
       <label
          htmlFor={props.id}
@@ -21,7 +21,7 @@ export function Chip({
                outline: `0px solid color-mix(in lch, canvas, canvasText 85%)`,
                outlineOffset: `2px`,
                gridTemplateColumns: `auto calc(var(--active)*20px)`,
-            } as CSSProperties
+            } as React.CSSProperties
          }
          className={cn(
             `has-[input:disabled]:!bg-background has-[:focus-visible]:!outline-2 grid cursor-pointer bg-[hsl(var(--color-primary)/calc(var(--active)-0.1))] active:enabled:scale-[97%]`,

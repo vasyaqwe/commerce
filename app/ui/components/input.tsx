@@ -1,19 +1,15 @@
 import { cn } from "@/ui/utils"
 import { XMarkIcon } from "@heroicons/react/24/outline"
 import { cva } from "class-variance-authority"
-import {
-   type ComponentProps,
-   type InputHTMLAttributes,
-   forwardRef,
-} from "react"
+import * as React from "react"
 import { buttonVariants } from "./button"
 
 const inputVariants = cva(
    `block h-[34px] md:h-[42px] w-full rounded-[11px] md:rounded-xl transition-colors md:text-[0.975rem] border border-transparent focus:border-[var(--border-color)] px-3 bg-muted/40 focus:bg-muted/60 placeholder:text-foreground/40 focus:outline-hidden ring ring-transparent appearance-none [--ring:var(--color-primary)] [--border-color:var(--color-muted)] has-[+button[data-clearinput]:active]:border-[var(--border-color)] has-[+button[data-clearinput]:active]:ring-[var(--color-primary)]`,
 )
-const Input = forwardRef<
+const Input = React.forwardRef<
    HTMLInputElement,
-   InputHTMLAttributes<HTMLInputElement>
+   React.InputHTMLAttributes<HTMLInputElement>
 >(({ className, type, ...props }, ref) => {
    return (
       <input
@@ -29,7 +25,7 @@ export function ClearInputButton({
    className,
    visible,
    ...props
-}: ComponentProps<"button"> & {
+}: React.ComponentProps<"button"> & {
    visible: boolean
 }) {
    return (
