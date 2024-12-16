@@ -15,7 +15,6 @@ import { Main } from "@/routes/-components/main"
 import { seo } from "@/seo/utils"
 import { Button } from "@/ui/components/button"
 import { Chip } from "@/ui/components/chip"
-import { Tooltip } from "@/ui/components/tooltip"
 import { cn } from "@/ui/utils"
 import { formatCurrency } from "@/utils/format"
 import {
@@ -164,10 +163,7 @@ function RouteComponent() {
                </div>
                <hr className="my-5 border-border lg:my-8" />
                <div className="mb-6 lg:mb-8">
-                  <VariantSelector
-                     options={product.options}
-                     variants={product.variants}
-                  />
+                  <VariantSelector options={product.options} />
                </div>
                <div className="mt-auto flex w-full items-center gap-2.5 lg:gap-4">
                   <AddToCartButton product={product} />
@@ -317,10 +313,8 @@ type Combination = {
 
 function VariantSelector({
    options,
-   variants,
 }: {
    options: ProductOption[]
-   variants: ProductVariant[]
 }) {
    const params = Route.useParams()
    const search = useSearch({ strict: false })
@@ -332,19 +326,6 @@ function VariantSelector({
    if (hasNoOptionsOrJustOneOption) {
       return null
    }
-
-   const combinations: Combination[] = variants.map((variant) => ({
-      id: variant.id,
-      availableForSale: variant.availableForSale,
-      ...variant.selectedOptions.reduce(
-         (accumulator, option) => ({
-            // biome-ignore lint/performance/noAccumulatingSpread: <explanation>
-            ...accumulator,
-            [option.name.toLowerCase()]: option.value,
-         }),
-         {},
-      ),
-   }))
 
    return (
       <div className="space-y-6">
@@ -358,34 +339,10 @@ function VariantSelector({
                      {option.values.map((value) => {
                         const optionNameLowerCase = option.name.toLowerCase()
 
-                        // Base option params on current selectedOptions so we can preserve any other param state.
-                        const optionParams = {
-                           ...search,
-                           [optionNameLowerCase]: value,
-                        }
-
-                        // Filter out invalid options and check if the option combination is available for sale.
-                        const filtered = Object.entries(optionParams).filter(
-                           ([key, value]) =>
-                              options.find(
-                                 (option) =>
-                                    option.name.toLowerCase() === key &&
-                                    option.values.includes(value as never),
-                              ),
-                        )
-                        const isAvailableForSale = combinations.find(
-                           (combination) =>
-                              filtered.every(
-                                 ([key, value]) =>
-                                    combination[key] === value &&
-                                    combination.availableForSale,
-                              ),
-                        )
-
                         const isActive =
                            search[optionNameLowerCase as never] === value
 
-                        const Component = (
+                        return (
                            <Chip
                               key={value}
                               name={option.name}
@@ -401,35 +358,9 @@ function VariantSelector({
                                  })
                               }}
                               checked={isActive}
-                              disabled={!isAvailableForSale}
                            >
                               {value}
                            </Chip>
-                        )
-
-                        return !isAvailableForSale ? (
-                           <Tooltip
-                              delayDuration={0}
-                              content={
-                                 <span>
-                                    Немає в наявності{" "}
-                                    {/* <span
-                                       className={cn(
-                                          option.name !== "Розмір"
-                                             ? "lowercase"
-                                             : "",
-                                       )}
-                                    >
-                                       ({value} {option.name})
-                                    </span> */}
-                                 </span>
-                              }
-                              key={value}
-                           >
-                              <span>{Component}</span>
-                           </Tooltip>
-                        ) : (
-                           Component
                         )
                      })}
                   </dd>
@@ -441,7 +372,7 @@ function VariantSelector({
 }
 
 function AddToCartButton({ product }: { product: Product }) {
-   const { variants, availableForSale } = product
+   const { variants, options } = product
    const { addItem } = useAddCartItem()
 
    const search = useSearch({ strict: false })
@@ -458,22 +389,57 @@ function AddToCartButton({ product }: { product: Product }) {
       (variant) => variant.id === selectedVariantId,
    )
 
-   return (
-      <Button
-         disabled={!availableForSale || !selectedVariantId}
-         className="h-12 w-full flex-1 gap-3 text-[1rem] lg:h-[3.75rem] lg:rounded-2xl lg:text-lg"
-         aria-label="Add to cart"
-         onClick={() => {
-            if (!finalVariant) return
+   const combinations: Combination[] = variants.map((variant) => ({
+      id: variant.id,
+      availableForSale: variant.availableForSale,
+      ...variant.selectedOptions.reduce(
+         (accumulator, option) => ({
+            // biome-ignore lint/performance/noAccumulatingSpread: <explanation>
+            ...accumulator,
+            [option.name.toLowerCase()]: option.value,
+         }),
+         {},
+      ),
+   }))
 
-            addItem.mutate({ variant: finalVariant, product })
-         }}
-      >
-         <ShoppingBagIcon
-            className="-mt-0.5 size-5 lg:size-6"
-            strokeWidth={2}
-         />
-         Додати до кошика
-      </Button>
+   // Base option params on current selectedOptions so we can preserve any other param state.
+   const optionParams = {
+      ...search,
+   }
+
+   // Filter out invalid options and check if the option combination is available for sale.
+   const filtered = Object.entries(optionParams).filter(([key, value]) =>
+      options.find(
+         (option) =>
+            option.name.toLowerCase() === key &&
+            option.values.includes(value as never),
+      ),
+   )
+   const availableForSale = combinations.some((combination) =>
+      filtered.every(
+         ([key, value]) =>
+            combination[key] === value && combination.availableForSale,
+      ),
+   )
+
+   return (
+      <>
+         <Button
+            disabled={!availableForSale || !selectedVariantId}
+            className="h-12 w-full flex-1 gap-3 text-[1rem] lg:h-[3.75rem] lg:rounded-2xl lg:text-lg"
+            aria-label="Add to cart"
+            onClick={() => {
+               if (!finalVariant) return
+
+               addItem.mutate({ variant: finalVariant, product })
+            }}
+         >
+            <ShoppingBagIcon
+               className="-mt-0.5 size-5 lg:size-6"
+               strokeWidth={2}
+            />
+            Додати до кошика
+         </Button>
+      </>
    )
 }
