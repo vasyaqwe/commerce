@@ -3,6 +3,8 @@ import { useDeleteFavorite } from "@/favorites/hooks/use-delete-favorite"
 import { useInsertFavorite } from "@/favorites/hooks/use-insert-favorite"
 import { listFavoriteIdsQuery } from "@/favorites/queries"
 import { HIDDEN_PRODUCT_TAG } from "@/lib/shopify/constants"
+import type { Image } from "@/lib/shopify/types"
+import { colorMap } from "@/product/constants"
 import { productByHandle } from "@/product/functions"
 import {
    Header,
@@ -32,8 +34,10 @@ import {
    useRouter,
    useSearch,
 } from "@tanstack/react-router"
+import { zodValidator } from "@tanstack/zod-adapter"
 import useEmblaCarousel from "embla-carousel-react"
 import * as React from "react"
+import { z } from "zod"
 
 const productByHandleQuery = ({ handle }: { handle: string }) =>
    queryOptions({
@@ -43,6 +47,11 @@ const productByHandleQuery = ({ handle }: { handle: string }) =>
 
 export const Route = createFileRoute("/product/$handle")({
    component: RouteComponent,
+   validateSearch: zodValidator(
+      z.object({
+         Колір: z.string().optional(),
+      }),
+   ),
    loader: async ({ context, params }) => {
       const product = await context.queryClient.ensureQueryData(
          productByHandleQuery({
@@ -85,8 +94,16 @@ export const Route = createFileRoute("/product/$handle")({
    },
 })
 
+type Combination = {
+   id: string
+   availableForSale: boolean
+   [key: string]: string | boolean
+}
+
 function RouteComponent() {
    const router = useRouter()
+   const search = useSearch({ from: Route.fullPath })
+   const navigate = useNavigate({ from: Route.fullPath })
    const params = Route.useParams()
    const query = useSuspenseQuery(
       productByHandleQuery({
@@ -100,6 +117,28 @@ function RouteComponent() {
    const favoriteIds = useQuery(listFavoriteIdsQuery())
 
    if (!product) return null
+
+   const colorVariant = product?.options.find(
+      (option) => option.name === "Колір",
+   )
+   const colorOptions = colorVariant?.values ?? []
+   const images =
+      product?.images.filter((image) =>
+         image.altText.includes(search.Колір ?? ""),
+      ) ?? []
+
+   const combinations: Combination[] = product.variants.map((variant) => ({
+      id: variant.id,
+      availableForSale: variant.availableForSale,
+      ...variant.selectedOptions.reduce(
+         (accumulator, option) => ({
+            // biome-ignore lint/performance/noAccumulatingSpread: <explanation>
+            ...accumulator,
+            [option.name]: option.value,
+         }),
+         {},
+      ),
+   }))
 
    return (
       <>
@@ -145,21 +184,74 @@ function RouteComponent() {
             <HeaderButtons />
          </Header>
          <Main className="container grid gap-4 lg:mt-12 lg:grid-cols-2 lg:gap-14 xl:gap-20 max-lg:px-0">
-            <Gallery
-               images={product.images.map((image) => ({
-                  src: image.url,
-                  altText: image.altText,
-               }))}
-            />
+            <Gallery images={images} />
             <div className="flex flex-col max-lg:px-4">
                <div className="flex flex-col">
                   <h1 className="mb-2 font-semibold text-2xl lg:text-3xl">
                      {product.title}
                   </h1>
                   {/* <p className="text-foreground/70 lg:mt-2 ">42 відгуки</p> */}
-                  <p className="mt-3 font-bold text-2xl lg:text-3xl">
+                  <p className="mt-1 font-bold text-2xl lg:text-3xl">
                      {formatCurrency(product.priceRange.maxVariantPrice.amount)}
                   </p>
+                  <div className="mt-5 flex flex-wrap items-center gap-2">
+                     {colorOptions.map((item) => {
+                        const color = colorMap[item]
+
+                        // Base option params on current selectedOptions so we can preserve any other param state.
+                        const optionParams = {
+                           ...search,
+                           Колір: item,
+                        }
+                        // Filter out invalid options and check if the option combination is available for sale.
+                        const filtered = Object.entries(optionParams).filter(
+                           ([key, value]) =>
+                              product.options.find(
+                                 (option) =>
+                                    option.name === key &&
+                                    option.values.includes(value as never),
+                              ),
+                        )
+                        const isAvailableForSale = combinations.find(
+                           (combination) =>
+                              filtered.every(
+                                 ([key, value]) =>
+                                    combination[key] === value &&
+                                    combination.availableForSale,
+                              ),
+                        )
+                        return (
+                           <button
+                              data-selected={item === search.Колір}
+                              role="button"
+                              onClick={() => {
+                                 navigate({
+                                    search: (prev) =>
+                                       isAvailableForSale
+                                          ? {
+                                               ...prev,
+                                               Колір: item,
+                                            }
+                                          : { Колір: item },
+                                 })
+                              }}
+                              aria-label={color}
+                              key={color}
+                              style={{
+                                 backgroundColor: color,
+                                 borderColor:
+                                    color === "#ffffff" ? "#000000" : color,
+                                 outlineColor:
+                                    color === "#ffffff" ? "#000000" : color,
+                              }}
+                              className={cn(
+                                 "size-7 cursor-pointer rounded-full border outline-offset-[3px] hover:opacity-70 data-[selected=true]:outline-[1px]",
+                                 color === "Білий" ? "border-foreground" : "",
+                              )}
+                           />
+                        )
+                     })}
+                  </div>
                </div>
                <hr className="my-5 border-border lg:my-8" />
                <div className="mb-6 lg:mb-8">
@@ -203,7 +295,7 @@ function RouteComponent() {
    )
 }
 
-function Gallery({ images }: { images: { src: string; altText: string }[] }) {
+function Gallery({ images }: { images: Image[] }) {
    const [emblaRef, emblaApi] = useEmblaCarousel()
    const [carouselActive, setCarouselActive] = React.useState(false)
    const [emblaRef2] = useEmblaCarousel({
@@ -249,13 +341,13 @@ function Gallery({ images }: { images: { src: string; altText: string }[] }) {
             <div className="flex h-full">
                {images.map((image, idx) => (
                   <div
-                     key={image.src}
+                     key={image.url}
                      className="relative size-full flex-[0_0_100%] active:cursor-grabbing"
                   >
                      <img
                         className="size-full object-cover object-top"
                         alt={image.altText as string}
-                        src={image.src as string}
+                        src={image.url as string}
                         loading={idx === 0 ? "eager" : "lazy"}
                      />
                   </div>
@@ -275,7 +367,7 @@ function Gallery({ images }: { images: { src: string; altText: string }[] }) {
                      {images.map((image, idx) => {
                         return (
                            <button
-                              key={image.src}
+                              key={image.url}
                               onClick={() => {
                                  emblaApi?.scrollTo(idx)
                               }}
@@ -290,7 +382,7 @@ function Gallery({ images }: { images: { src: string; altText: string }[] }) {
                               <img
                                  draggable={false}
                                  alt={image.altText}
-                                 src={image.src}
+                                 src={image.url}
                                  width={120}
                                  height={120}
                               />
@@ -305,12 +397,6 @@ function Gallery({ images }: { images: { src: string; altText: string }[] }) {
    )
 }
 
-type Combination = {
-   id: string
-   availableForSale: boolean
-   [key: string]: string | boolean
-}
-
 function VariantSelector() {
    const params = Route.useParams()
    const query = useSuspenseQuery(
@@ -318,11 +404,11 @@ function VariantSelector() {
          handle: params.handle,
       }),
    )
+   const product = query.data
 
    const search = useSearch({ strict: false })
    const navigate = useNavigate({ from: Route.fullPath })
 
-   const product = query.data
    if (!product) return null
 
    const { options, variants } = product
@@ -350,79 +436,79 @@ function VariantSelector() {
 
    return (
       <div className="space-y-6">
-         {options.map((option) => (
-            <div key={option.id}>
-               <dl className="">
-                  <dt className="mb-3 font-medium text-sm tracking-wide">
-                     {option.name}
-                  </dt>
-                  <dd className="flex flex-wrap gap-3">
-                     {option.values.map((value) => {
-                        const optionName = option.name
+         {options
+            .filter((option) => option.name !== "Колір")
+            .map((option) => (
+               <div key={option.id}>
+                  <dl className="">
+                     <dt className="mb-3 font-medium text-sm leading-none tracking-wide">
+                        {option.name}
+                     </dt>
+                     <dd className="flex flex-wrap gap-3">
+                        {option.values.map((value) => {
+                           const optionName = option.name
 
-                        // Base option params on current selectedOptions so we can preserve any other param state.
-                        const optionParams = {
-                           ...search,
-                           [optionName]: value,
-                        }
+                           // Base option params on current selectedOptions so we can preserve any other param state.
+                           const optionParams = {
+                              ...search,
+                              [optionName]: value,
+                           }
 
-                        // Filter out invalid options and check if the option combination is available for sale.
-                        const filtered = Object.entries(optionParams).filter(
-                           ([key, value]) =>
-                              options.find(
-                                 (option) =>
-                                    option.name === key &&
-                                    option.values.includes(value as never),
-                              ),
-                        )
-                        const isAvailableForSale = combinations.find(
-                           (combination) =>
-                              filtered.every(
-                                 ([key, value]) =>
-                                    combination[key] === value &&
-                                    combination.availableForSale,
-                              ),
-                        )
+                           // Filter out invalid options and check if the option combination is available for sale.
+                           const filtered = Object.entries(optionParams).filter(
+                              ([key, value]) =>
+                                 options.find(
+                                    (option) =>
+                                       option.name === key &&
+                                       option.values.includes(value as never),
+                                 ),
+                           )
+                           const isAvailableForSale = combinations.find(
+                              (combination) =>
+                                 filtered.every(
+                                    ([key, value]) =>
+                                       combination[key] === value &&
+                                       combination.availableForSale,
+                                 ),
+                           )
 
-                        const isActive = search[optionName as never] === value
+                           const isActive =
+                              search[optionName as never] === value
 
-                        const Component = (
-                           <Chip
-                              key={value}
-                              name={option.name}
-                              onChange={() => {
-                                 navigate({
-                                    params: { handle: params.handle },
-                                    resetScroll: false,
-                                    replace: true,
-                                    search:
+                           const Component = (
+                              <Chip
+                                 key={value}
+                                 name={option.name}
+                                 onChange={() => {
+                                    navigate({
+                                       params: { handle: params.handle },
+                                       resetScroll: false,
+                                       replace: true,
                                        // reset if not available for sale when changing color
-                                       option.name === "Колір" &&
-                                       !isAvailableForSale
-                                          ? { [optionName]: value }
-                                          : {
-                                               ...search,
-                                               [optionName]: value,
-                                            },
-                                 })
-                              }}
-                              checked={isActive}
-                              disabled={
-                                 option.name !== "Колір" && !isAvailableForSale
-                              }
-                           >
-                              {value}
-                           </Chip>
-                        )
+                                       search: (prev) => ({
+                                          ...prev,
+                                          [optionName]: value,
+                                       }),
+                                    })
+                                 }}
+                                 checked={isActive}
+                                 disabled={
+                                    option.name !== "Колір" &&
+                                    !isAvailableForSale
+                                 }
+                              >
+                                 {value}
+                              </Chip>
+                           )
 
-                        return option.name !== "Колір" &&
-                           !isAvailableForSale ? (
-                           <Tooltip
-                              delayDuration={0}
-                              content={
-                                 <span>
-                                    Розпродано
-                                    {/* <span
+                           return option.name !== "Колір" &&
+                              !isAvailableForSale ? (
+                              <Tooltip
+                                 delayDuration={0}
+                                 content={
+                                    <span>
+                                       Розпродано
+                                       {/* <span
                                        className={cn(
                                           option.name !== "Розмір"
                                              ? "lowercase"
@@ -431,20 +517,20 @@ function VariantSelector() {
                                     >
                                        ({value} {option.name})
                                     </span> */}
-                                 </span>
-                              }
-                              key={value}
-                           >
-                              <span>{Component}</span>
-                           </Tooltip>
-                        ) : (
-                           Component
-                        )
-                     })}
-                  </dd>
-               </dl>
-            </div>
-         ))}
+                                    </span>
+                                 }
+                                 key={value}
+                              >
+                                 <span>{Component}</span>
+                              </Tooltip>
+                           ) : (
+                              Component
+                           )
+                        })}
+                     </dd>
+                  </dl>
+               </div>
+            ))}
       </div>
    )
 }
