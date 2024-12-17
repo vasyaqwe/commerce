@@ -24,7 +24,7 @@ export function Chip({
             } as React.CSSProperties
          }
          className={cn(
-            `has-[input:disabled]:!bg-background has-[:focus-visible]:!outline-2 grid cursor-pointer bg-[hsl(var(--color-primary)/calc(var(--active)-0.1))] active:enabled:scale-[97%]`,
+            `has-[input:disabled]:!bg-border/75 has-[:focus-visible]:!outline-2 grid cursor-pointer bg-[hsl(var(--color-primary)/calc(var(--active)-0.1))] active:enabled:scale-[97%]`,
             `items-center rounded-[12px] border border-border px-3.5 py-[9px] text-[var(--accent)] shadow-xs`,
             `leading-[1.25] has-[input:disabled]:cursor-not-allowed has-[input:checked]:border-[hsl(var(--color-primary)/0.1)]`,
             `[&:not(:has(:checked))]:hover:bg-border/50 has-[:checked]:text-background`,

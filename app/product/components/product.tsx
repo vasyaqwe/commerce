@@ -53,7 +53,7 @@ export function Product({ product }: { product: ProductType }) {
          className={cn("relative inline-block size-full p-0")}
          to={"/product/$handle"}
          params={{ handle: product.handle }}
-         search={{ колір: hasMultipleColors ? selectedColor : undefined }}
+         search={{ Колір: selectedColor }}
       >
          <div
             className={cn("relative overflow-hidden rounded-2xl")}
