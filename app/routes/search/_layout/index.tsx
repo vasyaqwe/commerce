@@ -25,7 +25,7 @@ export const Route = createFileRoute("/search/_layout/")({
    component: RouteComponent,
    pendingComponent: ProductsPending,
    loaderDeps: ({ search }) => ({ search }),
-   loader: async ({ deps: { search }, context }) =>
+   loader: ({ deps: { search }, context }) => {
       context.queryClient.ensureQueryData(
          listProductsQuery({
             q: search.q,
@@ -37,7 +37,8 @@ export const Route = createFileRoute("/search/_layout/")({
             maxPrice: search.max_price,
             reverse: sortFilterSlugToReverse[search.sort],
          }),
-      ),
+      )
+   },
 })
 
 function RouteComponent() {

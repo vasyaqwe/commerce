@@ -71,10 +71,11 @@ export const Route = createRootRouteWithContext<{
       }
    },
    component: RootComponent,
-   loader: ({ context }) =>
+   loader: ({ context }) => {
       context.queryClient.ensureQueryData(
          menuByHandleQuery({ handle: "footer" }),
-      ),
+      )
+   },
 })
 
 function RootComponent() {

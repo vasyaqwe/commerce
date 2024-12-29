@@ -28,7 +28,15 @@ const listCollectionProductsQuery = (
    data: z.infer<typeof listCollectionProductsParams>,
 ) =>
    queryOptions({
-      queryKey: ["list_collection_products", { ...data }],
+      queryKey: [
+         "list_collection_products",
+         data.sort,
+         data.productTypes,
+         data.reverse,
+         data.minPrice,
+         data.maxPrice,
+         data.collection,
+      ],
       queryFn: () => listCollectionProducts({ data }),
    })
 
@@ -37,13 +45,6 @@ export const Route = createFileRoute("/search/_layout/$collection")({
    pendingComponent: ProductsPending,
    loaderDeps: ({ search }) => ({ search }),
    loader: async ({ deps: { search }, params, context }) => {
-      const collection = await context.queryClient.ensureQueryData(
-         collectionByHandleQuery({
-            handle: params.collection,
-         }),
-      )
-      if (!collection) throw notFound()
-
       context.queryClient.prefetchQuery(
          listCollectionProductsQuery({
             sort: search.sort,
@@ -54,6 +55,13 @@ export const Route = createFileRoute("/search/_layout/$collection")({
             collection: params.collection,
          }),
       )
+
+      const collection = await context.queryClient.ensureQueryData(
+         collectionByHandleQuery({
+            handle: params.collection,
+         }),
+      )
+      if (!collection) throw notFound()
 
       return collection
    },

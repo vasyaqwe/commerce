@@ -78,6 +78,7 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute("/search/_layout")({
    component: RouteComponent,
+   pendingComponent: PendingComponent,
    validateSearch: zodValidator(searchSchema),
    head: () => {
       return {
@@ -89,6 +90,58 @@ export const Route = createFileRoute("/search/_layout")({
       }
    },
 })
+
+function PendingComponent() {
+   const search = React.useDeferredValue(useSearch({ from: "/search/_layout" }))
+   const params = useParams({ strict: false })
+
+   return (
+      <>
+         <Header>
+            <HeaderNavigation />
+            <HeaderTitle>
+               {params.collection ? (
+                  <span className="capitalize">{params.collection}</span>
+               ) : search.q && search.q.trim().length > 0 ? (
+                  `Пошук "${search.q}"`
+               ) : (
+                  "Пошук"
+               )}
+            </HeaderTitle>
+            <HeaderButtons />
+         </Header>
+         <Main>
+            <PageDescription>
+               <div className="container md:hidden">
+                  <Drawer>
+                     <DrawerTrigger
+                        className={cn(
+                           buttonVariants({ variant: "outline", size: "sm" }),
+                           "md:hidden",
+                        )}
+                     >
+                        <FunnelIcon className="size-5" />
+                        Фільтри
+                     </DrawerTrigger>
+                     <DrawerContent>
+                        <DrawerHeader>
+                           <DrawerTitle>Фільтри</DrawerTitle>
+                        </DrawerHeader>
+                        <div className="flex flex-col items-center justify-center gap-5 py-6">
+                           <FiltersContent />
+                        </div>
+                     </DrawerContent>
+                  </Drawer>
+               </div>
+               <div className="scrollbar-hidden container flex items-center gap-4 overflow-x-auto py-1 max-md:hidden">
+                  <FiltersContent />
+               </div>
+            </PageDescription>
+            <Outlet />
+         </Main>
+      </>
+   )
+}
 
 function RouteComponent() {
    const search = React.useDeferredValue(useSearch({ from: "/search/_layout" }))
