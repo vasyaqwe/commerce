@@ -19,7 +19,7 @@ export function Footer() {
             <Link
                aria-label="Home"
                className="flex items-center gap-2 md:mr-auto max-md:flex-1 md:pt-1"
-               href="/"
+               to="/"
             >
                <Icons.logo />
             </Link>
@@ -104,7 +104,7 @@ function Menu() {
          {menu.data.map((item) => (
             <li key={item.path}>
                <Link
-                  href={item.path}
+                  to={item.path}
                   className="hover:underline"
                >
                   {item.title}

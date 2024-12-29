@@ -1,7 +1,19 @@
 import { ServerFnError } from "@/error"
 import { routeTree } from "@/routeTree.gen"
+import {
+   Header,
+   HeaderButtons,
+   HeaderNavigation,
+   HeaderSearch,
+} from "@/routes/-components/header"
+import { Main } from "@/routes/-components/main"
 import { Button, buttonVariants } from "@/ui/components/button"
-import { Card } from "@/ui/components/card"
+import {
+   FeedbackState,
+   FeedbackStateDescription,
+   FeedbackStateIcon,
+   FeedbackStateTitle,
+} from "@/ui/components/feedback-state"
 import { toast } from "@/ui/components/toast"
 import { MagnifyingGlassIcon, XCircleIcon } from "@heroicons/react/24/outline"
 import { QueryClient } from "@tanstack/react-query"
@@ -76,27 +88,33 @@ export function createRouter() {
 
 function NotFound() {
    return (
-      <div className="grid h-[80vh] place-items-center text-center">
-         <div className="lg:-mt-24 -mt-16">
-            <div className="relative mb-6">
-               <Card className="absolute inset-0 mx-auto grid h-28 w-[5.5rem] rotate-6 place-content-center rounded-xl" />
-               <Card className="-rotate-6 mx-auto grid h-28 w-[5.5rem] place-content-center rounded-xl">
-                  <MagnifyingGlassIcon className="size-9 text-foreground/75" />
-               </Card>
-            </div>
-            <h1 className="mb-2 font-semibold text-xl">Тут нічого немає..</h1>
-            <p className="mb-5 text-foreground/70 text-lg leading-snug">
-               Ця сторінка не більше існує — <br /> можливо вона переїхала, або
-               її видалили.
-            </p>
-            <Link
-               href={"/"}
-               className={buttonVariants()}
-            >
-               Додому
-            </Link>
-         </div>
-      </div>
+      <>
+         <Header>
+            <HeaderNavigation />
+            <HeaderSearch />
+            <HeaderButtons />
+         </Header>
+         <Main className="grid h-[80vh] place-items-center text-center">
+            <FeedbackState>
+               <FeedbackStateIcon>
+                  <MagnifyingGlassIcon
+                     className="size-12 text-foreground/50"
+                     strokeWidth={2}
+                  />
+               </FeedbackStateIcon>
+               <FeedbackStateTitle>Тут нічого немає..</FeedbackStateTitle>
+               <FeedbackStateDescription className="mb-5">
+                  Не знайдено жодного товару.
+               </FeedbackStateDescription>
+               <Link
+                  to={"/"}
+                  className={buttonVariants()}
+               >
+                  Додому
+               </Link>
+            </FeedbackState>
+         </Main>
+      </>
    )
 }
 
@@ -115,27 +133,26 @@ function CatchBoundary({ error }: ErrorComponentProps) {
             </div>
          )}
 
-         <div className="lg:-mt-24 -mt-16">
-            <div className="relative mb-6">
-               <Card className="absolute inset-0 mx-auto grid h-28 w-[5.5rem] rotate-6 place-content-center rounded-xl" />
-               <Card className="-rotate-6 mx-auto grid h-28 w-[5.5rem] place-content-center rounded-xl">
-                  <XCircleIcon className="size-9 text-destructive" />
-               </Card>
-            </div>
-            <h1 className="mb-2 font-semibold text-xl">От-такої..</h1>
-            <p className="mb-5 text-foreground/70 text-lg leading-snug">
+         <FeedbackState>
+            <FeedbackStateIcon>
+               <XCircleIcon
+                  className="size-12 text-destructive"
+                  strokeWidth={2}
+               />
+            </FeedbackStateIcon>
+            <FeedbackStateTitle>От-такої..</FeedbackStateTitle>
+            <FeedbackStateDescription className="mb-5">
                Сталася технічна проблема. <br /> Будь ласка, спробуйте ще раз
                пізніше.
-            </p>
+            </FeedbackStateDescription>
             <Button
-               className="active:!scale-100"
                onClick={() => {
                   router.invalidate()
                }}
             >
                Перезавантажити
             </Button>
-         </div>
+         </FeedbackState>
       </div>
    )
 }

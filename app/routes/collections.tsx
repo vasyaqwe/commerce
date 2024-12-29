@@ -1,7 +1,7 @@
 import bottom from "@/assets/bottom1.jpg"
 import {
    Header,
-   HeaderBackButton,
+   HeaderNavigation,
    HeaderTitle,
 } from "@/routes/-components/header"
 import { Main } from "@/routes/-components/main"
@@ -31,7 +31,7 @@ function RouteComponent() {
    return (
       <>
          <Header>
-            <HeaderBackButton />
+            <HeaderNavigation />
             <HeaderTitle>Каталог</HeaderTitle>
          </Header>
          <Main>

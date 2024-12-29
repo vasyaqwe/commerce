@@ -226,6 +226,8 @@ function RouteComponent() {
                               role="button"
                               onClick={() => {
                                  navigate({
+                                    resetScroll: false,
+                                    replace: true,
                                     search: (prev) =>
                                        isAvailableForSale
                                           ? {
@@ -354,11 +356,8 @@ function Gallery({ images }: { images: Image[] }) {
                ))}
             </div>
          </div>
-         <div
-            ref={containerRef}
-            className=""
-         >
-            {images.length > 1 ? (
+         <div ref={containerRef}>
+            {images.length > 0 ? (
                <div
                   ref={emblaRef2}
                   className="relative isolate overflow-hidden after:pointer-events-none before:pointer-events-none after:absolute before:absolute after:inset-y-0 before:inset-y-0 after:right-0 before:left-0 after:z-10 before:z-10 after:w-10 before:w-10 after:bg-gradient-to-l before:bg-gradient-to-r after:from-background before:from-background after:to-transparent before:to-transparent"
@@ -417,9 +416,7 @@ function VariantSelector() {
       !options.length ||
       (options.length === 1 && options[0]?.values.length === 1)
 
-   if (hasNoOptionsOrJustOneOption) {
-      return null
-   }
+   if (hasNoOptionsOrJustOneOption) return null
 
    const combinations: Combination[] = variants.map((variant) => ({
       id: variant.id,
@@ -481,7 +478,6 @@ function VariantSelector() {
                                  name={option.name}
                                  onChange={() => {
                                     navigate({
-                                       params: { handle: params.handle },
                                        resetScroll: false,
                                        replace: true,
                                        // reset if not available for sale when changing color

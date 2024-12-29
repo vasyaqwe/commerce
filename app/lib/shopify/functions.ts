@@ -59,9 +59,9 @@ export const pageByHandle = createServerFn({ method: "GET" })
       const res = (await shopifyFetch({
          query: pageByHandleGraphQLQuery,
          variables: { handle: data.handle },
-      })) as { pageByHandle: Page }
+      })) as { pageByHandle: Page | undefined }
 
-      return res.pageByHandle
+      return res.pageByHandle ?? null
    })
 
 export const listPages = createServerFn({ method: "GET" }).handler(async () => {

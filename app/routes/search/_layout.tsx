@@ -15,8 +15,8 @@ import {
 import { useEventListener } from "@/interactions/use-event-listener"
 import {
    Header,
-   HeaderBackButton,
    HeaderButtons,
+   HeaderNavigation,
    HeaderTitle,
 } from "@/routes/-components/header"
 import { Main } from "@/routes/-components/main"
@@ -97,7 +97,7 @@ function RouteComponent() {
    return (
       <>
          <Header>
-            <HeaderBackButton />
+            <HeaderNavigation />
             <HeaderTitle>
                {params.collection ? (
                   <span className="capitalize">{params.collection}</span>

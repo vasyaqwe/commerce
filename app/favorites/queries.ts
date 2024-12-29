@@ -35,4 +35,5 @@ export const listFavoritesQuery = () =>
 
          return await listFavoriteProducts({ data: { ids: favoriteIds } })
       },
+      staleTime: Infinity,
    })

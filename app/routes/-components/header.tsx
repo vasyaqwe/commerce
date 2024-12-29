@@ -48,37 +48,40 @@ export function HeaderNavigation({
    ] as const
 
    return (
-      <div
-         className={cn(
-            "flex items-center gap-8 md:min-w-[300px] max-md:justify-center",
-            className,
-         )}
-         {...props}
-      >
-         <Link href="/">
-            <Icons.logo />
-         </Link>
-         <nav className="max-md:hidden">
-            <ul className="flex h-full items-center gap-7">
-               {menu.map((item) => (
-                  <li
-                     key={item.title}
-                     className="h-full w-full grow rounded-xl"
-                  >
-                     <Link
-                        to={"/search/$collection"}
-                        params={{ collection: item.path }}
-                        className="relative block h-full font-semibold text-foreground/75 transition-colors hover:text-foreground"
+      <>
+         <HeaderBackButton />
+         <div
+            className={cn(
+               "flex items-center gap-8 max-md:hidden md:min-w-[300px] max-md:justify-center",
+               className,
+            )}
+            {...props}
+         >
+            <Link to="/">
+               <Icons.logo />
+            </Link>
+            <nav className="max-md:hidden">
+               <ul className="flex h-full items-center gap-7">
+                  {menu.map((item) => (
+                     <li
+                        key={item.title}
+                        className="h-full w-full grow rounded-xl"
                      >
-                        <span className="z-[2] flex items-center justify-between">
-                           {item.title}
-                        </span>
-                     </Link>
-                  </li>
-               ))}
-            </ul>
-         </nav>
-      </div>
+                        <Link
+                           to={"/search/$collection"}
+                           params={{ collection: item.path }}
+                           className="relative block h-full font-semibold text-foreground/75 transition-colors hover:text-foreground"
+                        >
+                           <span className="z-[2] flex items-center justify-between">
+                              {item.title}
+                           </span>
+                        </Link>
+                     </li>
+                  ))}
+               </ul>
+            </nav>
+         </div>
+      </>
    )
 }
 
@@ -130,22 +133,19 @@ export function HeaderBackButton({
    const router = useRouter()
 
    return (
-      <>
-         <Button
-            onClick={() => router.history.back()}
-            variant={"ghost"}
-            size="icon"
-            className={cn("shrink-0 text-foreground/80 md:hidden", className)}
-            aria-label="Повернутись назад"
-            {...props}
-         >
-            <ArrowLeftIcon
-               className="size-[22px]"
-               strokeWidth={2}
-            />
-         </Button>
-         <HeaderNavigation className="max-md:hidden" />
-      </>
+      <Button
+         onClick={() => router.history.back()}
+         variant={"ghost"}
+         size="icon"
+         className={cn("shrink-0 text-foreground/80 md:hidden", className)}
+         aria-label="Повернутись назад"
+         {...props}
+      >
+         <ArrowLeftIcon
+            className="size-[22px]"
+            strokeWidth={2}
+         />
+      </Button>
    )
 }
 

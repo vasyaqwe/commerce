@@ -1,8 +1,8 @@
 import { pageByHandle } from "@/lib/shopify/functions"
 import {
    Header,
-   HeaderBackButton,
    HeaderButtons,
+   HeaderNavigation,
    HeaderTitle,
 } from "@/routes/-components/header"
 import { Main } from "@/routes/-components/main"
@@ -54,7 +54,7 @@ function RouteComponent() {
    return (
       <>
          <Header>
-            <HeaderBackButton />
+            <HeaderNavigation />
             <HeaderTitle>Політика конфіденційності</HeaderTitle>
             <HeaderButtons />
          </Header>

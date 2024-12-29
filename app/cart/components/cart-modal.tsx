@@ -5,12 +5,16 @@ import type { CartItem } from "@/cart/types"
 import { DEFAULT_PRODUCT_TITLE } from "@/lib/shopify/constants"
 import { popModal } from "@/modals"
 import { Button, buttonVariants } from "@/ui/components/button"
-import { Card } from "@/ui/components/card"
 import {
    DrawerContent,
    DrawerHeader,
    DrawerTitle,
 } from "@/ui/components/drawer"
+import {
+   FeedbackState,
+   FeedbackStateDescription,
+   FeedbackStateIcon,
+} from "@/ui/components/feedback-state"
 import { cn } from "@/ui/utils"
 import { formatCurrency } from "@/utils/format"
 import {
@@ -31,20 +35,23 @@ export function CartModal() {
             <DrawerTitle className="text-left">Кошик</DrawerTitle>
          </DrawerHeader>
          {!cart || cart.lines.length === 0 ? (
-            <div className=" -mt-16 flex size-full flex-col items-center justify-center overflow-hidden">
-               <div className="relative mb-6">
-                  <Card className="absolute inset-0 mx-auto grid h-28 w-[5.5rem] rotate-6 place-content-center rounded-xl" />
-                  <Card className="-rotate-6 mx-auto grid h-28 w-[5.5rem] place-content-center rounded-xl">
-                     <ShoppingCartIcon className="size-9" />
-                  </Card>
-               </div>
-               <p className="mb-5 font-medium text-foreground/70 text-lg">
+            <FeedbackState>
+               <FeedbackStateIcon>
+                  <ShoppingCartIcon
+                     className="size-12 text-foreground/50"
+                     strokeWidth={2}
+                  />
+               </FeedbackStateIcon>
+               <FeedbackStateDescription className="mb-5">
                   Тут нічого немає.
-               </p>
-               <Button onClick={() => popModal("cart")}>
+               </FeedbackStateDescription>
+               <Button
+                  className="mt-5"
+                  onClick={() => popModal("cart")}
+               >
                   Продовжити шопінг
                </Button>
-            </div>
+            </FeedbackState>
          ) : (
             <>
                <section>

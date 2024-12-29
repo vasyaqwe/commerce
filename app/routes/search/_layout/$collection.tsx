@@ -8,7 +8,11 @@ import { Product } from "@/product/components/product"
 import { ProductsGrid } from "@/product/components/products-grid"
 import { ProductsPending } from "@/product/components/products-pending"
 import { seo } from "@/seo/utils"
-import { Card } from "@/ui/components/card"
+import {
+   FeedbackState,
+   FeedbackStateDescription,
+   FeedbackStateIcon,
+} from "@/ui/components/feedback-state"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute, notFound, useSearch } from "@tanstack/react-router"
@@ -88,19 +92,17 @@ function RouteComponent() {
    return (
       <>
          {products.length === 0 ? (
-            <div className="-mt-8 flex size-full items-center justify-center text-balance px-8 text-center font-medium text-lg">
-               <div>
-                  <div className="relative mb-8">
-                     <Card className="absolute inset-0 mx-auto grid h-28 w-[5.5rem] rotate-6 place-content-center rounded-xl" />
-                     <Card className="-rotate-6 mx-auto grid h-28 w-[5.5rem] place-content-center rounded-xl">
-                        <InformationCircleIcon className="size-9" />
-                     </Card>
-                  </div>
-                  <p className="text-foreground/90">
-                     Не знайдено жодного товару.
-                  </p>
-               </div>
-            </div>
+            <FeedbackState>
+               <FeedbackStateIcon>
+                  <InformationCircleIcon
+                     className="size-12 text-foreground/50"
+                     strokeWidth={2}
+                  />
+               </FeedbackStateIcon>
+               <FeedbackStateDescription className="mb-5">
+                  Не знайдено жодного товару.
+               </FeedbackStateDescription>
+            </FeedbackState>
          ) : (
             <ProductsGrid>
                {products.map((p) => (
