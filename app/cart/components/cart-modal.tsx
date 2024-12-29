@@ -45,10 +45,7 @@ export function CartModal() {
                <FeedbackStateDescription className="mb-5">
                   Тут нічого немає.
                </FeedbackStateDescription>
-               <Button
-                  className="mt-5"
-                  onClick={() => popModal("cart")}
-               >
+               <Button onClick={() => popModal("cart")}>
                   Продовжити шопінг
                </Button>
             </FeedbackState>

@@ -16,8 +16,8 @@ export function BottomMenu() {
          <ul className="flex h-full flex-1 items-center justify-around gap-2 px-1.5">
             <li className="flex flex-1">
                <Link
+                  preload="render"
                   to={indexRoute.to}
-                  activeOptions={{ exact: true }}
                   className="group inline-flex h-10 flex-1 items-center justify-center rounded-md text-foreground/60 transition-colors aria-[current=page]:text-foreground"
                >
                   <HomeIcon
@@ -28,6 +28,7 @@ export function BottomMenu() {
             </li>
             <li className="flex flex-1">
                <Link
+                  preload="render"
                   to={collectionsRoute.to}
                   className="group inline-flex h-10 flex-1 items-center justify-center rounded-md text-foreground/60 transition-colors aria-[current=page]:text-foreground/95"
                >

@@ -1,14 +1,15 @@
+import { cn } from "@/ui/utils"
 import type * as React from "react"
 
 type IconProps = React.ComponentProps<"svg">
 
 export const Icons = {
-   logo: (props: IconProps) => (
+   logo: ({ className, ...props }: IconProps) => (
       <svg
          viewBox="0 0 80 80"
          fill="none"
          xmlns="http://www.w3.org/2000/svg"
-         className="size-8"
+         className={cn("size-8", className)}
          {...props}
       >
          <circle

@@ -17,7 +17,8 @@ export function Footer() {
       >
          <div className="container flex flex-wrap items-start justify-around gap-8 py-12">
             <Link
-               aria-label="Home"
+               preload="render"
+               aria-label="Додому"
                className="flex items-center gap-2 md:mr-auto max-md:flex-1 md:pt-1"
                to="/"
             >

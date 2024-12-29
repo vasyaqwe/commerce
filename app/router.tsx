@@ -27,18 +27,11 @@ import {
    useRouter,
 } from "@tanstack/react-router"
 import { routerWithQueryClient } from "@tanstack/react-router-with-query"
-import superjson from "superjson"
 import { z } from "zod"
 
 export function createRouter() {
    const queryClient = new QueryClient({
       defaultOptions: {
-         dehydrate: {
-            serializeData: superjson.serialize,
-         },
-         hydrate: {
-            deserializeData: superjson.deserialize,
-         },
          queries: {
             retry(failureCount) {
                // 2 max
@@ -78,7 +71,6 @@ export function createRouter() {
          defaultPendingMs: 150,
          defaultPendingMinMs: 300,
          defaultPreloadStaleTime: 0,
-         transformer: superjson,
          defaultErrorComponent: CatchBoundary,
          defaultNotFoundComponent: NotFound,
       }),
@@ -107,6 +99,7 @@ function NotFound() {
                   Не знайдено жодного товару.
                </FeedbackStateDescription>
                <Link
+                  preload="render"
                   to={"/"}
                   className={buttonVariants()}
                >

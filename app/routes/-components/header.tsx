@@ -48,16 +48,21 @@ export function HeaderNavigation({
    ] as const
 
    return (
-      <>
+      <div
+         className={className}
+         {...props}
+      >
          <HeaderBackButton />
          <div
             className={cn(
                "flex items-center gap-8 max-md:hidden md:min-w-[300px] max-md:justify-center",
-               className,
             )}
-            {...props}
          >
-            <Link to="/">
+            <Link
+               to="/"
+               aria-label="Додому"
+               preload="render"
+            >
                <Icons.logo />
             </Link>
             <nav className="max-md:hidden">
@@ -70,7 +75,7 @@ export function HeaderNavigation({
                         <Link
                            to={"/search/$collection"}
                            params={{ collection: item.path }}
-                           className="relative block h-full font-semibold text-foreground/75 transition-colors hover:text-foreground"
+                           className="relative block h-full font-semibold text-foreground/75 transition-colors aria-[current=page]:text-foreground hover:text-foreground"
                         >
                            <span className="z-[2] flex items-center justify-between">
                               {item.title}
@@ -81,7 +86,7 @@ export function HeaderNavigation({
                </ul>
             </nav>
          </div>
-      </>
+      </div>
    )
 }
 
