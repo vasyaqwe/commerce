@@ -73,6 +73,7 @@ export function HeaderNavigation({
                         className="h-full w-full grow rounded-xl"
                      >
                         <Link
+                           suppressHydrationWarning
                            to={"/search/$collection"}
                            params={{ collection: item.path }}
                            className="relative block h-full font-semibold text-foreground/75 transition-colors aria-[current=page]:text-foreground hover:text-foreground"

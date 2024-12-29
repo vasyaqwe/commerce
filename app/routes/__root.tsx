@@ -72,7 +72,7 @@ export const Route = createRootRouteWithContext<{
    },
    component: RootComponent,
    loader: ({ context }) =>
-      context.queryClient.prefetchQuery(
+      context.queryClient.ensureQueryData(
          menuByHandleQuery({ handle: "footer" }),
       ),
 })

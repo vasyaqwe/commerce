@@ -44,13 +44,10 @@ export const Route = createFileRoute("/$page")({
 
 function RouteComponent() {
    const params = Route.useParams()
-   const pageQuery = useSuspenseQuery(
-      pageByHandleQuery({ handle: params.page }),
-   )
-   const page = pageQuery.data
+   const query = useSuspenseQuery(pageByHandleQuery({ handle: params.page }))
+   const page = query.data
    if (!page) return null
 
-   // <div className="mx-8 max-w-2xl pt-8 sm:mx-auto">{children}</div>
    return (
       <>
          <Header>

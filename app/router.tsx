@@ -16,7 +16,12 @@ import {
 } from "@/ui/components/feedback-state"
 import { toast } from "@/ui/components/toast"
 import { MagnifyingGlassIcon, XCircleIcon } from "@heroicons/react/24/outline"
-import { QueryClient } from "@tanstack/react-query"
+import {
+   QueryClient,
+   QueryClientProvider,
+   dehydrate,
+   hydrate,
+} from "@tanstack/react-query"
 import {
    ErrorComponent,
    type ErrorComponentProps,
@@ -73,6 +78,21 @@ export function createRouter() {
          defaultPreloadStaleTime: 0,
          defaultErrorComponent: CatchBoundary,
          defaultNotFoundComponent: NotFound,
+         dehydrate: () => {
+            return {
+               queryClientState: dehydrate(queryClient),
+            }
+         },
+         hydrate: (dehydrated) => {
+            hydrate(queryClient, dehydrated.queryClientState)
+         },
+         Wrap: ({ children }) => {
+            return (
+               <QueryClientProvider client={queryClient}>
+                  {children}
+               </QueryClientProvider>
+            )
+         },
       }),
       queryClient,
    )

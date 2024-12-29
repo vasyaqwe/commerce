@@ -8,6 +8,7 @@ import * as React from "react"
 
 export function Footer() {
    const { pathname } = useLocation()
+
    return (
       <footer
          className={cn(

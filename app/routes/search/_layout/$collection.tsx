@@ -46,7 +46,7 @@ export const Route = createFileRoute("/search/_layout/$collection")({
 
       context.queryClient.prefetchQuery(
          listCollectionProductsQuery({
-            ...search,
+            sort: search.sort,
             productTypes: search.product_types,
             reverse: sortFilterSlugToReverse[search.sort],
             minPrice: search.min_price,
@@ -79,7 +79,7 @@ function RouteComponent() {
    const search = React.useDeferredValue(useSearch({ from: "/search/_layout" }))
    const query = useSuspenseQuery(
       listCollectionProductsQuery({
-         ...search,
+         sort: search.sort,
          productTypes: search.product_types,
          reverse: sortFilterSlugToReverse[search.sort],
          minPrice: search.min_price,

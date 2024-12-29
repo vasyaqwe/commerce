@@ -28,7 +28,10 @@ export const Route = createFileRoute("/search/_layout/")({
    loader: async ({ deps: { search }, context }) =>
       context.queryClient.ensureQueryData(
          listProductsQuery({
-            ...search,
+            q: search.q,
+            sort: search.sort,
+            colors: search.colors,
+            sizes: search.sizes,
             productTypes: search.product_types,
             minPrice: search.min_price,
             maxPrice: search.max_price,
@@ -42,7 +45,10 @@ function RouteComponent() {
    const search = React.useDeferredValue(useSearch({ from: "/search/_layout" }))
    const query = useSuspenseQuery(
       listProductsQuery({
-         ...search,
+         q: search.q,
+         sort: search.sort,
+         colors: search.colors,
+         sizes: search.sizes,
          productTypes: search.product_types,
          minPrice: search.min_price,
          maxPrice: search.max_price,
