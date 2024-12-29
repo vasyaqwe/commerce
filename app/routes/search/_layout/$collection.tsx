@@ -79,6 +79,7 @@ export const Route = createFileRoute("/search/_layout/$collection")({
          ],
       }
    },
+   preload: false,
 })
 
 function RouteComponent() {
