@@ -25,8 +25,8 @@ export const Route = createFileRoute("/search/_layout/")({
    component: RouteComponent,
    pendingComponent: ProductsPending,
    loaderDeps: ({ search }) => ({ search }),
-   loader: async ({ deps: { search }, context }) => {
-      context.queryClient.prefetchQuery(
+   loader: async ({ deps: { search }, context }) =>
+      context.queryClient.ensureQueryData(
          listProductsQuery({
             ...search,
             productTypes: search.product_types,
@@ -34,8 +34,7 @@ export const Route = createFileRoute("/search/_layout/")({
             maxPrice: search.max_price,
             reverse: sortFilterSlugToReverse[search.sort],
          }),
-      )
-   },
+      ),
 })
 
 function RouteComponent() {
