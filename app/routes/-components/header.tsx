@@ -12,7 +12,6 @@ import {
    ShoppingBagIcon,
 } from "@heroicons/react/24/outline"
 import { Link, useNavigate, useRouter, useSearch } from "@tanstack/react-router"
-import type * as React from "react"
 
 export function Header({
    className,

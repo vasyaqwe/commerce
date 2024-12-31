@@ -1,5 +1,3 @@
-import type * as React from "react"
-
 export function Loading({ className, ...props }: React.ComponentProps<"svg">) {
    return (
       <svg
